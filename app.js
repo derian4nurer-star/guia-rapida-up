@@ -301,105 +301,6 @@ const BUSCADOR_RAPIDO = [
     subCat: "ori",
     oriTab: "outgoing",
     pildoras: ["Mínimo 20 créditos", "Promedio ≥ 13.00", "Inglés avanzado", "Postulación: Ene-May / Set-Dic", "Exonerado de pensión anfitriona"]
-  },
-  {
-    id: "br-19",
-    duda: "Disney Academic Exchange: clases en Montclair y prácticas en Disney",
-    canal: "ORI",
-    dot: "bg-rose-600",
-    correo: "outgoing@up.edu.pe",
-    enlace: "https://ori.up.edu.pe",
-    enlaceTexto: "ori.up.edu.pe",
-    categoria: "Experiencia Internacional",
-    detalle: "10 días de clases intensivas en Montclair State University (New Jersey) y prácticas remuneradas en Walt Disney World (Orlando). Reconoce 6 créditos UP, 1 práctica preprofesional y 1 crédito de internacionalización.",
-    seccion: "directorio",
-    subCat: "ori",
-    oriTab: "disney",
-    pildoras: ["6 créditos UP", "1 práctica preprofesional", "1 crédito internac.", "TOEFL 70 / IELTS 6 / Duolingo 95"]
-  },
-  {
-    id: "br-20",
-    duda: "Programas cortos: Faculty Led y misiones académicas",
-    canal: "ORI",
-    dot: "bg-rose-600",
-    correo: "shortprograms@up.edu.pe",
-    enlace: "https://ori.up.edu.pe",
-    enlaceTexto: "ori.up.edu.pe",
-    categoria: "Experiencias Cortas",
-    detalle: "Faculty Led Programs (cursos con profesor UP en Silicon Valley, Asia Tech o Alemania; reconocen 3-4 créditos + 1 internacionalización) y Misiones Académicas (visitas a empresas; reconocen 2 créditos + 1 internacionalización).",
-    seccion: "directorio",
-    subCat: "ori",
-    oriTab: "cortos",
-    pildoras: ["Faculty Led (3-4 créditos)", "Misiones académicas (2 créditos)", "+1 crédito internacionalización", "Silicon Valley / Asia / Alemania"]
-  },
-  {
-    id: "br-21",
-    duda: "Becas para experiencias internacionales: Alianza del Pacífico y Scotiabank",
-    canal: "ORI",
-    dot: "bg-rose-600",
-    correo: "outgoing@up.edu.pe",
-    enlace: "https://ori.up.edu.pe",
-    enlaceTexto: "Becas ORI (PDF)",
-    categoria: "Financiamiento Internacional",
-    detalle: "Beca Alianza del Pacífico (intercambio en Chile, Colombia o México con asignación mensual y vuelos; tercio superior desde 5.º ciclo) y Beca Scotiabank (Canadá para FCE e Ingeniería; US$ 10,000, mentorship en Toronto y prácticas en Lima).",
-    seccion: "directorio",
-    subCat: "ori",
-    oriTab: "becas",
-    pildoras: ["Beca Alianza del Pacífico (Chile/Col/Méx)", "Beca Scotiabank (Canadá, US$ 10k)", "Tercio superior", "Mentorship en Toronto"]
-  },
-  {
-    id: "br-22",
-    duda: "Universidades con convenio de intercambio (UP en el mundo)",
-    canal: "ORI",
-    dot: "bg-rose-600",
-    enlace: "https://ori.up.edu.pe",
-    enlaceTexto: "Convenios de intercambio",
-    categoria: "Convenios Globales",
-    detalle: "Directorio de convenios bilaterales de la Universidad del Pacífico con prestigiosas instituciones asociadas en América, Europa, Asia y Oceanía.",
-    seccion: "directorio",
-    subCat: "ori",
-    oriTab: "convenios",
-    pildoras: ["América (Norte, Centro, Sur)", "Europa", "Asia", "Oceanía"]
-  },
-  {
-    id: "br-16",
-    duda: "Recuperar contraseña, reportar fallas, software UP y sistemas académicos",
-    canal: "T2D",
-    dot: "bg-cyan-500",
-    enlace: "https://serviciost2d.up.edu.pe/",
-    enlaceTexto: "serviciost2d.up.edu.pe",
-    categoria: "Soporte e Informática",
-    detalle: "Portal oficial de servicios informáticos UP: restablecer contraseña, reportar fallas técnicas, accesos a clases virtuales, descarga de software, PowerCampus y ciberseguridad.",
-    horario: "L–V 7:30 a.m. – 9:30 p.m. · Sáb 7:30 a.m. – 5:00 p.m.",
-    seccion: "directorio",
-    subCat: "t2d",
-    pildoras: ["Recuperar contraseña", "PowerCampus", "Aulas virtuales & Software", "Reportar fallas", "Ciberseguridad"]
-  },
-  {
-    id: "br-17",
-    duda: "No estás en el grupo de WhatsApp de tu salón, Buzón REA, banco de sílabos",
-    canal: "Programa REA",
-    dot: "bg-pink-500",
-    enlace: "https://www.instagram.com/progreaup/",
-    enlaceTexto: "@progreaup (linktree)",
-    categoria: "Acompañamiento Estudiantil",
-    detalle: "Programa REA en Instagram / Linktree: grupos de WhatsApp por salón (REA sin contactar), buzón unificado para compartir necesidades, banco de sílabos históricos (hasta 2025-1) y música de REA estudio.",
-    seccion: "directorio",
-    subCat: "representacion",
-    pildoras: ["REA sin contactar (WhatsApp)", "Buzón REA", "Banco de sílabos hasta 2025-1", "Música de estudio"]
-  },
-  {
-    id: "br-18",
-    duda: "Comunidad REUP WhatsApp, causales de baja UP, exámenes pasados («Tu amigo Inge») y doble grado",
-    canal: "REUP",
-    dot: "bg-indigo-500",
-    enlace: "https://www.instagram.com/reupcontigo/",
-    enlaceTexto: "@reupcontigo (linktree)",
-    categoria: "Representación Estudiantil",
-    detalle: "Representación Estudiantil UP: comunidad oficial en WhatsApp, guía en PDF de causales de baja UP, repositorio «Tu amigo Inge» con exámenes y proyectos de Ingeniería, y afiches informativos de Doble Grado 2025 (UOL, Rennes, HEC).",
-    seccion: "directorio",
-    subCat: "representacion",
-    pildoras: ["Comunidad WhatsApp", "Causales de baja (PDF)", "Tu amigo Inge", "Doble grado (UOL, Rennes, HEC)"]
   }
 ];
 
@@ -646,7 +547,7 @@ const BFE_DATA = {
       badge: "Créditos y Actividades",
       descripcion: "Desarrollan competencias socioemocionales mediante arte, deporte, voluntariado y liderazgo.",
       flujogramaLink: "https://casaup.up.edu.pe/nuevo-flujograma-plan-efe-para-planes-2027-i-y-2028-i/",
-      obligatorias: "Para ingresantes a partir de 2022-I: deben acreditar obligatoriamente 2 créditos EFE para egresar. Para ingresantes entre 2017-I y 2021-II: consultar el reglamento correspondiente en el portal de estudiantes.",
+      obligatorias: "Para ingresantes a partir de 2022-I: deben acreditar obligatoriamente 4 créditos EFE para egresar. Para ingresantes entre 2017-I y 2021-II: consultar el reglamento correspondiente en el portal de estudiantes.",
       voluntarias: "Se ofrecen actividades deportivas, artísticas, culturales y de liderazgo. Por ser parte de una selección deportiva, elenco artístico o Brigada UP se puede solicitar la convalidación de 1 crédito EFE voluntario.",
       enlaces: [
         { nombre: "Elencos y Selecciones Deportivas", ig: "@elencos.up", url: "https://casaup.up.edu.pe/vida-universitaria/elencos-artisticos/" },
@@ -929,9 +830,10 @@ const DIRECTORIO_DATA = {
         },
         {
           id: "ofi-daar",
-          nombre: "Servicios Académicos y Registro (DAAR)",
+          nombre: "Oficina de Servicios Académicos y Registro (DAAR) — Ventanilla Presencial",
           correo: "pregrado@up.edu.pe",
-          anexo: "8990"
+          anexo: "8990",
+          detalle: "Atención física en ventanilla y consultas telefónicas. Para trámites curriculares (matrícula, retiros, notas, sumillas), usa el módulo interactivo de DAAR."
         },
         {
           id: "ofi-tesor",
@@ -1734,8 +1636,8 @@ function scoreChannels(query) {
       }
     });
 
-    // 3. Coincidencia de frase exacta
-    if (normTitle.includes(norm)) {
+    // 3. Coincidencia de frase exacta (mínimo 3 caracteres para no disparar con letras sueltas)
+    if (norm.length >= 3 && normTitle.includes(norm)) {
       score += 50;
     }
 
@@ -1758,16 +1660,18 @@ function scoreChannels(query) {
     const hasTrigger = triggerWords.some(w => norm.includes(normalizeText(w)));
     if (hasTrigger) {
       const altTarget = CANALES_SEARCH_ENGINE.find(c => c.id === principal.alternativaTrigger.canalAlternativoId);
-      alternativa = {
-        pregunta: principal.alternativaTrigger.pregunta,
-        subtexto: principal.alternativaTrigger.subtexto,
-        canalDestino: altTarget
-      };
+      if (altTarget) {
+        alternativa = {
+          pregunta: principal.alternativaTrigger.pregunta,
+          subtexto: principal.alternativaTrigger.subtexto,
+          canalDestino: altTarget
+        };
+      }
     }
   }
 
   // Filtrar otros resultados relevantes
-  const otros = sorted.slice(1, 4).filter(c => !alternativa || c.id !== alternativa.canalDestino.id);
+  const otros = sorted.slice(1, 4).filter(c => !alternativa || !alternativa.canalDestino || c.id !== alternativa.canalDestino.id);
 
   return { principal, alternativa, otros };
 }
@@ -2572,6 +2476,11 @@ function App() {
     showToast(label);
   };
 
+  // Motor de Búsqueda Inteligente por Raíces (Keyword Root Scoring)
+  const searchEngineResults = useMemo(() => {
+    return scoreChannels(searchQuery);
+  }, [searchQuery]);
+
   // Resultados en tiempo real de la consulta inteligente
   const globalSearchResults = useMemo(() => {
     if (!searchQuery.trim()) return [];
@@ -2811,20 +2720,17 @@ function App() {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           
-          {/* Logo Oficial HD Universidad del Pacífico */}
-          <div className="flex items-center gap-3.5">
+          {/* Logo Oficial y Título Institucional */}
+          <div className="flex items-center gap-3 sm:gap-3.5">
             <img 
               src="assets/up_logo_clean.png" 
-              alt="Universidad del Pacífico" 
-              className="h-10 sm:h-11 w-auto object-contain"
+              alt="Logo UP" 
+              className="h-9 sm:h-10 w-auto object-contain"
             />
-            <div className="h-7 w-[1px] bg-slate-200 hidden sm:block"></div>
+            <div className="h-6 w-[1px] bg-slate-300 hidden sm:block"></div>
             <div>
-              <div className="text-sm font-extrabold text-[#0B2240] leading-none mb-0.5">
-                Guía rápida de canales
-              </div>
-              <div className="text-[11px] text-slate-500 font-medium">
-                Pregrado · 2026-II
+              <div className="text-xs sm:text-sm font-extrabold text-[#0B2240] tracking-tight uppercase leading-snug">
+                UP GUÍA RÁPIDA DE CANALES OFICIALES INSTITUCIONALES
               </div>
             </div>
           </div>
@@ -2862,13 +2768,13 @@ function App() {
 
             {/* Titular Principal: ¿Tienes dudas? Encuentra el canal correcto. */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-2.5">
-              <span className="text-white">¿Tienes dudas?</span><br />
-              <span className="text-[#F59E0B]">Encuentra el canal correcto.</span>
+              <span className="text-white">¿No sabes a dónde acudir?</span><br />
+              <span className="text-[#F59E0B]">Encuentra el canal adecuado.</span>
             </h1>
 
-            {/* Subtítulo Oficial de Imagen 2 */}
+            {/* Subtítulo Oficial */}
             <p className="text-slate-200 text-xs sm:text-sm max-w-xl leading-relaxed mb-6 font-normal">
-              Trámites, costos, bienestar, intercambios, soporte y mucho más: a quién escribir, cómo y dónde.
+              Todos los canales oficiales para estudiantes de pregrado: a quién escribir, cómo y dónde encontrar más información.
             </p>
 
             {/* 4 Reglas Rápidas Institucionales de la Guía UP */}
@@ -3029,7 +2935,7 @@ function App() {
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className={`font-bold text-sm sm:text-base ${activeSection === 'rapido' ? 'text-amber-300' : 'text-white'}`}>
-                    Buscador rápido
+                    ¿No estás seguro?
                   </span>
                   {activeSection === 'rapido' && (
                     <span className="w-2 h-2 rounded-full bg-amber-400"></span>
@@ -3127,7 +3033,7 @@ function App() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
               <div>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight">
-                  Buscador rápido
+                  ¿No estás seguro?
                 </h2>
                 <p className="text-slate-600 text-sm mt-1">
                   Ubica tu tema en la columna izquierda y presiona cualquier fila para activar el enrutador y generar tu asunto oficial.
@@ -3515,65 +3421,147 @@ function App() {
                   {activeDaarItem.descripcion}
                 </p>
 
-                {/* Generador de Asunto Oficial */}
-                <div className="bg-white rounded-xl p-4 border border-blue-100 shadow-sm space-y-3 mb-4">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-[#0B2240] uppercase tracking-wider text-[11px]">
-                      Fórmula de Asunto Oficial Pre-armada:
-                    </span>
-                    <span className="text-slate-500 text-[11px]">
-                      Código activo: <strong className="text-amber-700 font-mono">{studentCode || '20231234'}</strong>
-                    </span>
+                {/* Si es Matrícula, Retiro de curso, Retiro de semestre o Reserva: Trámite por Autoservicio */}
+                {['d-matr', 'd-reser', 'd-retcurso', 'd-retsem'].includes(activeDaarItem.id) ? (
+                  <div className="space-y-4 mb-5">
+                    {/* Tarjeta Destacada de Autoservicio */}
+                    <div className="bg-blue-50/80 border-2 border-blue-300 rounded-2xl p-5 shadow-sm">
+                      <div className="flex items-start gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-[#1E40AF] text-white flex items-center justify-center shrink-0 shadow-xs">
+                          <Icon name="check" className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-extrabold text-[#0B2240] text-sm sm:text-base">
+                            Trámite 100% en Línea mediante Autoservicio
+                          </h4>
+                          <p className="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
+                            Este trámite no se gestiona mediante correo ordinario. Se realiza de forma directa en las plataformas oficiales UP en las fechas establecidas en el Calendario Académico:
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                        <a
+                          href="https://powercampus.up.edu.pe"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3.5 rounded-xl bg-white border border-blue-200 hover:border-blue-500 hover:shadow-md transition flex items-center justify-between group"
+                        >
+                          <div>
+                            <span className="text-[10px] font-extrabold uppercase text-blue-600 block">Autoservicio Principal</span>
+                            <span className="font-extrabold text-slate-900 text-sm group-hover:text-blue-700">PowerCampus UP</span>
+                            <span className="text-[11px] text-slate-500 block">Matrícula regular y retiros</span>
+                          </div>
+                          <Icon name="external-link" className="w-4 h-4 text-blue-600 shrink-0" />
+                        </a>
+
+                        <a
+                          href="https://experience.up.edu.pe"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3.5 rounded-xl bg-white border border-blue-200 hover:border-blue-500 hover:shadow-md transition flex items-center justify-between group"
+                        >
+                          <div>
+                            <span className="text-[10px] font-extrabold uppercase text-blue-600 block">Portal del Alumno</span>
+                            <span className="font-extrabold text-slate-900 text-sm group-hover:text-blue-700">UP Experience</span>
+                            <span className="text-[11px] text-slate-500 block">Cronogramas y acceso rápido</span>
+                          </div>
+                          <Icon name="external-link" className="w-4 h-4 text-blue-600 shrink-0" />
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Fallback de Excepción para Casos Especiales */}
+                    <div className="bg-amber-50/80 border border-amber-300 rounded-xl p-4 text-xs">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div className="text-slate-700">
+                          <strong className="text-amber-950 font-bold block mb-0.5">
+                            ¿Tu caso es excepcional o no corresponde a un trámite automático?
+                          </strong>
+                          <span>Si presentas alguna incidencia técnica o trámite especial, escribe directamente a pregrado@up.edu.pe:</span>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <button
+                            onClick={() => copyToClipboard('pregrado@up.edu.pe', '¡Correo pregrado@up.edu.pe copiado!')}
+                            className="px-3 py-1.5 bg-white hover:bg-slate-100 border border-amber-300 rounded-lg font-bold text-slate-800 text-xs flex items-center gap-1 transition"
+                          >
+                            <Icon name="copy" className="w-3.5 h-3.5" />
+                            <span>Copiar correo</span>
+                          </button>
+                          <a
+                            href="mailto:pregrado@up.edu.pe?subject=Consulta%20Excepcional%20DAAR%20-%20Incidencia"
+                            className="px-3 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white rounded-lg font-bold text-xs flex items-center gap-1 transition shadow-xs"
+                          >
+                            <Icon name="mail" className="w-3.5 h-3.5" />
+                            <span>Escribir correo</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                ) : (
+                  <>
+                    {/* Generador de Asunto Oficial para Otros Trámites */}
+                    <div className="bg-white rounded-xl p-4 border border-blue-100 shadow-sm space-y-3 mb-4">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-bold text-[#0B2240] uppercase tracking-wider text-[11px]">
+                          Fórmula de Asunto Oficial Pre-armada:
+                        </span>
+                        <span className="text-slate-500 text-[11px]">
+                          Código activo: <strong className="text-amber-700 font-mono">{studentCode || '20231234'}</strong>
+                        </span>
+                      </div>
 
-                  <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 font-mono text-xs sm:text-sm text-slate-800 flex items-center justify-between gap-2">
-                    <span className="font-semibold break-all">
-                      «{activeDaarItem.nombre} – {studentCode || '20231234'}»
-                    </span>
-                    <button
-                      onClick={() => {
-                        const subj = `${activeDaarItem.nombre} – ${studentCode || '20231234'}`;
-                        copyToClipboard(subj, "¡Asunto oficial copiado!");
-                      }}
-                      className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 rounded border border-slate-200 text-xs font-sans font-bold flex items-center gap-1 transition"
-                      title="Copiar fórmula"
-                    >
-                      <Icon name="copy" className="w-3.5 h-3.5" />
-                      <span>Copiar</span>
-                    </button>
-                  </div>
-                </div>
+                      <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 font-mono text-xs sm:text-sm text-slate-800 flex items-center justify-between gap-2">
+                        <span className="font-semibold break-all">
+                          «{activeDaarItem.nombre} – {studentCode || '20231234'}»
+                        </span>
+                        <button
+                          onClick={() => {
+                            const subj = `${activeDaarItem.nombre} – ${studentCode || '20231234'}`;
+                            copyToClipboard(subj, "¡Asunto oficial copiado!");
+                          }}
+                          className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 rounded border border-slate-200 text-xs font-sans font-bold flex items-center gap-1 transition"
+                          title="Copiar fórmula"
+                        >
+                          <Icon name="copy" className="w-3.5 h-3.5" />
+                          <span>Copiar</span>
+                        </button>
+                      </div>
+                    </div>
 
-                {/* Botones de Acción Inmediata */}
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <a
-                    href={`mailto:${activeDaarItem.correo}?subject=${encodeURIComponent(`${activeDaarItem.nombre} – ${studentCode || '20231234'}`)}`}
-                    className="px-4 py-2 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5"
-                  >
-                    <Icon name="mail" className="w-3.5 h-3.5" />
-                    <span>Redactar en mi Correo UP</span>
-                  </a>
+                    {/* Botones de Acción Inmediata */}
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <a
+                        href={`mailto:${activeDaarItem.correo}?subject=${encodeURIComponent(`${activeDaarItem.nombre} – ${studentCode || '20231234'}`)}`}
+                        className="px-4 py-2 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5"
+                      >
+                        <Icon name="mail" className="w-3.5 h-3.5" />
+                        <span>Redactar en mi Correo UP</span>
+                      </a>
 
-                  <button
-                    onClick={() => copyToClipboard(activeDaarItem.correo, "¡Correo institucional copiado!")}
-                    className="px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition flex items-center gap-1.5"
-                  >
-                    <Icon name="copy" className="w-3.5 h-3.5" />
-                    <span>Copiar {activeDaarItem.correo}</span>
-                  </button>
+                      <button
+                        onClick={() => copyToClipboard(activeDaarItem.correo, "¡Correo institucional copiado!")}
+                        className="px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition flex items-center gap-1.5"
+                      >
+                        <Icon name="copy" className="w-3.5 h-3.5" />
+                        <span>Copiar {activeDaarItem.correo}</span>
+                      </button>
 
-                  {activeDaarItem.web && (
-                    <a
-                      href={activeDaarItem.web}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition flex items-center gap-1.5"
-                    >
-                      <span>Web oficial</span>
-                      <Icon name="external-link" className="w-3.5 h-3.5" />
-                    </a>
-                  )}
-                </div>
+                      {activeDaarItem.web && (
+                        <a
+                          href={activeDaarItem.web}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition flex items-center gap-1.5"
+                        >
+                          <span>Web oficial</span>
+                          <Icon name="external-link" className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                    </div>
+                  </>
+                )}
 
               </div>
             )}
@@ -3635,7 +3623,15 @@ function App() {
 
               <div>
                 <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CENTRAL / WEB</div>
-                <div className="font-bold text-[#1E40AF]">{BFE_DATA.header.central}</div>
+                <div className="space-y-0.5">
+                  <a href="tel:012190100" className="font-bold text-[#1E40AF] hover:underline block">
+                    (01) 219-0100 <span className="font-normal text-slate-600 text-[11px]">(Anexos: 2390 / 2261)</span>
+                  </a>
+                  <a href="https://www.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[11px] font-bold text-blue-700 hover:underline flex items-center gap-1">
+                    <span>www.up.edu.pe</span>
+                    <Icon name="external-link" className="w-2.5 h-2.5" />
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -3917,7 +3913,15 @@ function App() {
 
               <div>
                 <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">PORTAL WEB</div>
-                <div className="font-bold text-[#1E40AF]">{DIRECTORIO_DATA.header.portal}</div>
+                <a 
+                  href="https://www.up.edu.pe" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="font-bold text-[#1E40AF] hover:underline flex items-center gap-1"
+                >
+                  <span>www.up.edu.pe</span>
+                  <Icon name="external-link" className="w-3 h-3 text-[#1E40AF]" />
+                </a>
               </div>
 
               <div>
@@ -4525,6 +4529,21 @@ function App() {
                           >
                             Redactar
                           </a>
+                        </div>
+                      )}
+
+                      {item.id === 'ofi-daar' && (
+                        <div className="pt-2">
+                          <button
+                            onClick={() => {
+                              setActiveSection('daar');
+                              window.scrollTo({ top: 400, behavior: 'smooth' });
+                            }}
+                            className="w-full py-2 px-3 bg-[#1E40AF] hover:bg-blue-800 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition shadow-xs"
+                          >
+                            <span>Ir al módulo de Trámites DAAR</span>
+                            <Icon name="chevron-right" className="w-3.5 h-3.5" />
+                          </button>
                         </div>
                       )}
 
