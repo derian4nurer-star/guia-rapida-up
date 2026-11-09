@@ -1060,103 +1060,102 @@ function App() {
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased flex flex-col">
       
       {/* ====================================================================
-          CABECERA HERO INSTITUCIONAL (Identidad de Imagen 1)
+          BARRA SUPERIOR OFICIAL (Estilo Profesional Idéntico a Imagen 2)
           ==================================================================== */}
-      <section className="bg-[#0B2240] text-white pt-8 pb-10 px-4 sm:px-6 shadow-xl relative overflow-hidden">
-        
-        {/* Glow de fondo */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="max-w-5xl mx-auto relative z-10">
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           
-          {/* Barra Superior con Identidad y Selector de Código */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-[#1A3A64]">
+          {/* Logo Oficial HD Universidad del Pacífico */}
+          <div className="flex items-center gap-3.5">
+            <img 
+              src="assets/up_logo_clean.png" 
+              alt="Universidad del Pacífico" 
+              className="h-10 sm:h-11 w-auto object-contain"
+            />
+            <div className="h-7 w-[1px] bg-slate-200 hidden sm:block"></div>
+            <div>
+              <div className="text-sm font-extrabold text-[#0B2240] leading-none mb-0.5">
+                Guía rápida de canales
+              </div>
+              <div className="text-[11px] text-slate-500 font-medium">
+                Pregrado · 2026-II
+              </div>
+            </div>
+          </div>
+
+          {/* Lado derecho limpio institucional */}
+          <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-500">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+            <span>Canales Institucionales Oficiales</span>
+          </div>
+
+        </div>
+      </header>
+
+      {/* ====================================================================
+          HERO BANNER CON FONDO DE LA FACHADA UP EN AZUL OSCURO TRANSPARENTE
+          (Réplica Exacta de Imagen 2 con Letras en Relieve y Mascota Búho UP)
+          ==================================================================== */}
+      <section 
+        className="relative text-white pt-8 sm:pt-10 md:pt-12 pb-0 px-4 sm:px-6 overflow-hidden bg-[#0B2240] shadow-md"
+        style={{
+          backgroundImage: "linear-gradient(to right, rgba(11, 34, 64, 0.94) 0%, rgba(15, 44, 89, 0.88) 50%, rgba(11, 34, 64, 0.82) 100%), url('assets/up_campus_facade_hd.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 35%'
+        }}
+      >
+        <div className="max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row items-center md:items-end justify-between gap-6 md:gap-8">
+          
+          {/* Lado Izquierdo: Textos y Buscador */}
+          <div className="flex-1 w-full max-w-2xl lg:max-w-3xl pb-6 md:pb-10">
             
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-[#102A4C] border border-[#1D3D66] flex items-center justify-center font-bold text-sm tracking-wider text-amber-300 shadow-inner">
-                UP
-              </div>
-              <div>
-                <div className="text-[#E5A823] font-bold text-xs uppercase tracking-wider">
-                  GUÍA RÁPIDA · UNIVERSIDAD DEL PACÍFICO
-                </div>
-                <div className="text-xs text-slate-300">
-                  Pregrado 2026-II · Canales Oficiales Institucionales
-                </div>
-              </div>
+            {/* Píldora: ¡TODO ESTÁ AQUÍ! */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#102A4C]/90 border border-blue-400/40 text-[11px] font-bold uppercase tracking-wider text-blue-200 mb-3.5 shadow-sm">
+              <span>¡TODO ESTÁ AQUÍ!</span>
             </div>
 
-            {/* Código de Alumno Interactivo */}
-            <div className="flex items-center gap-2 bg-[#102A4C] border border-[#1D3D66] rounded-xl px-3 py-1.5 self-start sm:self-auto">
-              <span className="text-xs text-slate-300">Mi Código UP:</span>
-              {isEditingCode ? (
-                <input
-                  type="text"
-                  value={studentCode}
-                  onChange={(e) => setStudentCode(e.target.value)}
-                  onBlur={() => setIsEditingCode(false)}
-                  onKeyDown={(e) => e.key === 'Enter' && setIsEditingCode(false)}
-                  autoFocus
-                  placeholder="20231234"
-                  className="w-24 px-1.5 py-0.5 bg-slate-900 text-amber-300 font-mono text-xs rounded border border-blue-400 focus:outline-none"
-                />
-              ) : (
-                <button
-                  onClick={() => setIsEditingCode(true)}
-                  className="font-mono font-bold text-amber-300 hover:text-white flex items-center gap-1.5 text-xs transition"
-                  title="Haz clic para ingresar tu código"
-                >
-                  <span>{studentCode || '20231234'}</span>
-                  <Icon name="edit" className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-              )}
-            </div>
-
-          </div>
-
-          {/* Titular Principal de Imagen 1 */}
-          <div className="mb-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-white mb-3">
-              ¿Tienes una duda?<br />
-              Encuentra el canal correcto.
+            {/* Titular Principal: ¿Tienes dudas? Encuentra el canal correcto. */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-2.5">
+              <span className="text-white">¿Tienes dudas?</span><br />
+              <span className="text-[#F59E0B]">Encuentra el canal correcto.</span>
             </h1>
-            <p className="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
-              Todos los canales oficiales para estudiantes de pregrado, ordenados por tema: a quién escribir, cómo y dónde encontrar más información.
-            </p>
-          </div>
 
-          {/* Barra de Consulta Inteligente en Lenguaje Natural (Reemplazo de la caja blanca) */}
-          <div className="mb-8">
-            <div className="relative flex items-center bg-white rounded-2xl shadow-xl border-2 border-transparent focus-within:border-blue-400 transition-all overflow-hidden p-1">
-              <div className="pl-3.5 pr-2 text-[#1E40AF]">
-                <Icon name="search" className="w-5 h-5" />
+            {/* Subtítulo Oficial de Imagen 2 */}
+            <p className="text-slate-200 text-xs sm:text-sm max-w-xl leading-relaxed mb-6 font-normal">
+              Trámites, costos, bienestar, intercambios, soporte y mucho más: a quién escribir, cómo y dónde.
+            </p>
+
+            {/* Barra de Consulta Redondeada en Lenguaje Natural */}
+            <div className="relative flex items-center bg-white rounded-full shadow-2xl border-2 border-transparent focus-within:border-blue-400 transition-all overflow-hidden p-1 max-w-2xl mb-3">
+              <div className="pl-3.5 pr-2 text-slate-400">
+                <Icon name="search" className="w-4 h-4 text-slate-400" />
               </div>
               <input
                 type="text"
-                placeholder="Escribe tu consulta aquí (ej. retiro de curso, cita psicológica, gym, pensiones, ingeniería)..."
+                placeholder="Escribe tu duda: retiro de curso, psicólogo, contraseña, intercambio..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full py-3.5 pr-3 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none"
+                className="w-full py-2.5 pr-3 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="mr-2 px-2.5 py-1 text-xs text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg transition font-medium"
+                  className="mr-2 px-2.5 py-0.5 text-xs text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-full transition font-medium"
                 >
                   Limpiar
                 </button>
               )}
             </div>
 
-            {/* Píldoras de Consultas Frecuentes Sugeridas */}
-            <div className="flex flex-wrap items-center gap-1.5 mt-2.5 text-xs text-slate-300">
-              <span className="text-slate-400 font-medium text-[11px]">Consultas frecuentes:</span>
-              <button onClick={() => setSearchQuery('Retiro de curso')} className="px-2.5 py-1 rounded-lg bg-[#102A4C] hover:bg-[#16365F] text-blue-200 border border-[#1D3D66] transition text-[11px]">Retiro de curso</button>
-              <button onClick={() => setSearchQuery('Consejería')} className="px-2.5 py-1 rounded-lg bg-[#102A4C] hover:bg-[#16365F] text-blue-200 border border-[#1D3D66] transition text-[11px]">Cita psicológica</button>
-              <button onClick={() => setSearchQuery('Gym UP')} className="px-2.5 py-1 rounded-lg bg-[#102A4C] hover:bg-[#16365F] text-blue-200 border border-[#1D3D66] transition text-[11px]">Gym UP</button>
-              <button onClick={() => setSearchQuery('Pensiones')} className="px-2.5 py-1 rounded-lg bg-[#102A4C] hover:bg-[#16365F] text-blue-200 border border-[#1D3D66] transition text-[11px]">Pensiones</button>
-              <button onClick={() => setSearchQuery('EFE')} className="px-2.5 py-1 rounded-lg bg-[#102A4C] hover:bg-[#16365F] text-blue-200 border border-[#1D3D66] transition text-[11px]">Créditos EFE</button>
-              <button onClick={() => setSearchQuery('Ingeniería')} className="px-2.5 py-1 rounded-lg bg-[#102A4C] hover:bg-[#16365F] text-blue-200 border border-[#1D3D66] transition text-[11px]">Facultad de Ingeniería</button>
+            {/* Píldoras de Frecuentes (Exactas a Imagen 2) */}
+            <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-slate-300">
+              <span className="text-slate-300 font-medium">Frecuentes:</span>
+              <button onClick={() => setSearchQuery('Retiro de curso')} className="px-2.5 py-0.5 rounded-full bg-[#102A4C]/80 hover:bg-[#16365F] text-slate-200 border border-blue-400/20 transition">Retiro de curso</button>
+              <button onClick={() => setSearchQuery('Consejería')} className="px-2.5 py-0.5 rounded-full bg-[#102A4C]/80 hover:bg-[#16365F] text-slate-200 border border-blue-400/20 transition">Cita psicológica</button>
+              <button onClick={() => setSearchQuery('Constancias')} className="px-2.5 py-0.5 rounded-full bg-[#102A4C]/80 hover:bg-[#16365F] text-slate-200 border border-blue-400/20 transition">Constancias</button>
+              <button onClick={() => setSearchQuery('Pensiones')} className="px-2.5 py-0.5 rounded-full bg-[#102A4C]/80 hover:bg-[#16365F] text-slate-200 border border-blue-400/20 transition">Pensiones</button>
+              <button onClick={() => setSearchQuery('Intercambio')} className="px-2.5 py-0.5 rounded-full bg-[#102A4C]/80 hover:bg-[#16365F] text-slate-200 border border-blue-400/20 transition">Intercambio</button>
+              <button onClick={() => setSearchQuery('Prácticas')} className="px-2.5 py-0.5 rounded-full bg-[#102A4C]/80 hover:bg-[#16365F] text-slate-200 border border-blue-400/20 transition">Prácticas</button>
             </div>
 
             {/* Resultados de la Consulta Inteligente */}
@@ -1222,6 +1221,24 @@ function App() {
             )}
 
           </div>
+
+          {/* Lado Derecho: Mascota Búho UP Grande y al Costado de Todo (Exacto a Imagen de Referencia) */}
+          <div className="flex flex-col items-center justify-end flex-shrink-0 relative self-center md:self-end z-20 pb-0">
+            <img 
+              src="assets/up_mascot_reup.png" 
+              alt="Mascota Oficial Búho RE UP" 
+              className="w-64 sm:w-72 md:w-80 lg:w-[390px] xl:w-[430px] h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-300 pointer-events-none select-none block"
+            />
+          </div>
+
+        </div>
+      </section>
+
+      {/* ====================================================================
+          BARRA DE LOS 4 CANALES MAESTROS (Fondo Azul Marino Oscuro)
+          ==================================================================== */}
+      <section className="bg-[#0B2240] text-white pt-2 pb-8 px-4 sm:px-6 border-b border-[#1A3A64]">
+        <div className="max-w-5xl mx-auto">
 
           {/* ================================================================
               LOS 4 BOTONES MAESTROS INTERACTIVOS (Identidad de Imagen 1)
