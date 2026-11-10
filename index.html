@@ -1917,296 +1917,726 @@ function scoreChannels(query) {
    (Jirón Sánchez Cerro, Av. Salaverry, Pabellón Z y Pabellón F - F400)
    ========================================================================== */
 function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
-  const [selectedPabellon, setSelectedPabellon] = useState(initialPabellon);
+  const [selectedPabellon, setSelectedPabellon] = React.useState(initialPabellon);
+  const [mapMode, setMapMode] = React.useState('interactive'); // 'interactive' | 'official'
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (initialPabellon) setSelectedPabellon(initialPabellon);
   }, [initialPabellon, isOpen]);
 
   if (!isOpen) return null;
 
+  const PABELLONES_DATA = {
+    Z: {
+      nombre: 'Pabellón Z · Casa del Estudiante',
+      tag: 'BFE & Vida Universitaria',
+      color: '#D97706',
+      accent: 'border-amber-500 bg-amber-50 text-amber-900',
+      badgeColor: 'bg-amber-100 text-amber-800 border-amber-300',
+      acceso: 'Jr. Luis Sánchez Cerro 2141 / 2215 (Puerta lateral)',
+      pisos: [
+        { nivel: 'Piso 1', info: 'Gym UP · Casilleros / Lockers estudiantiles · Préstamo de balones y juegos' },
+        { nivel: 'Piso 2', info: 'Salón Z-201 (Área de descanso, microondas y estudio libre) · Consejería Psicológica y BFE' }
+      ],
+      nota: 'Sede central de Bienestar Formativo Estudiantil (BFE) y el principal espacio de relax y vida estudiantil.'
+    },
+    F: {
+      nombre: 'Pabellón F · Salón F400 & Informática',
+      tag: 'Ingeniería de la Información',
+      color: '#2563EB',
+      accent: 'border-blue-500 bg-blue-50 text-blue-900',
+      badgeColor: 'bg-blue-100 text-blue-800 border-blue-300',
+      acceso: 'Desde Plaza Geis (Placita UP) o Jr. Sánchez Cerro',
+      pisos: [
+        { nivel: 'Piso 4', info: 'Secretaría F400 · Dirección de carrera de Ingeniería de la Información y Sistemas' },
+        { nivel: 'Pisos 1 - 3', info: 'Laboratorios de cómputo avanzado, aulas multimedia y salas de innovación' }
+      ],
+      nota: 'Referencia clave si estudias Ingeniería o tienes clases prácticas en laboratorios de computación.'
+    },
+    C: {
+      nombre: 'Pabellón C · Tópico Médico & Rectorado',
+      tag: 'Tópico de Emergencias Médicas',
+      color: '#DC2626',
+      accent: 'border-rose-500 bg-rose-50 text-rose-900',
+      badgeColor: 'bg-rose-100 text-rose-800 border-rose-300',
+      acceso: 'Ingreso directo frente a Plaza Geis (Placita UP)',
+      pisos: [
+        { nivel: 'Piso 1', info: 'TÓPICO MÉDICO UP: Atención médica primaria, urgencias, botiquín, seguro médico contra accidentes y visación de descansos médicos' },
+        { nivel: 'Pisos 2 - 4', info: 'Rectorado, Vicerrectorados Académico y de Investigación, y Oficinas Centrales' }
+      ],
+      nota: 'Si te sientes mal en el campus o necesitas justificar inasistencias por salud, acude al 1er piso del Pabellón C.'
+    },
+    B: {
+      nombre: 'Pabellón B · Biblioteca Central',
+      tag: 'Salas de Estudio & Cubículos',
+      color: '#0D9488',
+      accent: 'border-teal-500 bg-teal-50 text-teal-900',
+      badgeColor: 'bg-teal-100 text-teal-800 border-teal-300',
+      acceso: 'Plaza Geis / Costado de la Canchita deportiva UP',
+      pisos: [
+        { nivel: 'Pisos 1 - 3', info: 'Salas de lectura silenciosa, préstamo de libros, reserva de cubículos grupales y módulos con computadoras' },
+        { nivel: 'Servicios', info: 'Préstamo de calculadoras financieras y científicas, laptops y cargadores' }
+      ],
+      nota: 'El espacio por excelencia para estudiar entre clases, avanzar trabajos en grupo y consultar bases de datos.'
+    },
+    A: {
+      nombre: 'Pabellón A · Aulas de Pregrado',
+      tag: 'Aulas Magnas & DAAR',
+      color: '#4F46E5',
+      accent: 'border-indigo-500 bg-indigo-50 text-indigo-900',
+      badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-300',
+      acceso: 'Frente al Estacionamiento Salaverry / Plaza Geis',
+      pisos: [
+        { nivel: 'Pisos 1 - 4', info: 'Aulas de clases de pregrado, auditorios magnos y oficinas de coordinación docente' }
+      ],
+      nota: 'Pabellón histórico de clases teóricas de pregrado, ubicado frente a la Capilla UP y el estacionamiento.'
+    },
+    JK: {
+      nombre: 'Pabellones J y K · Aulas & Centros',
+      tag: 'Jr. Sánchez Cerro & Jr. Inca Rípac',
+      color: '#0284C7',
+      accent: 'border-sky-500 bg-sky-50 text-sky-900',
+      badgeColor: 'bg-sky-100 text-sky-800 border-sky-300',
+      acceso: 'Cruzar Jr. Luis Sánchez Cerro (paso peatonal señalizado)',
+      pisos: [
+        { nivel: 'Pabellón J', info: 'Aulas modernas, centros de estudio y laboratorios de investigación' },
+        { nivel: 'Pabellón K', info: 'Aulas complementarias y oficinas administrativas de apoyo' }
+      ],
+      nota: 'Se encuentran en la acera de enfrente de Jr. Sánchez Cerro, en la esquina con Jr. Inca Rípac.'
+    },
+    E: {
+      nombre: 'Pabellón E · Aulas & Tutorías',
+      tag: 'Aulas Jr. Sánchez Cerro',
+      color: '#0369A1',
+      accent: 'border-cyan-500 bg-cyan-50 text-cyan-900',
+      badgeColor: 'bg-cyan-100 text-cyan-800 border-cyan-300',
+      acceso: 'Jr. Luis Sánchez Cerro / Conexión a Plaza Geis',
+      pisos: [
+        { nivel: 'Pisos 1 - 3', info: 'Aulas de clases para pregrado, salas de asesoría personalizada y tutorías docentes' }
+      ],
+      nota: 'Conecta longitudinalmente el campus sobre Jr. Sánchez Cerro hacia la Placita UP.'
+    },
+    D: {
+      nombre: 'Pabellón D · Auditorio J.J. Wicht',
+      tag: 'Eventos Institucionales',
+      color: '#7C3AED',
+      accent: 'border-purple-500 bg-purple-50 text-purple-900',
+      badgeColor: 'bg-purple-100 text-purple-800 border-purple-300',
+      acceso: 'Plaza Geis / Zona norte del campus',
+      pisos: [
+        { nivel: 'Auditorio', info: 'Auditorio Juan Julio Wicht S.J. para conferencias, ceremonias de bienvenida y conversatorios' }
+      ],
+      nota: 'Sede de los principales eventos culturales y académicos magistrales de la universidad.'
+    },
+    X: {
+      nombre: 'Pabellón X · Preuniversitaria UP',
+      tag: 'Escuela Preuniversitaria',
+      color: '#EA580C',
+      accent: 'border-orange-500 bg-orange-50 text-orange-900',
+      badgeColor: 'bg-orange-100 text-orange-800 border-orange-300',
+      acceso: 'Av. Salaverry / Cerca a Pabellón Z',
+      pisos: [
+        { nivel: 'Aulas', info: 'Instalaciones y coordinación de la Escuela Preuniversitaria de la UP' }
+      ],
+      nota: 'Ubicado en el cuadrante sur del campus, junto al Pabellón Z (Casa del Estudiante).'
+    },
+    DEPORTES: {
+      nombre: 'Canchita UP & Plaza Geis (Placita)',
+      tag: 'Áreas Verdes & Recreación',
+      color: '#16A34A',
+      accent: 'border-emerald-500 bg-emerald-50 text-emerald-900',
+      badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+      acceso: 'Corazón del Campus Universitario UP',
+      pisos: [
+        { nivel: 'Canchita UP', info: 'Cancha deportiva sintética para fútbol 5, calentamiento y torneos interfacultades' },
+        { nivel: 'Plaza Geis', info: '«La Placita»: punto neurálgico al aire libre para conversar, almorzar y ferias estudiantiles' },
+        { nivel: 'Capilla UP', info: 'Espacio de recogimiento, misa dominical y pastoral universitaria' }
+      ],
+      nota: 'Las zonas al aire libre más vivas del campus durante los interciclos y descansos.'
+    }
+  };
+
+  const currentInfo = PABELLONES_DATA[selectedPabellon] || PABELLONES_DATA.Z;
+
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5 animate-fade-in">
-      <div className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]">
-        
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 animate-fade-in">
+      <div 
+        className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full border border-slate-200 overflow-hidden flex flex-col max-h-[94vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Cabecera del Modal */}
-        <div className="bg-[#0B2240] text-white px-5 sm:px-6 py-4 flex items-center justify-between border-b border-blue-900/50 shrink-0">
+        <div className="bg-[#0B2240] text-white px-5 sm:px-6 py-3.5 flex items-center justify-between border-b border-blue-950 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-amber-300">
-              <Icon name="map-pin" className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-blue-600/30 border border-blue-400/40 flex items-center justify-center text-amber-400">
+              <Icon name="map-pin" className="w-5 h-5 text-amber-400" />
             </div>
             <div>
-              <h3 className="font-extrabold text-base sm:text-lg tracking-tight">
-                Ubícate en la UP · Plano Oficial del Campus
+              <h3 className="font-extrabold text-base sm:text-lg text-white leading-tight">
+                Ubícate en la UP · Plano del Campus Universitario
               </h3>
-              <p className="text-xs text-slate-300">
-                Pabellones, accesos oficiales y rutas por Jirón Sánchez Cerro y Av. Salaverry (Jesús María)
+              <p className="text-xs text-blue-200 font-medium">
+                Pabellones, accesos oficiales por Jr. Sánchez Cerro y Av. Salaverry (Jesús María)
               </p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition"
-            title="Cerrar plano"
-          >
-            <Icon name="x" className="w-5 h-5 text-white" />
-          </button>
+
+          <div className="flex items-center gap-2">
+            {/* Selector de modo: Interactivo vs Oficial */}
+            <div className="bg-blue-950/80 p-0.5 rounded-xl border border-blue-500/30 hidden sm:flex">
+              <button
+                onClick={() => setMapMode('interactive')}
+                className={'px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ' + 
+                  (mapMode === 'interactive' ? 'bg-amber-400 text-slate-950 shadow-xs' : 'text-blue-200 hover:text-white')}
+              >
+                <span>🗺️ Interactivo</span>
+              </button>
+              <button
+                onClick={() => setMapMode('official')}
+                className={'px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ' + 
+                  (mapMode === 'official' ? 'bg-amber-400 text-slate-950 shadow-xs' : 'text-blue-200 hover:text-white')}
+              >
+                <span>🖼️ Plano Gráfico</span>
+              </button>
+            </div>
+
+            <button
+              onClick={onClose}
+              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition"
+              title="Cerrar plano"
+            >
+              <Icon name="x" className="w-5 h-5 text-white" />
+            </button>
+          </div>
         </div>
 
-        {/* Barra de Pestañas Interactivas */}
-        <div className="bg-slate-100 px-4 sm:px-6 py-2.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 shrink-0">
-          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+        {/* Barra de Filtros / Pabellones Rápidos */}
+        <div className="bg-slate-100 px-4 sm:px-6 py-2 border-b border-slate-200 flex flex-wrap items-center justify-between gap-1.5 shrink-0">
+          <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto py-0.5">
             {[
               { id: 'Z', label: '📍 Pabellón Z · Casa del Estudiante' },
-              { id: 'F', label: '📍 Pabellón F · Salón F400 (Ingeniería)' },
-              { id: 'C', label: '📍 Pabellón C · Tópico Médico' },
+              { id: 'F', label: '📍 Pabellón F · Salón F400' },
+              { id: 'C', label: '📍 Pabellón C · Tópico UP' },
               { id: 'B', label: '📍 Pabellón B · Biblioteca' },
+              { id: 'A', label: '📍 Pabellón A' },
               { id: 'JK', label: '📍 Pabellones J y K' },
-              { id: 'ALL', label: '🗺️ Ver Campus General' }
-            ].map((pab) => {
-              const isSelected = selectedPabellon === pab.id;
-              return (
-                <button
-                  key={pab.id}
-                  onClick={() => setSelectedPabellon(pab.id)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1.5 ${
-                    isSelected
-                      ? 'bg-[#0B2240] text-white shadow-sm'
-                      : 'bg-white text-slate-700 hover:bg-slate-200 border border-slate-300'
-                  }`}
-                >
-                  {isSelected && <span className="w-2 h-2 rounded-full bg-amber-400"></span>}
-                  <span>{pab.label}</span>
-                </button>
-              );
-            })}
+              { id: 'E', label: '📍 Pabellón E' },
+              { id: 'DEPORTES', label: '⚽ Canchita & Placita' }
+            ].map(pab => (
+              <button
+                key={pab.id}
+                onClick={() => setSelectedPabellon(pab.id)}
+                className={'px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1.5 ' + 
+                  (selectedPabellon === pab.id 
+                    ? 'bg-[#0B2240] text-white shadow-xs' 
+                    : 'bg-white text-slate-700 hover:bg-slate-200 border border-slate-300')}
+              >
+                <span className={'w-2 h-2 rounded-full ' + (selectedPabellon === pab.id ? 'bg-amber-400 animate-ping' : 'bg-slate-400')}></span>
+                <span>{pab.label}</span>
+              </button>
+            ))}
           </div>
 
-          <div className="text-[11px] font-semibold text-slate-500 hidden sm:block">
-            Haz clic en un pabellón para ver detalles y servicios
+          <div className="text-[11px] font-semibold text-slate-500 hidden md:block">
+            Haz clic en un pabellón del plano para ver sus detalles
           </div>
         </div>
 
-        {/* Contenedor del Plano Oficial y Tarjeta de Detalles */}
-        <div className="p-4 sm:p-6 overflow-y-auto space-y-4 bg-[#F8F7F4] flex-1">
-          
-          {/* Imagen Oficial del Plano UP */}
-          <div className="bg-white rounded-2xl p-2 sm:p-3 border border-slate-200 shadow-sm relative overflow-hidden flex flex-col items-center">
-            <div className="w-full flex items-center justify-between px-2 py-1 text-[11px] text-slate-500 border-b border-slate-100 mb-2 font-medium">
-              <span>▲ Jr. Luis Sánchez Cerro &nbsp;·&nbsp; Jr. Inca Rípac (Izquierda)</span>
-              <span>► Av. Gral. Salaverry (Ingreso Peatonal y Vehicular)</span>
-            </div>
-            
-            <img 
-              src="assets/mapa_campus_up.jpg" 
-              alt="Plano Oficial Campus Universidad del Pacífico" 
-              className="w-full h-auto max-h-[380px] sm:max-h-[420px] object-contain rounded-xl select-none"
-            />
+        {/* Contenido Principal con Scroll */}
+        <div className="p-3 sm:p-5 overflow-y-auto space-y-4 bg-slate-50/50">
 
-            <div className="w-full mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between text-[11px] text-slate-500 px-2 gap-2">
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span>
-                <strong>Pabellones Principales:</strong> A, B, C, D, E, F, J, K, X, Z
+          {mapMode === 'official' ? (
+            /* Vista del Plano Oficial en Imagen */
+            <div className="bg-white rounded-2xl p-2 sm:p-3 border border-slate-200 shadow-xs relative">
+              <div className="flex items-center justify-between px-2 py-1 mb-2 text-xs text-slate-600 font-semibold border-b border-slate-100">
+                <span className="flex items-center gap-1 text-[#0B2240]">
+                  <Icon name="map" className="w-4 h-4 text-amber-500" />
+                  Plano oficial arquitectónico del campus UP (Jesús María)
+                </span>
+                <button
+                  onClick={() => setMapMode('interactive')}
+                  className="text-blue-600 hover:underline font-bold text-xs"
+                >
+                  Cambiar a vista interactiva ➔
+                </button>
+              </div>
+              <div className="relative overflow-hidden rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+                <img
+                  src="assets/mapa_campus_up.jpg"
+                  alt="Plano Oficial Campus Universidad del Pacífico"
+                  className="w-full h-auto max-h-[500px] object-contain rounded-lg"
+                />
+              </div>
+            </div>
+          ) : (
+            /* Vista Vectorial Interactiva con el orden y geometría REAL */
+            <div className="bg-white rounded-2xl p-2 sm:p-3 border border-slate-200 shadow-xs relative overflow-hidden">
+              <div className="flex items-center justify-between px-2 py-1 mb-1 text-xs text-slate-600 font-semibold">
+                <span className="flex items-center gap-1.5 text-[#0B2240]">
+                  <Icon name="navigation" className="w-4 h-4 text-amber-500" />
+                  Haz clic sobre cualquier pabellón o área verde para seleccionarlo:
+                </span>
+                <span className="text-[11px] text-slate-400 hidden sm:inline">
+                  Distrito de Jesús María, Lima
+                </span>
+              </div>
+
+              <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-[#EEF2F6]">
+                <svg 
+                  viewBox="0 0 980 600" 
+                  className="w-full h-auto max-h-[460px] select-none font-sans"
+                >
+                  <defs>
+                    <filter id="pab-shadow" x="-5%" y="-5%" width="110%" height="110%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.1" />
+                    </filter>
+                    <pattern id="grass-pattern" width="16" height="16" patternUnits="userSpaceOnUse">
+                      <rect width="16" height="16" fill="#DCFCE7" />
+                      <circle cx="4" cy="4" r="1.2" fill="#86EFAC" />
+                      <circle cx="12" cy="12" r="1.2" fill="#86EFAC" />
+                    </pattern>
+                    <pattern id="parking-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <rect width="20" height="20" fill="#E2E8F0" />
+                      <line x1="0" y1="10" x2="20" y2="10" stroke="#CBD5E1" strokeWidth="1" strokeDasharray="3,3" />
+                    </pattern>
+                  </defs>
+
+                  {/* FONDO GENERAL */}
+                  <rect x="0" y="0" width="980" height="600" fill="#F1F5F9" />
+
+                  {/* CALLE IZQUIERDA: JR. INCA RÍPAC */}
+                  <rect x="0" y="0" width="70" height="600" fill="#CBD5E1" />
+                  <g transform="translate(38, 300) rotate(-90)">
+                    <text x="0" y="0" fill="#475569" fontSize="12" fontWeight="bold" textAnchor="middle" letterSpacing="3">
+                      ◄ JR. INCA RÍPAC ◄
+                    </text>
+                  </g>
+
+                  {/* CALLE VERTICAL CENTRAL: JR. LUIS SÁNCHEZ CERRO */}
+                  {/* Separa los pabellones J/K del campus principal */}
+                  <rect x="360" y="0" width="90" height="600" fill="#334155" />
+                  <line x1="405" y1="0" x2="405" y2="600" stroke="#94A3B8" strokeWidth="2" strokeDasharray="12,12" />
+                  <g transform="translate(415, 290) rotate(90)">
+                    <text x="0" y="0" fill="#F8FAFC" fontSize="11" fontWeight="bold" textAnchor="middle" letterSpacing="3">
+                      ▲ JIRÓN LUIS SÁNCHEZ CERRO ▲
+                    </text>
+                  </g>
+                  {/* Pasos peatonales de cebra en Sánchez Cerro */}
+                  <g fill="#FFFFFF" opacity="0.8">
+                    <rect x="365" y="140" width="80" height="5" />
+                    <rect x="365" y="150" width="80" height="5" />
+                    <rect x="365" y="160" width="80" height="5" />
+                    <rect x="365" y="170" width="80" height="5" />
+
+                    <rect x="365" y="470" width="80" height="5" />
+                    <rect x="365" y="480" width="80" height="5" />
+                    <rect x="365" y="490" width="80" height="5" />
+                    <rect x="365" y="500" width="80" height="5" />
+                  </g>
+
+                  {/* CALLE DIAGONAL INFERIOR DERECHA: AV. GENERAL SALAVERRY */}
+                  <polygon points="560,600 980,360 980,600" fill="#1E293B" />
+                  <g transform="translate(800, 520) rotate(-30)">
+                    <text x="0" y="0" fill="#F8FAFC" fontSize="13" fontWeight="extrabold" textAnchor="middle" letterSpacing="4">
+                      ► AV. GRAL. SALAVERRY (CDRA. 20) ►
+                    </text>
+                    <text x="0" y="16" fill="#94A3B8" fontSize="9.5" textAnchor="middle">
+                      Ingreso Peatonal & Vehicular UP (Salaverry 2020)
+                    </text>
+                  </g>
+
+                  {/* INDICADOR DE PUERTA SALAVERRY */}
+                  <g transform="translate(710, 460) rotate(-30)">
+                    <rect x="-8" y="-12" width="16" height="24" rx="3" fill="#F59E0B" />
+                    <text x="14" y="3" fill="#0B2240" fontSize="10" fontWeight="bold">
+                      Puerta Principal Salaverry ◄
+                    </text>
+                  </g>
+
+                  {/* ========================================================
+                      BLOQUE 1: PABELLONES J Y K (Entre Inca Rípac y Sánchez Cerro)
+                      ======================================================== */}
+                  {/* PABELLÓN K */}
+                  <g 
+                    onClick={() => setSelectedPabellon('JK')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="90" y="45" width="115" height="125" rx="10" 
+                      fill={selectedPabellon === 'JK' ? '#E0F2FE' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'JK' ? '#0284C7' : '#94A3B8'} 
+                      strokeWidth={selectedPabellon === 'JK' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="90" y="45" width="115" height="28" rx="8" fill={selectedPabellon === 'JK' ? '#0369A1' : '#0B2240'} />
+                    <text x="147" y="63" fill="#FFFFFF" fontSize="11" fontWeight="bold" textAnchor="middle">
+                      PABELLÓN K
+                    </text>
+                    <text x="147" y="100" fill="#1E293B" fontSize="10" fontWeight="bold" textAnchor="middle">
+                      Aulas UP
+                    </text>
+                    <text x="147" y="120" fill="#64748B" fontSize="8.5" textAnchor="middle">
+                      Jr. Inca Rípac
+                    </text>
+                  </g>
+
+                  {/* PABELLÓN J */}
+                  <g 
+                    onClick={() => setSelectedPabellon('JK')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="220" y="30" width="125" height="155" rx="10" 
+                      fill={selectedPabellon === 'JK' ? '#E0F2FE' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'JK' ? '#0284C7' : '#94A3B8'} 
+                      strokeWidth={selectedPabellon === 'JK' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="220" y="30" width="125" height="28" rx="8" fill={selectedPabellon === 'JK' ? '#0369A1' : '#0B2240'} />
+                    <text x="282" y="48" fill="#FFFFFF" fontSize="11" fontWeight="bold" textAnchor="middle">
+                      PABELLÓN J
+                    </text>
+                    <text x="282" y="85" fill="#1E293B" fontSize="10" fontWeight="bold" textAnchor="middle">
+                      Aulas & Centros
+                    </text>
+                    <text x="282" y="105" fill="#64748B" fontSize="8.5" textAnchor="middle">
+                      Frente a Sánchez Cerro
+                    </text>
+                    <rect x="235" y="125" width="95" height="18" rx="4" fill="#BAE6FD" />
+                    <text x="282" y="137" fill="#0369A1" fontSize="8.5" fontWeight="bold" textAnchor="middle">
+                      Laboratorios
+                    </text>
+                  </g>
+
+                  {/* ========================================================
+                      BLOQUE 2: CAMPUS PRINCIPAL (Lado Este de Sánchez Cerro)
+                      ======================================================== */}
+
+                  {/* PABELLÓN D (Extremo Norte) */}
+                  <g 
+                    onClick={() => setSelectedPabellon('D')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="475" y="25" width="105" height="50" rx="8" 
+                      fill={selectedPabellon === 'D' ? '#EDE9FE' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'D' ? '#7C3AED' : '#94A3B8'} 
+                      strokeWidth={selectedPabellon === 'D' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="475" y="25" width="105" height="20" rx="6" fill={selectedPabellon === 'D' ? '#6D28D9' : '#334155'} />
+                    <text x="527" y="39" fill="#FFFFFF" fontSize="9.5" fontWeight="bold" textAnchor="middle">
+                      PABELLÓN D
+                    </text>
+                    <text x="527" y="60" fill="#4B5563" fontSize="8.5" fontWeight="bold" textAnchor="middle">
+                      Auditorio J.J. Wicht
+                    </text>
+                  </g>
+
+                  {/* PABELLÓN C (Con TÓPICO UP) */}
+                  <g 
+                    onClick={() => setSelectedPabellon('C')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="475" y="85" width="145" height="75" rx="10" 
+                      fill={selectedPabellon === 'C' ? '#FEE2E2' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'C' ? '#DC2626' : '#94A3B8'} 
+                      strokeWidth={selectedPabellon === 'C' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="475" y="85" width="145" height="24" rx="8" fill={selectedPabellon === 'C' ? '#B91C1C' : '#0B2240'} />
+                    <text x="547" y="101" fill="#FFFFFF" fontSize="10.5" fontWeight="bold" textAnchor="middle">
+                      PABELLÓN C
+                    </text>
+                    
+                    {/* Badge destacado Tópico */}
+                    <rect x="485" y="117" width="125" height="24" rx="6" fill="#FCA5A5" stroke="#DC2626" strokeWidth="1" />
+                    <text x="547" y="132" fill="#7F1D1D" fontSize="9.5" fontWeight="extrabold" textAnchor="middle">
+                      🏥 TÓPICO MÉDICO UP
+                    </text>
+                  </g>
+
+                  {/* CANCHITA DEPORTIVA UP (Norte / Este) */}
+                  <g 
+                    onClick={() => setSelectedPabellon('DEPORTES')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="645" y="30" width="140" height="90" rx="10" 
+                      fill="url(#grass-pattern)" 
+                      stroke={selectedPabellon === 'DEPORTES' ? '#16A34A' : '#4ADE80'} 
+                      strokeWidth={selectedPabellon === 'DEPORTES' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="653" y="38" width="124" height="74" fill="none" stroke="#FFFFFF" strokeWidth="1.5" strokeDasharray="3,3" />
+                    <circle cx="715" cy="75" r="14" fill="none" stroke="#FFFFFF" strokeWidth="1.5" />
+                    <text x="715" y="72" fill="#14532D" fontSize="11" fontWeight="extrabold" textAnchor="middle">
+                      ⚽ CANCHITA UP
+                    </text>
+                    <text x="715" y="85" fill="#166534" fontSize="8" fontStyle="italic" textAnchor="middle">
+                      Deportes & Fútbol
+                    </text>
+                  </g>
+
+                  {/* PABELLÓN B · BIBLIOTECA (Este) */}
+                  <g 
+                    onClick={() => setSelectedPabellon('B')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="780" y="125" width="120" height="115" rx="10" 
+                      fill={selectedPabellon === 'B' ? '#CCFBF1' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'B' ? '#0D9488' : '#94A3B8'} 
+                      strokeWidth={selectedPabellon === 'B' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="780" y="125" width="120" height="26" rx="8" fill={selectedPabellon === 'B' ? '#0F766E' : '#0B2240'} />
+                    <text x="840" y="142" fill="#FFFFFF" fontSize="10.5" fontWeight="bold" textAnchor="middle">
+                      PABELLÓN B
+                    </text>
+                    <text x="840" y="172" fill="#0F766E" fontSize="11" fontWeight="extrabold" textAnchor="middle">
+                      📚 BIBLIOTECA
+                    </text>
+                    <text x="840" y="190" fill="#475569" fontSize="8.5" textAnchor="middle">
+                      Salas & Cubículos
+                    </text>
+                    <rect x="795" y="202" width="90" height="16" rx="4" fill="#99F6E4" />
+                    <text x="840" y="213" fill="#115E59" fontSize="8" fontWeight="bold" textAnchor="middle">
+                      Estudio Grupal
+                    </text>
+                  </g>
+
+                  {/* PLAZA GEIS (PLACITA UP) - Centro del campus */}
+                  <g 
+                    onClick={() => setSelectedPabellon('DEPORTES')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="570" y="170" width="105" height="110" rx="12" 
+                      fill="#F0FDF4" 
+                      stroke={selectedPabellon === 'DEPORTES' ? '#16A34A' : '#86EFAC'} 
+                      strokeWidth={selectedPabellon === 'DEPORTES' ? '2.5' : '1'}
+                    />
+                    <circle cx="622" cy="225" r="22" fill="#DCFCE7" stroke="#86EFAC" strokeWidth="1" />
+                    <text x="622" y="222" fill="#166534" fontSize="9.5" fontWeight="extrabold" textAnchor="middle">
+                      PLAZA GEIS
+                    </text>
+                    <text x="622" y="235" fill="#15803D" fontSize="8" textAnchor="middle">
+                      (Placita UP)
+                    </text>
+                  </g>
+
+                  {/* CAPILLA UP */}
+                  <g 
+                    onClick={() => setSelectedPabellon('DEPORTES')}
+                    className="cursor-pointer"
+                  >
+                    <rect x="685" y="195" width="65" height="70" rx="8" fill="#FFEDD5" stroke="#F97316" strokeWidth="1" />
+                    <text x="717" y="225" fill="#C2410C" fontSize="13" textAnchor="middle">✝</text>
+                    <text x="717" y="240" fill="#9A3412" fontSize="8.5" fontWeight="bold" textAnchor="middle">
+                      CAPILLA UP
+                    </text>
+                  </g>
+
+                  {/* PABELLÓN E (A lo largo de Sánchez Cerro) */}
+                  <g 
+                    onClick={() => setSelectedPabellon('E')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="475" y="170" width="80" height="130" rx="10" 
+                      fill={selectedPabellon === 'E' ? '#E0F2FE' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'E' ? '#0284C7' : '#94A3B8'} 
+                      strokeWidth={selectedPabellon === 'E' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="475" y="170" width="80" height="24" rx="8" fill={selectedPabellon === 'E' ? '#0369A1' : '#0B2240'} />
+                    <text x="515" y="186" fill="#FFFFFF" fontSize="10" fontWeight="bold" textAnchor="middle">
+                      PAB. E
+                    </text>
+                    <text x="515" y="225" fill="#1E293B" fontSize="9" fontWeight="bold" textAnchor="middle">
+                      Aulas UP
+                    </text>
+                    <text x="515" y="245" fill="#64748B" fontSize="8" textAnchor="middle">
+                      Sánchez Cerro
+                    </text>
+                  </g>
+
+                  {/* PABELLÓN F (Con SALÓN F400) */}
+                  <g 
+                    onClick={() => setSelectedPabellon('F')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="540" y="310" width="115" height="65" rx="10" 
+                      fill={selectedPabellon === 'F' ? '#DBEAFE' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'F' ? '#2563EB' : '#94A3B8'} 
+                      strokeWidth={selectedPabellon === 'F' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="540" y="310" width="115" height="22" rx="8" fill={selectedPabellon === 'F' ? '#1D4ED8' : '#0B2240'} />
+                    <text x="597" y="325" fill="#FFFFFF" fontSize="10" fontWeight="bold" textAnchor="middle">
+                      PABELLÓN F
+                    </text>
+                    <rect x="548" y="338" width="99" height="18" rx="4" fill="#93C5FD" />
+                    <text x="597" y="350" fill="#1E3A8A" fontSize="8.5" fontWeight="extrabold" textAnchor="middle">
+                      ⚡ SALÓN F400 (Piso 4)
+                    </text>
+                    <text x="597" y="367" fill="#1E40AF" fontSize="7.5" textAnchor="middle">
+                      Ingeniería de la Información
+                    </text>
+                  </g>
+
+                  {/* PABELLÓN A (Aulas Magnas) */}
+                  <g 
+                    onClick={() => setSelectedPabellon('A')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="675" y="275" width="115" height="90" rx="10" 
+                      fill={selectedPabellon === 'A' ? '#E0E7FF' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'A' ? '#4F46E5' : '#94A3B8'} 
+                      strokeWidth={selectedPabellon === 'A' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="675" y="275" width="115" height="24" rx="8" fill={selectedPabellon === 'A' ? '#4338CA' : '#0B2240'} />
+                    <text x="732" y="291" fill="#FFFFFF" fontSize="10.5" fontWeight="bold" textAnchor="middle">
+                      PABELLÓN A
+                    </text>
+                    <text x="732" y="325" fill="#312E81" fontSize="9.5" fontWeight="bold" textAnchor="middle">
+                      Aulas Magnas
+                    </text>
+                    <text x="732" y="345" fill="#64748B" fontSize="8.5" textAnchor="middle">
+                      Clases Pregrado
+                    </text>
+                  </g>
+
+                  {/* ESTACIONAMIENTO SALAVERRY */}
+                  <g>
+                    <polygon 
+                      points="660,380 910,250 960,340 730,460" 
+                      fill="url(#parking-pattern)" 
+                      stroke="#94A3B8" 
+                      strokeWidth="1"
+                    />
+                    <text x="800" y="360" fill="#475569" fontSize="11" fontWeight="bold" textAnchor="middle" transform="rotate(-25, 800, 360)">
+                      🅿️ ESTACIONAMIENTO SALAVERRY
+                    </text>
+                  </g>
+
+                  {/* PABELLÓN X · PRE UNIVERSITARIA (Cuadrante Sur) */}
+                  <g 
+                    onClick={() => setSelectedPabellon('X')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="570" y="440" width="100" height="65" rx="9" 
+                      fill={selectedPabellon === 'X' ? '#FFEDD5' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'X' ? '#EA580C' : '#94A3B8'} 
+                      strokeWidth={selectedPabellon === 'X' ? '3' : '1.5'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="570" y="440" width="100" height="20" rx="7" fill={selectedPabellon === 'X' ? '#C2410C' : '#0B2240'} />
+                    <text x="620" y="454" fill="#FFFFFF" fontSize="9.5" fontWeight="bold" textAnchor="middle">
+                      PABELLÓN X
+                    </text>
+                    <text x="620" y="478" fill="#9A3412" fontSize="8.5" fontWeight="bold" textAnchor="middle">
+                      Preuniversitaria UP
+                    </text>
+                  </g>
+
+                  {/* PABELLÓN Z · CASA DEL ESTUDIANTE (Extremo Sur / Sánchez Cerro) */}
+                  <g 
+                    onClick={() => setSelectedPabellon('Z')}
+                    className="cursor-pointer transition-all duration-200"
+                  >
+                    <rect 
+                      x="475" y="470" width="145" height="110" rx="12" 
+                      fill={selectedPabellon === 'Z' ? '#FEF3C7' : '#FFFFFF'} 
+                      stroke={selectedPabellon === 'Z' ? '#D97706' : '#B45309'} 
+                      strokeWidth={selectedPabellon === 'Z' ? '3.5' : '2'}
+                      filter="url(#pab-shadow)"
+                    />
+                    <rect x="475" y="470" width="145" height="26" rx="10" fill={selectedPabellon === 'Z' ? '#B45309' : '#0F2C59'} />
+                    <text x="547" y="487" fill="#FFFFFF" fontSize="10.5" fontWeight="bold" textAnchor="middle">
+                      PABELLÓN Z · CASA UP
+                    </text>
+                    <text x="547" y="515" fill="#92400E" fontSize="10" fontWeight="extrabold" textAnchor="middle">
+                      CASA DEL ESTUDIANTE
+                    </text>
+                    <text x="547" y="532" fill="#78350F" fontSize="8.5" textAnchor="middle">
+                      • Piso 1: Gym UP · Casilleros
+                    </text>
+                    <text x="547" y="546" fill="#78350F" fontSize="8.5" textAnchor="middle">
+                      • Piso 2: Salón Z-201 · BFE
+                    </text>
+                    <rect x="495" y="555" width="105" height="16" rx="4" fill="#FDE68A" />
+                    <text x="547" y="566" fill="#78350F" fontSize="8" fontWeight="bold" textAnchor="middle">
+                      Puerta: Jr. Sánchez Cerro 2141
+                    </text>
+                  </g>
+
+                </svg>
+              </div>
+            </div>
+          )}
+
+          {/* Tarjeta Interactiva Detallada del Pabellón Seleccionado */}
+          <div className={'rounded-2xl p-4 sm:p-5 border shadow-sm transition-all duration-300 ' + currentInfo.accent}>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200/60">
+              <div className="flex items-center gap-2.5">
+                <span className="w-3 h-3 rounded-full bg-amber-500 animate-ping"></span>
+                <h4 className="text-base sm:text-lg font-extrabold tracking-tight">
+                  {currentInfo.nombre}
+                </h4>
+              </div>
+              <span className={'inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border ' + currentInfo.badgeColor}>
+                <Icon name="tag" className="w-3.5 h-3.5" />
+                {currentInfo.tag}
               </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
-                <strong>Áreas Verdes y Deporte:</strong> Canchita UP y Plaza Geis (Placita UP)
-              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 text-xs sm:text-sm">
+              <div className="space-y-2">
+                <div className="font-bold text-slate-800 flex items-center gap-1.5">
+                  <Icon name="layers" className="w-4 h-4 text-slate-600" />
+                  <span>Distribución por pisos y dependencias:</span>
+                </div>
+                <ul className="space-y-1.5 pl-2">
+                  {currentInfo.pisos.map((p, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="font-bold text-slate-900 shrink-0 bg-white/70 px-1.5 py-0.5 rounded border border-slate-300/60 text-[11px]">
+                        {p.nivel}
+                      </span>
+                      <span className="text-slate-700 leading-snug">{p.info}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="space-y-2.5 bg-white/60 p-3 rounded-xl border border-slate-200/50">
+                <div>
+                  <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                    <Icon name="door" className="w-3.5 h-3.5 text-blue-600" />
+                    Acceso recomendado:
+                  </span>
+                  <p className="text-slate-700 text-xs mt-0.5">{currentInfo.acceso}</p>
+                </div>
+                <div>
+                  <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                    <Icon name="info" className="w-3.5 h-3.5 text-amber-600" />
+                    Información de interés:
+                  </span>
+                  <p className="text-slate-700 text-xs mt-0.5 leading-relaxed">{currentInfo.nota}</p>
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* Tarjetas Dinámicas de Información por Pabellón */}
-          {selectedPabellon === 'Z' && (
-            <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 sm:p-5 text-xs text-amber-950 space-y-3 animate-fade-in shadow-xs">
-              <div className="flex items-center justify-between pb-2 border-b border-amber-200">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-amber-200 text-amber-900 font-extrabold uppercase text-[10px]">
-                    UBICACIÓN DESTACADA
-                  </span>
-                  <h4 className="font-extrabold text-sm sm:text-base text-amber-950">
-                    Pabellón Z · Casa del Estudiante
-                  </h4>
-                </div>
-                <span className="text-[11px] font-semibold text-amber-800">
-                  Acceso directo: Jr. Sánchez Cerro 2215
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div className="bg-white p-3.5 rounded-xl border border-amber-200 space-y-1">
-                  <strong className="text-[#0B2240] block font-bold">🏋️ Piso 1 · Bienestar y Deporte:</strong>
-                  <p className="text-slate-600">
-                    Gimnasio UP (máquinas y pesas), administración de casilleros, tópico de salud y préstamo de balones.
-                  </p>
-                </div>
-                <div className="bg-white p-3.5 rounded-xl border border-amber-200 space-y-1">
-                  <strong className="text-[#0B2240] block font-bold">🧠 Piso 2 · Consejería y Descanso:</strong>
-                  <p className="text-slate-600">
-                    Salón <strong>Z-201</strong> (espacio acondicionado para descanso entre clases), oficinas de Consejería Psicológica y Estudiantil BFE.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {selectedPabellon === 'F' && (
-            <div className="bg-blue-50 border-2 border-blue-300 rounded-2xl p-4 sm:p-5 text-xs text-blue-950 space-y-3 animate-fade-in shadow-xs">
-              <div className="flex items-center justify-between pb-2 border-b border-blue-200">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-blue-200 text-blue-900 font-extrabold uppercase text-[10px]">
-                    FACULTAD DE INGENIERÍA
-                  </span>
-                  <h4 className="font-extrabold text-sm sm:text-base text-blue-950">
-                    Pabellón F · Salón F400 (Secretaría de Ingeniería)
-                  </h4>
-                </div>
-                <span className="text-[11px] font-semibold text-blue-800">
-                  Frente a Plaza Geis (Placita UP)
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div className="bg-white p-3.5 rounded-xl border border-blue-200 space-y-1">
-                  <strong className="text-[#0B2240] block font-bold">🏢 Piso 4 · Salón F400:</strong>
-                  <p className="text-slate-600">
-                    Secretaría Académica de Ingeniería. Atención para Ingeniería de la Información, Empresarial e Industrial. Anexo directo: <strong>2336</strong>.
-                  </p>
-                </div>
-                <div className="bg-white p-3.5 rounded-xl border border-blue-200 space-y-1">
-                  <strong className="text-[#0B2240] block font-bold">💻 Pisos 1 al 3 · Laboratorios:</strong>
-                  <p className="text-slate-600">
-                    Laboratorios de cómputo especializados, software de ingeniería y salas de desarrollo tecnológico.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {selectedPabellon === 'C' && (
-            <div className="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-4 sm:p-5 text-xs text-emerald-950 space-y-3 animate-fade-in shadow-xs">
-              <div className="flex items-center justify-between pb-2 border-b border-emerald-200">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-200 text-emerald-900 font-extrabold uppercase text-[10px]">
-                    SALUD Y RECTORADO
-                  </span>
-                  <h4 className="font-extrabold text-sm sm:text-base text-emerald-950">
-                    Pabellón C · Tópico Médico y Administración
-                  </h4>
-                </div>
-                <span className="text-[11px] font-semibold text-emerald-800">
-                  Piso 1 · Al lado de Canchita UP
-                </span>
-              </div>
-
-              <div className="bg-white p-3.5 rounded-xl border border-emerald-200 space-y-1">
-                <strong className="text-[#0B2240] block font-bold">🩺 Tópico Médico Oficial (Piso 1):</strong>
-                <p className="text-slate-600 leading-relaxed">
-                  Atención de primeros auxilios en el campus, urgencias ambulatorias y recepción de descansos médicos para justificar inasistencias a exámenes. Correo: <strong>medico@up.edu.pe</strong> · Anexo: <strong>2120</strong>.
-                </p>
-              </div>
-            </div>
-          )}
-
-          {selectedPabellon === 'B' && (
-            <div className="bg-indigo-50 border-2 border-indigo-300 rounded-2xl p-4 sm:p-5 text-xs text-indigo-950 space-y-3 animate-fade-in shadow-xs">
-              <div className="flex items-center justify-between pb-2 border-b border-indigo-200">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-indigo-200 text-indigo-900 font-extrabold uppercase text-[10px]">
-                    BIBLIOTECA CENTRAL
-                  </span>
-                  <h4 className="font-extrabold text-sm sm:text-base text-indigo-950">
-                    Pabellón B · Biblioteca y Salas de Estudio
-                  </h4>
-                </div>
-                <span className="text-[11px] font-semibold text-indigo-800">
-                  Vista hacia Av. Salaverry
-                </span>
-              </div>
-
-              <div className="bg-white p-3.5 rounded-xl border border-indigo-200 space-y-1">
-                <strong className="text-[#0B2240] block font-bold">📚 Salas de Lectura y Cubículos de Estudio:</strong>
-                <p className="text-slate-600 leading-relaxed">
-                  Préstamo de libros de cursos, reserva de cubículos para trabajos grupales, terminales Bloomberg y acceso a bases de datos científicas. Correo: <strong>biblioteca@up.edu.pe</strong> · Anexos: <strong>2125 / 2126</strong>.
-                </p>
-              </div>
-            </div>
-          )}
-
-          {selectedPabellon === 'JK' && (
-            <div className="bg-slate-100 border-2 border-slate-300 rounded-2xl p-4 sm:p-5 text-xs text-slate-800 space-y-3 animate-fade-in shadow-xs">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-800 font-extrabold uppercase text-[10px]">
-                    PABELLONES J Y K
-                  </span>
-                  <h4 className="font-extrabold text-sm sm:text-base text-[#0B2240]">
-                    Pabellones J y K · Aulas y Escuela de Posgrado
-                  </h4>
-                </div>
-                <span className="text-[11px] font-semibold text-slate-600">
-                  Cruzando Jr. Sánchez Cerro (entre Inca Rípac y Sánchez Cerro)
-                </span>
-              </div>
-
-              <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                <strong className="text-[#0B2240] block font-bold">🏛️ Edificios de Aulas Magnas y Escuela de Posgrado:</strong>
-                <p className="text-slate-600 leading-relaxed">
-                  Pabellón J (Aulas de pregrado y laboratorios) y Pabellón K (Escuela de Posgrado y Centro de Idiomas). Acceso directo cruzando la calzada de Jr. Luis Sánchez Cerro.
-                </p>
-              </div>
-            </div>
-          )}
-
-          {selectedPabellon === 'ALL' && (
-            <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 text-xs text-slate-700 space-y-3 animate-fade-in shadow-xs">
-              <strong className="text-[#0B2240] block text-sm font-bold pb-2 border-b border-slate-100">
-                Guía Rápida de Pabellones y Referencias del Campus UP:
-              </strong>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <strong className="text-[#0B2240] block font-bold">Pabellón A:</strong>
-                  <span className="text-slate-600 text-[11px]">Aulas generales de clase y conferencias.</span>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <strong className="text-[#0B2240] block font-bold">Pabellón B:</strong>
-                  <span className="text-slate-600 text-[11px]">Biblioteca Central, cubículos y salas de lectura.</span>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <strong className="text-[#0B2240] block font-bold">Pabellón C:</strong>
-                  <span className="text-slate-600 text-[11px]">Tópico Médico (piso 1) y oficinas del Rectorado.</span>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <strong className="text-[#0B2240] block font-bold">Pabellón D:</strong>
-                  <span className="text-slate-600 text-[11px]">Auditorio Juan Julio Wicht y eventos institucionales.</span>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <strong className="text-[#0B2240] block font-bold">Pabellón E:</strong>
-                  <span className="text-slate-600 text-[11px]">Aulas de estudio y asesorías de tutoría.</span>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <strong className="text-[#0B2240] block font-bold">Pabellón F:</strong>
-                  <span className="text-slate-600 text-[11px]">Ingeniería (Secretaría F400) y laboratorios.</span>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <strong className="text-[#0B2240] block font-bold">Pabellón Z:</strong>
-                  <span className="text-slate-600 text-[11px]">Casa del Estudiante, Gimnasio UP, Z-201 y BFE.</span>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <strong className="text-[#0B2240] block font-bold">Pabellón X:</strong>
-                  <span className="text-slate-600 text-[11px]">Escuela Pre Universitaria y aulas de extensión.</span>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <strong className="text-[#0B2240] block font-bold">Pabellones J y K:</strong>
-                  <span className="text-slate-600 text-[11px]">Cruzando Sánchez Cerro: aulas magnas y posgrado.</span>
-                </div>
-              </div>
-            </div>
-          )}
 
         </div>
 
         {/* Pie del Modal */}
-        <div className="bg-slate-100 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+        <div className="bg-slate-100 px-5 sm:px-6 py-3 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
           <div className="text-xs text-slate-600 flex items-center gap-1.5 text-center sm:text-left">
             <Icon name="map-pin" className="w-3.5 h-3.5 text-slate-400 shrink-0" />
             <span>Universidad del Pacífico · Jr. Sánchez Cerro 2141 / Av. Salaverry 2020, Jesús María, Lima</span>
@@ -2863,7 +3293,7 @@ function App() {
               </div>
               <div className="flex items-center gap-2 bg-[#102A4C]/90 border border-blue-400/30 rounded-xl px-2.5 py-1.5 text-blue-100 shadow-xs">
                 <span className="w-5 h-5 rounded-full bg-amber-500/30 text-amber-300 font-extrabold flex items-center justify-center text-[10.5px] shrink-0">3</span>
-                <span className="leading-tight font-medium text-[11px]">Asunto: «Tema - Código»</span>
+                <span className="leading-tight font-medium text-[11px]">Asunto: «Tema de tu consulta»</span>
               </div>
               <div className="flex items-center gap-2 bg-[#102A4C]/90 border border-blue-400/30 rounded-xl px-2.5 py-1.5 text-blue-100 shadow-xs">
                 <span className="w-5 h-5 rounded-full bg-emerald-500/30 text-emerald-300 font-extrabold flex items-center justify-center text-[10.5px] shrink-0">4</span>
