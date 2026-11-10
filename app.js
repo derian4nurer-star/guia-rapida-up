@@ -1859,7 +1859,6 @@ function scoreChannels(query) {
    ========================================================================== */
 function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
   const [selectedPabellon, setSelectedPabellon] = React.useState(initialPabellon);
-  const [mapMode, setMapMode] = React.useState('interactive'); // 'interactive' | 'official'
 
   React.useEffect(() => {
     if (initialPabellon) setSelectedPabellon(initialPabellon);
@@ -1932,22 +1931,33 @@ function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
       ],
       nota: 'Pabellón histórico de clases teóricas de pregrado, ubicado frente a la Capilla UP y el estacionamiento.'
     },
-    JK: {
-      nombre: 'Pabellones J y K · Aulas & Centros',
-      tag: 'Jr. Sánchez Cerro & Jr. Inca Rípac',
+    H: {
+      nombre: 'Pabellón H · Innovación & Posgrado',
+      tag: 'Jr. Sánchez Cerro (Ingreso)',
       color: '#0284C7',
       accent: 'border-sky-500 bg-sky-50 text-sky-900',
       badgeColor: 'bg-sky-100 text-sky-800 border-sky-300',
-      acceso: 'Cruzar Jr. Luis Sánchez Cerro (paso peatonal señalizado)',
+      acceso: 'Puerta de ingreso sobre Jr. Luis Sánchez Cerro',
       pisos: [
-        { nivel: 'Pabellón J', info: 'Aulas modernas, centros de estudio y laboratorios de investigación' },
-        { nivel: 'Pabellón K', info: 'Aulas complementarias y oficinas administrativas de apoyo' }
+        { nivel: 'Instalaciones', info: 'Aulas modernas de posgrado, centros de investigación y salas de conferencias' }
       ],
-      nota: 'Se encuentran en la acera de enfrente de Jr. Sánchez Cerro, en la esquina con Jr. Inca Rípac.'
+      nota: 'Edificio ubicado en el extremo izquierdo sobre Jr. Luis Sánchez Cerro.'
+    },
+    D: {
+      nombre: 'Pabellón D · Auditorio J.J. Wicht',
+      tag: 'Eventos Institucionales',
+      color: '#7C3AED',
+      accent: 'border-purple-500 bg-purple-50 text-purple-900',
+      badgeColor: 'bg-purple-100 text-purple-800 border-purple-300',
+      acceso: 'Acceso directo por Plaza Geis / Jr. Sánchez Cerro',
+      pisos: [
+        { nivel: 'Auditorio', info: 'Auditorio Juan Julio Wicht S.J. para conferencias, ceremonias de bienvenida y conversatorios' }
+      ],
+      nota: 'Sede de los principales eventos culturales y conferencias magistrales de la UP.'
     },
     E: {
       nombre: 'Pabellón E · Aulas & Tutorías',
-      tag: 'Aulas Jr. Sánchez Cerro',
+      tag: 'Aulas Sánchez Cerro',
       color: '#0369A1',
       accent: 'border-cyan-500 bg-cyan-50 text-cyan-900',
       badgeColor: 'bg-cyan-100 text-cyan-800 border-cyan-300',
@@ -1956,18 +1966,6 @@ function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
         { nivel: 'Pisos 1 - 3', info: 'Aulas de clases para pregrado, salas de asesoría personalizada y tutorías docentes' }
       ],
       nota: 'Conecta longitudinalmente el campus sobre Jr. Sánchez Cerro hacia la Placita UP.'
-    },
-    D: {
-      nombre: 'Pabellón D · Auditorio J.J. Wicht',
-      tag: 'Eventos Institucionales',
-      color: '#7C3AED',
-      accent: 'border-purple-500 bg-purple-50 text-purple-900',
-      badgeColor: 'bg-purple-100 text-purple-800 border-purple-300',
-      acceso: 'Plaza Geis / Zona norte del campus',
-      pisos: [
-        { nivel: 'Auditorio', info: 'Auditorio Juan Julio Wicht S.J. para conferencias, ceremonias de bienvenida y conversatorios' }
-      ],
-      nota: 'Sede de los principales eventos culturales y académicos magistrales de la universidad.'
     },
     X: {
       nombre: 'Pabellón X · Preuniversitaria UP',
@@ -1982,7 +1980,7 @@ function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
       nota: 'Ubicado en el cuadrante sur del campus, junto al Pabellón Z (Casa del Estudiante).'
     },
     DEPORTES: {
-      nombre: 'Canchita UP & Plaza Geis (Placita)',
+      nombre: 'Canchita UP, Plaza Geis & Capilla',
       tag: 'Áreas Verdes & Recreación',
       color: '#16A34A',
       accent: 'border-emerald-500 bg-emerald-50 text-emerald-900',
@@ -1999,6 +1997,22 @@ function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
 
   const currentInfo = PABELLONES_DATA[selectedPabellon] || PABELLONES_DATA.Z;
 
+  // Cuadros interactivos (Hotspots) colocados con precisión milimétrica sobre la imagen 3D
+  const HOTSPOTS = [
+    { id: 'H', label: 'Pabellón H', x: '17%', y: '73%', color: 'bg-sky-600', active: selectedPabellon === 'H' },
+    { id: 'D', label: 'Pab. D', x: '30%', y: '73%', color: 'bg-purple-600', active: selectedPabellon === 'D' },
+    { id: 'C', label: '🏥 Pab. C · Tópico UP', x: '36%', y: '63%', color: 'bg-rose-600', isTopico: true, active: selectedPabellon === 'C' },
+    { id: 'E', label: 'Pab. E · Aulas', x: '46%', y: '75%', color: 'bg-blue-700', active: selectedPabellon === 'E' },
+    { id: 'F', label: '⚡ Pab. F · F400', x: '57%', y: '59%', color: 'bg-blue-600', active: selectedPabellon === 'F' },
+    { id: 'DEPORTES', label: 'Plaza Geis (Placita)', x: '47%', y: '56%', color: 'bg-emerald-700', active: selectedPabellon === 'DEPORTES' },
+    { id: 'DEPORTES', label: '✝ Capilla UP', x: '48%', y: '43%', color: 'bg-orange-600', active: selectedPabellon === 'DEPORTES' },
+    { id: 'DEPORTES', label: '⚽ Canchita UP', x: '35%', y: '38%', color: 'bg-emerald-600', active: selectedPabellon === 'DEPORTES' },
+    { id: 'B', label: '📚 Pab. B · Biblioteca', x: '44%', y: '22%', color: 'bg-teal-700', active: selectedPabellon === 'B' },
+    { id: 'A', label: 'Pab. A · Aulas', x: '53%', y: '30%', color: 'bg-indigo-700', active: selectedPabellon === 'A' },
+    { id: 'X', label: 'Pab. X · Pre UP', x: '73%', y: '43%', color: 'bg-orange-600', active: selectedPabellon === 'X' },
+    { id: 'Z', label: '📍 Pab. Z · Casa del Estudiante', x: '81%', y: '66%', color: 'bg-amber-600', isCasa: true, active: selectedPabellon === 'Z' }
+  ];
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 animate-fade-in">
       <div 
@@ -2013,41 +2027,21 @@ function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
             </div>
             <div>
               <h3 className="font-extrabold text-base sm:text-lg text-white leading-tight">
-                Ubícate en la UP · Plano del Campus Universitario
+                Ubícate en la UP · Plano 3D Interactivo del Campus
               </h3>
               <p className="text-xs text-blue-200 font-medium">
-                Pabellones, accesos oficiales por Jr. Sánchez Cerro y Av. Salaverry (Jesús María)
+                Pabellones oficiales, accesos por Jr. Sánchez Cerro y Av. Salaverry (Jesús María)
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            {/* Selector de modo: Interactivo vs Oficial */}
-            <div className="bg-blue-950/80 p-0.5 rounded-xl border border-blue-500/30 hidden sm:flex">
-              <button
-                onClick={() => setMapMode('interactive')}
-                className={'px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ' + 
-                  (mapMode === 'interactive' ? 'bg-amber-400 text-slate-950 shadow-xs' : 'text-blue-200 hover:text-white')}
-              >
-                <span>🗺️ Interactivo</span>
-              </button>
-              <button
-                onClick={() => setMapMode('official')}
-                className={'px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ' + 
-                  (mapMode === 'official' ? 'bg-amber-400 text-slate-950 shadow-xs' : 'text-blue-200 hover:text-white')}
-              >
-                <span>🖼️ Plano Gráfico</span>
-              </button>
-            </div>
-
-            <button
-              onClick={onClose}
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition"
-              title="Cerrar plano"
-            >
-              <Icon name="x" className="w-5 h-5 text-white" />
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition"
+            title="Cerrar plano"
+          >
+            <Icon name="x" className="w-5 h-5 text-white" />
+          </button>
         </div>
 
         {/* Barra de Filtros / Pabellones Rápidos */}
@@ -2056,11 +2050,11 @@ function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
             {[
               { id: 'Z', label: '📍 Pabellón Z · Casa del Estudiante' },
               { id: 'F', label: '📍 Pabellón F · Salón F400' },
-              { id: 'C', label: '📍 Pabellón C · Tópico UP' },
-              { id: 'B', label: '📍 Pabellón B · Biblioteca' },
+              { id: 'C', label: '🏥 Pabellón C · Tópico UP' },
+              { id: 'B', label: '📚 Pabellón B · Biblioteca' },
               { id: 'A', label: '📍 Pabellón A' },
-              { id: 'JK', label: '📍 Pabellones J y K' },
-              { id: 'E', label: '📍 Pabellón E' },
+              { id: 'H', label: '📍 Pabellón H' },
+              { id: 'D', label: '📍 Pabellón D' },
               { id: 'DEPORTES', label: '⚽ Canchita & Placita' }
             ].map(pab => (
               <button
@@ -2078,449 +2072,54 @@ function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
           </div>
 
           <div className="text-[11px] font-semibold text-slate-500 hidden md:block">
-            Haz clic en un pabellón del plano para ver sus detalles
+            Haz clic en un cuadro del mapa para ver sus detalles
           </div>
         </div>
 
         {/* Contenido Principal con Scroll */}
         <div className="p-3 sm:p-5 overflow-y-auto space-y-4 bg-slate-50/50">
 
-          {mapMode === 'official' ? (
-            /* Vista del Plano Oficial en Imagen */
-            <div className="bg-white rounded-2xl p-2 sm:p-3 border border-slate-200 shadow-xs relative">
-              <div className="flex items-center justify-between px-2 py-1 mb-2 text-xs text-slate-600 font-semibold border-b border-slate-100">
-                <span className="flex items-center gap-1 text-[#0B2240]">
-                  <Icon name="map" className="w-4 h-4 text-amber-500" />
-                  Plano oficial arquitectónico del campus UP (Jesús María)
-                </span>
+          {/* Plano 3D con Cuadros Interactivos Flotantes */}
+          <div className="bg-white rounded-2xl p-2 sm:p-3 border border-slate-200 shadow-xs relative overflow-hidden">
+            <div className="flex items-center justify-between px-2 py-1 mb-1 text-xs text-slate-600 font-semibold">
+              <span className="flex items-center gap-1.5 text-[#0B2240]">
+                <Icon name="navigation" className="w-4 h-4 text-amber-500" />
+                Haz clic sobre los cuadros de cada pabellón para seleccionarlo:
+              </span>
+              <span className="text-[11px] text-slate-400 hidden sm:inline">
+                Jesús María, Lima · Vista Arquitectónica 3D
+              </span>
+            </div>
+
+            <div className="relative overflow-hidden rounded-xl bg-slate-100 border border-slate-200 select-none">
+              {/* Imagen 3D Base Oficial */}
+              <img
+                src="assets/mapa_campus_up.jpg"
+                alt="Plano 3D Oficial Campus Universidad del Pacífico"
+                className="w-full h-auto max-h-[500px] object-contain block mx-auto pointer-events-none"
+              />
+
+              {/* Capa de Cuadros Interactivos (Hotspots) */}
+              {HOTSPOTS.map((spot, idx) => (
                 <button
-                  onClick={() => setMapMode('interactive')}
-                  className="text-blue-600 hover:underline font-bold text-xs"
+                  key={idx}
+                  onClick={() => setSelectedPabellon(spot.id)}
+                  style={{ left: spot.x, top: spot.y, transform: 'translate(-50%, -50%)' }}
+                  className={'absolute z-10 px-2 py-1 sm:px-2.5 sm:py-1 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-extrabold text-white shadow-md transition-all duration-200 flex items-center gap-1 border ' + 
+                    spot.color + ' ' + 
+                    (spot.active 
+                      ? 'ring-3 ring-amber-400 scale-110 shadow-xl z-20 ' + spot.color 
+                      : 'hover:scale-105 hover:shadow-lg opacity-90 hover:opacity-100 border-white/60')}
+                  title={`Ver detalles de ${spot.label}`}
                 >
-                  Cambiar a vista interactiva ➔
+                  {spot.active && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-300 animate-ping"></span>
+                  )}
+                  <span>{spot.label}</span>
                 </button>
-              </div>
-              <div className="relative overflow-hidden rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
-                <img
-                  src="assets/mapa_campus_up.jpg"
-                  alt="Plano Oficial Campus Universidad del Pacífico"
-                  className="w-full h-auto max-h-[500px] object-contain rounded-lg"
-                />
-              </div>
+              ))}
             </div>
-          ) : (
-            /* Vista Vectorial Interactiva con el orden y geometría REAL */
-            <div className="bg-white rounded-2xl p-2 sm:p-3 border border-slate-200 shadow-xs relative overflow-hidden">
-              <div className="flex items-center justify-between px-2 py-1 mb-1 text-xs text-slate-600 font-semibold">
-                <span className="flex items-center gap-1.5 text-[#0B2240]">
-                  <Icon name="navigation" className="w-4 h-4 text-amber-500" />
-                  Haz clic sobre cualquier pabellón o área verde para seleccionarlo:
-                </span>
-                <span className="text-[11px] text-slate-400 hidden sm:inline">
-                  Distrito de Jesús María, Lima
-                </span>
-              </div>
-
-              <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-[#EEF2F6]">
-                <svg 
-                  viewBox="0 0 980 600" 
-                  className="w-full h-auto max-h-[460px] select-none font-sans"
-                >
-                  <defs>
-                    <filter id="pab-shadow" x="-5%" y="-5%" width="110%" height="110%">
-                      <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.1" />
-                    </filter>
-                    <pattern id="grass-pattern" width="16" height="16" patternUnits="userSpaceOnUse">
-                      <rect width="16" height="16" fill="#DCFCE7" />
-                      <circle cx="4" cy="4" r="1.2" fill="#86EFAC" />
-                      <circle cx="12" cy="12" r="1.2" fill="#86EFAC" />
-                    </pattern>
-                    <pattern id="parking-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <rect width="20" height="20" fill="#E2E8F0" />
-                      <line x1="0" y1="10" x2="20" y2="10" stroke="#CBD5E1" strokeWidth="1" strokeDasharray="3,3" />
-                    </pattern>
-                  </defs>
-
-                  {/* FONDO GENERAL */}
-                  <rect x="0" y="0" width="980" height="600" fill="#F1F5F9" />
-
-                  {/* CALLE IZQUIERDA: JR. INCA RÍPAC */}
-                  <rect x="0" y="0" width="70" height="600" fill="#CBD5E1" />
-                  <g transform="translate(38, 300) rotate(-90)">
-                    <text x="0" y="0" fill="#475569" fontSize="12" fontWeight="bold" textAnchor="middle" letterSpacing="3">
-                      ◄ JR. INCA RÍPAC ◄
-                    </text>
-                  </g>
-
-                  {/* CALLE VERTICAL CENTRAL: JR. LUIS SÁNCHEZ CERRO */}
-                  {/* Separa los pabellones J/K del campus principal */}
-                  <rect x="360" y="0" width="90" height="600" fill="#334155" />
-                  <line x1="405" y1="0" x2="405" y2="600" stroke="#94A3B8" strokeWidth="2" strokeDasharray="12,12" />
-                  <g transform="translate(415, 290) rotate(90)">
-                    <text x="0" y="0" fill="#F8FAFC" fontSize="11" fontWeight="bold" textAnchor="middle" letterSpacing="3">
-                      ▲ JIRÓN LUIS SÁNCHEZ CERRO ▲
-                    </text>
-                  </g>
-                  {/* Pasos peatonales de cebra en Sánchez Cerro */}
-                  <g fill="#FFFFFF" opacity="0.8">
-                    <rect x="365" y="140" width="80" height="5" />
-                    <rect x="365" y="150" width="80" height="5" />
-                    <rect x="365" y="160" width="80" height="5" />
-                    <rect x="365" y="170" width="80" height="5" />
-
-                    <rect x="365" y="470" width="80" height="5" />
-                    <rect x="365" y="480" width="80" height="5" />
-                    <rect x="365" y="490" width="80" height="5" />
-                    <rect x="365" y="500" width="80" height="5" />
-                  </g>
-
-                  {/* CALLE DIAGONAL INFERIOR DERECHA: AV. GENERAL SALAVERRY */}
-                  <polygon points="560,600 980,360 980,600" fill="#1E293B" />
-                  <g transform="translate(800, 520) rotate(-30)">
-                    <text x="0" y="0" fill="#F8FAFC" fontSize="13" fontWeight="extrabold" textAnchor="middle" letterSpacing="4">
-                      ► AV. GRAL. SALAVERRY (CDRA. 20) ►
-                    </text>
-                    <text x="0" y="16" fill="#94A3B8" fontSize="9.5" textAnchor="middle">
-                      Ingreso Peatonal & Vehicular UP (Salaverry 2020)
-                    </text>
-                  </g>
-
-                  {/* INDICADOR DE PUERTA SALAVERRY */}
-                  <g transform="translate(710, 460) rotate(-30)">
-                    <rect x="-8" y="-12" width="16" height="24" rx="3" fill="#F59E0B" />
-                    <text x="14" y="3" fill="#0B2240" fontSize="10" fontWeight="bold">
-                      Puerta Principal Salaverry ◄
-                    </text>
-                  </g>
-
-                  {/* ========================================================
-                      BLOQUE 1: PABELLONES J Y K (Entre Inca Rípac y Sánchez Cerro)
-                      ======================================================== */}
-                  {/* PABELLÓN K */}
-                  <g 
-                    onClick={() => setSelectedPabellon('JK')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="90" y="45" width="115" height="125" rx="10" 
-                      fill={selectedPabellon === 'JK' ? '#E0F2FE' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'JK' ? '#0284C7' : '#94A3B8'} 
-                      strokeWidth={selectedPabellon === 'JK' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="90" y="45" width="115" height="28" rx="8" fill={selectedPabellon === 'JK' ? '#0369A1' : '#0B2240'} />
-                    <text x="147" y="63" fill="#FFFFFF" fontSize="11" fontWeight="bold" textAnchor="middle">
-                      PABELLÓN K
-                    </text>
-                    <text x="147" y="100" fill="#1E293B" fontSize="10" fontWeight="bold" textAnchor="middle">
-                      Aulas UP
-                    </text>
-                    <text x="147" y="120" fill="#64748B" fontSize="8.5" textAnchor="middle">
-                      Jr. Inca Rípac
-                    </text>
-                  </g>
-
-                  {/* PABELLÓN J */}
-                  <g 
-                    onClick={() => setSelectedPabellon('JK')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="220" y="30" width="125" height="155" rx="10" 
-                      fill={selectedPabellon === 'JK' ? '#E0F2FE' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'JK' ? '#0284C7' : '#94A3B8'} 
-                      strokeWidth={selectedPabellon === 'JK' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="220" y="30" width="125" height="28" rx="8" fill={selectedPabellon === 'JK' ? '#0369A1' : '#0B2240'} />
-                    <text x="282" y="48" fill="#FFFFFF" fontSize="11" fontWeight="bold" textAnchor="middle">
-                      PABELLÓN J
-                    </text>
-                    <text x="282" y="85" fill="#1E293B" fontSize="10" fontWeight="bold" textAnchor="middle">
-                      Aulas & Centros
-                    </text>
-                    <text x="282" y="105" fill="#64748B" fontSize="8.5" textAnchor="middle">
-                      Frente a Sánchez Cerro
-                    </text>
-                    <rect x="235" y="125" width="95" height="18" rx="4" fill="#BAE6FD" />
-                    <text x="282" y="137" fill="#0369A1" fontSize="8.5" fontWeight="bold" textAnchor="middle">
-                      Laboratorios
-                    </text>
-                  </g>
-
-                  {/* ========================================================
-                      BLOQUE 2: CAMPUS PRINCIPAL (Lado Este de Sánchez Cerro)
-                      ======================================================== */}
-
-                  {/* PABELLÓN D (Extremo Norte) */}
-                  <g 
-                    onClick={() => setSelectedPabellon('D')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="475" y="25" width="105" height="50" rx="8" 
-                      fill={selectedPabellon === 'D' ? '#EDE9FE' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'D' ? '#7C3AED' : '#94A3B8'} 
-                      strokeWidth={selectedPabellon === 'D' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="475" y="25" width="105" height="20" rx="6" fill={selectedPabellon === 'D' ? '#6D28D9' : '#334155'} />
-                    <text x="527" y="39" fill="#FFFFFF" fontSize="9.5" fontWeight="bold" textAnchor="middle">
-                      PABELLÓN D
-                    </text>
-                    <text x="527" y="60" fill="#4B5563" fontSize="8.5" fontWeight="bold" textAnchor="middle">
-                      Auditorio J.J. Wicht
-                    </text>
-                  </g>
-
-                  {/* PABELLÓN C (Con TÓPICO UP) */}
-                  <g 
-                    onClick={() => setSelectedPabellon('C')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="475" y="85" width="145" height="75" rx="10" 
-                      fill={selectedPabellon === 'C' ? '#FEE2E2' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'C' ? '#DC2626' : '#94A3B8'} 
-                      strokeWidth={selectedPabellon === 'C' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="475" y="85" width="145" height="24" rx="8" fill={selectedPabellon === 'C' ? '#B91C1C' : '#0B2240'} />
-                    <text x="547" y="101" fill="#FFFFFF" fontSize="10.5" fontWeight="bold" textAnchor="middle">
-                      PABELLÓN C
-                    </text>
-                    
-                    {/* Badge destacado Tópico */}
-                    <rect x="485" y="117" width="125" height="24" rx="6" fill="#FCA5A5" stroke="#DC2626" strokeWidth="1" />
-                    <text x="547" y="132" fill="#7F1D1D" fontSize="9.5" fontWeight="extrabold" textAnchor="middle">
-                      🏥 TÓPICO MÉDICO UP
-                    </text>
-                  </g>
-
-                  {/* CANCHITA DEPORTIVA UP (Norte / Este) */}
-                  <g 
-                    onClick={() => setSelectedPabellon('DEPORTES')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="645" y="30" width="140" height="90" rx="10" 
-                      fill="url(#grass-pattern)" 
-                      stroke={selectedPabellon === 'DEPORTES' ? '#16A34A' : '#4ADE80'} 
-                      strokeWidth={selectedPabellon === 'DEPORTES' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="653" y="38" width="124" height="74" fill="none" stroke="#FFFFFF" strokeWidth="1.5" strokeDasharray="3,3" />
-                    <circle cx="715" cy="75" r="14" fill="none" stroke="#FFFFFF" strokeWidth="1.5" />
-                    <text x="715" y="72" fill="#14532D" fontSize="11" fontWeight="extrabold" textAnchor="middle">
-                      ⚽ CANCHITA UP
-                    </text>
-                    <text x="715" y="85" fill="#166534" fontSize="8" fontStyle="italic" textAnchor="middle">
-                      Deportes & Fútbol
-                    </text>
-                  </g>
-
-                  {/* PABELLÓN B · BIBLIOTECA (Este) */}
-                  <g 
-                    onClick={() => setSelectedPabellon('B')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="780" y="125" width="120" height="115" rx="10" 
-                      fill={selectedPabellon === 'B' ? '#CCFBF1' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'B' ? '#0D9488' : '#94A3B8'} 
-                      strokeWidth={selectedPabellon === 'B' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="780" y="125" width="120" height="26" rx="8" fill={selectedPabellon === 'B' ? '#0F766E' : '#0B2240'} />
-                    <text x="840" y="142" fill="#FFFFFF" fontSize="10.5" fontWeight="bold" textAnchor="middle">
-                      PABELLÓN B
-                    </text>
-                    <text x="840" y="172" fill="#0F766E" fontSize="11" fontWeight="extrabold" textAnchor="middle">
-                      📚 BIBLIOTECA
-                    </text>
-                    <text x="840" y="190" fill="#475569" fontSize="8.5" textAnchor="middle">
-                      Salas & Cubículos
-                    </text>
-                    <rect x="795" y="202" width="90" height="16" rx="4" fill="#99F6E4" />
-                    <text x="840" y="213" fill="#115E59" fontSize="8" fontWeight="bold" textAnchor="middle">
-                      Estudio Grupal
-                    </text>
-                  </g>
-
-                  {/* PLAZA GEIS (PLACITA UP) - Centro del campus */}
-                  <g 
-                    onClick={() => setSelectedPabellon('DEPORTES')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="570" y="170" width="105" height="110" rx="12" 
-                      fill="#F0FDF4" 
-                      stroke={selectedPabellon === 'DEPORTES' ? '#16A34A' : '#86EFAC'} 
-                      strokeWidth={selectedPabellon === 'DEPORTES' ? '2.5' : '1'}
-                    />
-                    <circle cx="622" cy="225" r="22" fill="#DCFCE7" stroke="#86EFAC" strokeWidth="1" />
-                    <text x="622" y="222" fill="#166534" fontSize="9.5" fontWeight="extrabold" textAnchor="middle">
-                      PLAZA GEIS
-                    </text>
-                    <text x="622" y="235" fill="#15803D" fontSize="8" textAnchor="middle">
-                      (Placita UP)
-                    </text>
-                  </g>
-
-                  {/* CAPILLA UP */}
-                  <g 
-                    onClick={() => setSelectedPabellon('DEPORTES')}
-                    className="cursor-pointer"
-                  >
-                    <rect x="685" y="195" width="65" height="70" rx="8" fill="#FFEDD5" stroke="#F97316" strokeWidth="1" />
-                    <text x="717" y="225" fill="#C2410C" fontSize="13" textAnchor="middle">✝</text>
-                    <text x="717" y="240" fill="#9A3412" fontSize="8.5" fontWeight="bold" textAnchor="middle">
-                      CAPILLA UP
-                    </text>
-                  </g>
-
-                  {/* PABELLÓN E (A lo largo de Sánchez Cerro) */}
-                  <g 
-                    onClick={() => setSelectedPabellon('E')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="475" y="170" width="80" height="130" rx="10" 
-                      fill={selectedPabellon === 'E' ? '#E0F2FE' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'E' ? '#0284C7' : '#94A3B8'} 
-                      strokeWidth={selectedPabellon === 'E' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="475" y="170" width="80" height="24" rx="8" fill={selectedPabellon === 'E' ? '#0369A1' : '#0B2240'} />
-                    <text x="515" y="186" fill="#FFFFFF" fontSize="10" fontWeight="bold" textAnchor="middle">
-                      PAB. E
-                    </text>
-                    <text x="515" y="225" fill="#1E293B" fontSize="9" fontWeight="bold" textAnchor="middle">
-                      Aulas UP
-                    </text>
-                    <text x="515" y="245" fill="#64748B" fontSize="8" textAnchor="middle">
-                      Sánchez Cerro
-                    </text>
-                  </g>
-
-                  {/* PABELLÓN F (Con SALÓN F400) */}
-                  <g 
-                    onClick={() => setSelectedPabellon('F')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="540" y="310" width="115" height="65" rx="10" 
-                      fill={selectedPabellon === 'F' ? '#DBEAFE' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'F' ? '#2563EB' : '#94A3B8'} 
-                      strokeWidth={selectedPabellon === 'F' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="540" y="310" width="115" height="22" rx="8" fill={selectedPabellon === 'F' ? '#1D4ED8' : '#0B2240'} />
-                    <text x="597" y="325" fill="#FFFFFF" fontSize="10" fontWeight="bold" textAnchor="middle">
-                      PABELLÓN F
-                    </text>
-                    <rect x="548" y="338" width="99" height="18" rx="4" fill="#93C5FD" />
-                    <text x="597" y="350" fill="#1E3A8A" fontSize="8.5" fontWeight="extrabold" textAnchor="middle">
-                      ⚡ SALÓN F400 (Piso 4)
-                    </text>
-                    <text x="597" y="367" fill="#1E40AF" fontSize="7.5" textAnchor="middle">
-                      Ingeniería de la Información
-                    </text>
-                  </g>
-
-                  {/* PABELLÓN A (Aulas Magnas) */}
-                  <g 
-                    onClick={() => setSelectedPabellon('A')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="675" y="275" width="115" height="90" rx="10" 
-                      fill={selectedPabellon === 'A' ? '#E0E7FF' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'A' ? '#4F46E5' : '#94A3B8'} 
-                      strokeWidth={selectedPabellon === 'A' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="675" y="275" width="115" height="24" rx="8" fill={selectedPabellon === 'A' ? '#4338CA' : '#0B2240'} />
-                    <text x="732" y="291" fill="#FFFFFF" fontSize="10.5" fontWeight="bold" textAnchor="middle">
-                      PABELLÓN A
-                    </text>
-                    <text x="732" y="325" fill="#312E81" fontSize="9.5" fontWeight="bold" textAnchor="middle">
-                      Aulas Magnas
-                    </text>
-                    <text x="732" y="345" fill="#64748B" fontSize="8.5" textAnchor="middle">
-                      Clases Pregrado
-                    </text>
-                  </g>
-
-                  {/* ESTACIONAMIENTO SALAVERRY */}
-                  <g>
-                    <polygon 
-                      points="660,380 910,250 960,340 730,460" 
-                      fill="url(#parking-pattern)" 
-                      stroke="#94A3B8" 
-                      strokeWidth="1"
-                    />
-                    <text x="800" y="360" fill="#475569" fontSize="11" fontWeight="bold" textAnchor="middle" transform="rotate(-25, 800, 360)">
-                      🅿️ ESTACIONAMIENTO SALAVERRY
-                    </text>
-                  </g>
-
-                  {/* PABELLÓN X · PRE UNIVERSITARIA (Cuadrante Sur) */}
-                  <g 
-                    onClick={() => setSelectedPabellon('X')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="570" y="440" width="100" height="65" rx="9" 
-                      fill={selectedPabellon === 'X' ? '#FFEDD5' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'X' ? '#EA580C' : '#94A3B8'} 
-                      strokeWidth={selectedPabellon === 'X' ? '3' : '1.5'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="570" y="440" width="100" height="20" rx="7" fill={selectedPabellon === 'X' ? '#C2410C' : '#0B2240'} />
-                    <text x="620" y="454" fill="#FFFFFF" fontSize="9.5" fontWeight="bold" textAnchor="middle">
-                      PABELLÓN X
-                    </text>
-                    <text x="620" y="478" fill="#9A3412" fontSize="8.5" fontWeight="bold" textAnchor="middle">
-                      Preuniversitaria UP
-                    </text>
-                  </g>
-
-                  {/* PABELLÓN Z · CASA DEL ESTUDIANTE (Extremo Sur / Sánchez Cerro) */}
-                  <g 
-                    onClick={() => setSelectedPabellon('Z')}
-                    className="cursor-pointer transition-all duration-200"
-                  >
-                    <rect 
-                      x="475" y="470" width="145" height="110" rx="12" 
-                      fill={selectedPabellon === 'Z' ? '#FEF3C7' : '#FFFFFF'} 
-                      stroke={selectedPabellon === 'Z' ? '#D97706' : '#B45309'} 
-                      strokeWidth={selectedPabellon === 'Z' ? '3.5' : '2'}
-                      filter="url(#pab-shadow)"
-                    />
-                    <rect x="475" y="470" width="145" height="26" rx="10" fill={selectedPabellon === 'Z' ? '#B45309' : '#0F2C59'} />
-                    <text x="547" y="487" fill="#FFFFFF" fontSize="10.5" fontWeight="bold" textAnchor="middle">
-                      PABELLÓN Z · CASA UP
-                    </text>
-                    <text x="547" y="515" fill="#92400E" fontSize="10" fontWeight="extrabold" textAnchor="middle">
-                      CASA DEL ESTUDIANTE
-                    </text>
-                    <text x="547" y="532" fill="#78350F" fontSize="8.5" textAnchor="middle">
-                      • Piso 1: Gym UP · Casilleros
-                    </text>
-                    <text x="547" y="546" fill="#78350F" fontSize="8.5" textAnchor="middle">
-                      • Piso 2: Salón Z-201 · BFE
-                    </text>
-                    <rect x="495" y="555" width="105" height="16" rx="4" fill="#FDE68A" />
-                    <text x="547" y="566" fill="#78350F" fontSize="8" fontWeight="bold" textAnchor="middle">
-                      Puerta: Jr. Sánchez Cerro 2141
-                    </text>
-                  </g>
-
-                </svg>
-              </div>
-            </div>
-          )}
+          </div>
 
           {/* Tarjeta Interactiva Detallada del Pabellón Seleccionado */}
           <div className={'rounded-2xl p-4 sm:p-5 border shadow-sm transition-all duration-300 ' + currentInfo.accent}>
@@ -2687,20 +2286,7 @@ function DynamicResultCard({
         </div>
 
         {/* Enlace Oficial Web */}
-        {channel.web && (
-          <a
-            href={channel.web}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-2xl bg-blue-50 hover:bg-blue-100/80 border border-blue-200 text-blue-900 flex items-center justify-between gap-2 transition font-bold"
-          >
-            <div>
-              <span className="text-[10px] uppercase font-bold text-blue-500 block">Portal Institucional</span>
-              <span className="truncate block text-xs">Sitio Web Oficial</span>
-            </div>
-            <Icon name="external-link" className="w-4 h-4 text-blue-700 shrink-0" />
-          </a>
-        )}
+        {/* Web externa eliminada - Solo canal de correo oficial */}
 
         {/* Botón Mapa si tiene Pabellón */}
         {channel.pabellon && (
@@ -3393,17 +2979,17 @@ function App() {
                         : 'bg-[#102A4C] border-[#1D3D66] hover:bg-[#133055] hover:border-slate-500'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1 w-full">
+                    <span className="flex items-center justify-between mb-1 w-full">
                       <span className={`font-bold text-sm sm:text-base ${isActive ? 'text-amber-300' : 'text-white'}`}>
                         {card.title}
                       </span>
                       {isActive && (
                         <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>
                       )}
-                    </div>
-                    <div className="text-[11px] sm:text-xs text-slate-300 truncate w-full">
+                    </span>
+                    <span className="text-[11px] sm:text-xs text-slate-300 truncate w-full">
                       {card.desc}
-                    </div>
+                    </span>
                   </button>
                 );
               })}
@@ -3492,21 +3078,12 @@ function App() {
                           </td>
                           <td className="py-3.5 px-3 sm:px-4 text-[#1E40AF]">
                             {row.correo ? (
-                              <span className="font-semibold hover:underline block text-xs sm:text-sm">{row.correo}</span>
-                            ) : null}
-                            {row.enlace && (
-                              <a
-                                href={row.enlace}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="text-xs text-blue-700 hover:underline block"
-                              >
-                                {row.enlaceTexto || row.enlace}
-                              </a>
-                            )}
-                            {!row.correo && !row.enlace && (
-                              <span className="text-slate-600 font-semibold text-xs sm:text-sm">{row.contactoTexto}</span>
+                              <span className="font-bold text-[#0B2240] hover:underline flex items-center gap-1.5 text-xs sm:text-sm">
+                                <Icon name="mail" className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                                {row.correo}
+                              </span>
+                            ) : (
+                              <span className="text-slate-600 font-semibold text-xs sm:text-sm">{row.contactoTexto || "Atención presencial"}</span>
                             )}
                           </td>
                         </tr>
@@ -3587,18 +3164,7 @@ function App() {
                                         <Icon name="mail" className="w-3.5 h-3.5" />
                                         <span>Abrir en mi Correo UP</span>
                                       </a>
-                                      {row.enlace && (
-                                        <a
-                                          href={row.enlace}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          onClick={(e) => e.stopPropagation()}
-                                          className="py-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-lg transition inline-flex items-center gap-1"
-                                        >
-                                          <span>Web oficial</span>
-                                          <Icon name="external-link" className="w-3 h-3" />
-                                        </a>
-                                      )}
+                                      {/* Enlace externo retirado */}
                                     </div>
 
                                   </div>
@@ -3630,20 +3196,6 @@ function App() {
                                       </div>
                                     )}
 
-                                    {row.enlace && (
-                                      <div className="pt-1 flex flex-wrap items-center gap-2">
-                                        <a
-                                          href={row.enlace}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          onClick={(e) => e.stopPropagation()}
-                                          className="py-1.5 px-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-lg transition inline-flex items-center gap-1.5 shadow-sm"
-                                        >
-                                          <span>{row.canal === 'T2D' ? 'Ingresar a Servicios T2D' : `Abrir Linktree de ${row.canal}`}</span>
-                                          <Icon name="external-link" className="w-3.5 h-3.5" />
-                                        </a>
-                                      </div>
-                                    )}
                                   </div>
                                 )}
 
@@ -3660,15 +3212,14 @@ function App() {
 
             {/* Enlaces Puente al pie */}
             <div className="text-xs text-slate-600 flex flex-wrap items-center gap-x-2 gap-y-1 pt-2">
-              <span>Más información:</span>
-              <a href="https://daar.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[#1E40AF] font-bold hover:underline">
-                daar.up.edu.pe
-              </a>
-              <span>(trámites académicos) ·</span>
-              <a href="https://casaup.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[#1E40AF] font-bold hover:underline">
-                casaup.up.edu.pe
-              </a>
-              <span>(bienestar y vida universitaria).</span>
+              <span>Canal oficial de atención:</span>
+              <button 
+                onClick={() => copyToClipboard('pregrado@up.edu.pe', '¡Correo pregrado@up.edu.pe copiado!')} 
+                className="font-bold text-[#0B2240] hover:underline inline-flex items-center gap-1 bg-white px-2.5 py-0.5 rounded-lg border border-slate-200"
+              >
+                <Icon name="mail" className="w-3.5 h-3.5 text-blue-600" /> pregrado@up.edu.pe
+              </button>
+              <span>· Oficina DAAR (Pabellón A)</span>
             </div>
 
           </div>
@@ -3712,36 +3263,40 @@ function App() {
             {/* Franja Celeste de 4 Columnas (Exacta a Imagen 3) */}
             <div className="bg-[#EBF3FC] rounded-2xl p-4 sm:p-5 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 border border-blue-100 text-xs">
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CORREO</div>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CORREO PRINCIPAL</div>
                 <button
                   onClick={() => copyToClipboard(DAAR_DATA.header.correo, "¡Correo de DAAR copiado!")}
-                  className="font-bold text-[#1E40AF] hover:underline text-left flex items-center gap-1"
+                  className="font-bold text-[#0B2240] hover:underline text-left flex items-center gap-1"
                 >
+                  <Icon name="mail" className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                   <span>{DAAR_DATA.header.correo}</span>
                   <Icon name="copy" className="w-3 h-3 text-slate-400" />
                 </button>
               </div>
 
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">WEB</div>
-                <a href={DAAR_DATA.header.web} target="_blank" rel="noopener noreferrer" className="font-bold text-[#1E40AF] hover:underline">
-                  {DAAR_DATA.header.webTexto}
-                </a>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">UBICACIÓN EN CAMPUS</div>
+                <span className="font-semibold text-slate-800 flex items-center gap-1">
+                  <Icon name="map-pin" className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                  <span>Pabellón A · Edificio Central</span>
+                </span>
               </div>
 
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">MATRÍCULA</div>
-                <a href={DAAR_DATA.header.matricula} target="_blank" rel="noopener noreferrer" className="font-bold text-[#1E40AF] hover:underline">
-                  {DAAR_DATA.header.matriculaTexto}
-                </a>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">HORARIO DE ATENCIÓN</div>
+                <span className="font-semibold text-slate-800 flex items-center gap-1">
+                  <Icon name="clock" className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span>Lunes a Viernes 8:00 – 18:00</span>
+                </span>
               </div>
 
               <div>
                 <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">GRADOS Y TÍTULOS</div>
                 <button
                   onClick={() => copyToClipboard(DAAR_DATA.header.grados, "¡Correo de Grados y Títulos copiado!")}
-                  className="font-bold text-[#1E40AF] hover:underline text-left flex items-center gap-1"
+                  className="font-bold text-[#0B2240] hover:underline text-left flex items-center gap-1"
                 >
+                  <Icon name="mail" className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                   <span>{DAAR_DATA.header.grados}</span>
                   <Icon name="copy" className="w-3 h-3 text-slate-400" />
                 </button>
@@ -3773,10 +3328,10 @@ function App() {
                           : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
                       }`}
                     >
-                      <div className="font-bold text-xs sm:text-sm">{cat.title}</div>
-                      <div className={`text-[11px] mt-0.5 ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
+                      <span className="font-bold text-xs sm:text-sm">{cat.title}</span>
+                      <span className={`text-[11px] mt-0.5 ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
                         {cat.badge}
-                      </div>
+                      </span>
                     </button>
                   );
                 })}
@@ -3837,101 +3392,16 @@ function App() {
                   {activeDaarItem.descripcion}
                 </p>
 
-                {/* Si es Matrícula, Retiro de curso, Retiro de semestre o Reserva: Trámite por Autoservicio */}
-                {['d-matr', 'd-reser', 'd-retcurso', 'd-retsem'].includes(activeDaarItem.id) ? (
-                  <div className="space-y-4 mb-5">
-                    {/* Tarjeta Destacada de Autoservicio */}
-                    <div className="bg-blue-50/80 border-2 border-blue-300 rounded-2xl p-5 shadow-sm">
-                      <div className="flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-[#1E40AF] text-white flex items-center justify-center shrink-0 shadow-xs">
-                          <Icon name="check" className="w-5 h-5 text-white" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-extrabold text-[#0B2240] text-sm sm:text-base">
-                            Trámite 100% en Línea mediante Autoservicio
-                          </h4>
-                          <p className="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
-                            Este trámite no se gestiona mediante correo ordinario. Se realiza de forma directa en las plataformas oficiales UP en las fechas establecidas en el Calendario Académico:
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                        <a
-                          href="https://powercampus.up.edu.pe"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3.5 rounded-xl bg-white border border-blue-200 hover:border-blue-500 hover:shadow-md transition flex items-center justify-between group"
-                        >
-                          <div>
-                            <span className="text-[10px] font-extrabold uppercase text-blue-600 block">Autoservicio Principal</span>
-                            <span className="font-extrabold text-slate-900 text-sm group-hover:text-blue-700">PowerCampus UP</span>
-                            <span className="text-[11px] text-slate-500 block">Matrícula regular y retiros</span>
-                          </div>
-                          <Icon name="external-link" className="w-4 h-4 text-blue-600 shrink-0" />
-                        </a>
-
-                        <a
-                          href="https://experience.up.edu.pe"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3.5 rounded-xl bg-white border border-blue-200 hover:border-blue-500 hover:shadow-md transition flex items-center justify-between group"
-                        >
-                          <div>
-                            <span className="text-[10px] font-extrabold uppercase text-blue-600 block">Portal del Alumno</span>
-                            <span className="font-extrabold text-slate-900 text-sm group-hover:text-blue-700">UP Experience</span>
-                            <span className="text-[11px] text-slate-500 block">Cronogramas y acceso rápido</span>
-                          </div>
-                          <Icon name="external-link" className="w-4 h-4 text-blue-600 shrink-0" />
-                        </a>
-                      </div>
-
-                      {/* Guía textual de ruta oficial en PowerCampus */}
-                      <div className="mt-4 bg-white border border-blue-200 rounded-xl p-3.5 flex items-start gap-3 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
-                          <Icon name="info" className="w-4 h-4 text-blue-700" />
-                        </div>
-                        <div className="text-xs text-slate-700 flex-1">
-                          <strong className="text-[#0B2240] block font-bold mb-0.5">
-                            📍 Ruta oficial en PowerCampus:
-                          </strong>
-                          <p className="leading-relaxed text-slate-600">
-                            Inicia sesión con tu correo institucional y dirígete al menú superior: <strong className="text-slate-900 font-semibold">«Información General» → «Trámites y Documentos»</strong> para acceder a las solicitudes virtuales de carné universitario, requisito de inglés, convenios de prácticas, cartas de presentación y verificación académica.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Fallback de Excepción para Casos Especiales */}
-                    <div className="bg-amber-50/80 border border-amber-300 rounded-xl p-4 text-xs">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div className="text-slate-700">
-                          <strong className="text-amber-950 font-bold block mb-0.5">
-                            ¿Tu caso es excepcional o no corresponde a un trámite automático?
-                          </strong>
-                          <span>Si presentas alguna incidencia técnica o trámite especial, escribe directamente a pregrado@up.edu.pe:</span>
-                        </div>
-                        <div className="flex items-center gap-2 shrink-0">
-                          <button
-                            onClick={() => copyToClipboard('pregrado@up.edu.pe', '¡Correo pregrado@up.edu.pe copiado!')}
-                            className="px-3 py-1.5 bg-white hover:bg-slate-100 border border-amber-300 rounded-lg font-bold text-slate-800 text-xs flex items-center gap-1 transition"
-                          >
-                            <Icon name="copy" className="w-3.5 h-3.5" />
-                            <span>Copiar correo</span>
-                          </button>
-                          <a
-                            href="mailto:pregrado@up.edu.pe?subject=Consulta%20Excepcional%20DAAR%20-%20Incidencia"
-                            className="px-3 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white rounded-lg font-bold text-xs flex items-center gap-1 transition shadow-xs"
-                          >
-                            <Icon name="mail" className="w-3.5 h-3.5" />
-                            <span>Escribir correo</span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+                {['d-matr', 'd-reser', 'd-retcurso', 'd-retsem'].includes(activeDaarItem.id) && (
+                  <div className="bg-blue-50/80 border border-blue-200 rounded-xl p-3.5 text-xs text-slate-700 mb-4 flex items-start gap-2.5 shadow-2xs">
+                    <Icon name="info" className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">
+                      <strong className="text-[#0B2240]">Nota sobre autoservicio:</strong> Si las fechas de matrícula o retiro por sistema están vigentes según tu turno, también puedes realizarlo desde tu cuenta regular en PowerCampus. Para cualquier duda, cruce de cursos, excepción o incidencia técnica, escribe directamente al correo institucional indicado abajo.
+                    </span>
                   </div>
-                ) : (
-                  <>
+                )}
+
+                <>
                     {/* Generador de Asunto Oficial para Otros Trámites */}
                     <div className="bg-white rounded-xl p-4 border border-blue-100 shadow-sm space-y-3 mb-4">
                       <div className="flex items-center justify-between text-xs">
@@ -3976,20 +3446,8 @@ function App() {
                         <span>Copiar {activeDaarItem.correo}</span>
                       </button>
 
-                      {activeDaarItem.web && (
-                        <a
-                          href={activeDaarItem.web}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition flex items-center gap-1.5"
-                        >
-                          <span>Web oficial</span>
-                          <Icon name="external-link" className="w-3.5 h-3.5" />
-                        </a>
-                      )}
+                      {/* Web externa eliminada */}
                     </div>
-                  </>
-                )}
 
               </div>
             )}
@@ -4069,10 +3527,7 @@ function App() {
                   <a href="tel:012190100" className="font-bold text-[#1E40AF] hover:underline block">
                     (01) 219-0100 <span className="font-normal text-slate-600 text-[11px]">(Anexos: 2390 / 2261)</span>
                   </a>
-                  <a href="https://www.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[11px] font-bold text-blue-700 hover:underline flex items-center gap-1">
-                    <span>www.up.edu.pe</span>
-                    <Icon name="external-link" className="w-2.5 h-2.5" />
-                  </a>
+                  <span className="text-[11px] font-medium text-slate-600">Pabellón Z · Casa del Estudiante</span>
                 </div>
               </div>
             </div>
@@ -4101,10 +3556,10 @@ function App() {
                           : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
                       }`}
                     >
-                      <div className="font-bold text-xs">{cat.title}</div>
-                      <div className={`text-[10px] mt-0.5 ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
+                      <span className="font-bold text-xs">{cat.title}</span>
+                      <span className={`text-[10px] mt-0.5 ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
                         {cat.badge}
-                      </div>
+                      </span>
                     </button>
                   );
                 })}
@@ -4150,15 +3605,10 @@ function App() {
                   >
                     Solicitar Cita Estudiantil
                   </a>
-                  <a
-                    href={currentBfeCategory.pdfLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-2 bg-white text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 hover:bg-slate-100 transition flex items-center gap-1.5"
-                  >
-                    <span>Folleto Oficial PDF 2025</span>
-                    <Icon name="external-link" className="w-3.5 h-3.5" />
-                  </a>
+                  <button onClick={() => copyToClipboard('bfe@up.edu.pe', '¡Correo bfe@up.edu.pe copiado!')} className="px-3.5 py-2 bg-white text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 hover:bg-slate-100 transition flex items-center gap-1.5 shadow-2xs">
+                    <Icon name="mail" className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Solicitar guía oficial: bfe@up.edu.pe</span>
+                  </button>
                 </div>
               </div>
             )}
@@ -4210,27 +3660,21 @@ function App() {
                   </div>
                 </div>
 
-                <div className="pt-2 flex flex-wrap gap-2 text-xs">
-                  {currentBfeCategory.enlaces.map((link, idx) => (
-                    <a
-                      key={idx}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3.5 py-2 bg-white border border-slate-200 rounded-xl hover:border-blue-400 font-semibold text-[#1E40AF] flex items-center gap-1.5 transition"
-                    >
-                      <span>{link.nombre} ({link.ig})</span>
-                      <Icon name="external-link" className="w-3 h-3" />
-                    </a>
-                  ))}
+                <div className="pt-2 flex flex-wrap items-center gap-2 text-xs">
                   <a
-                    href={currentBfeCategory.flujogramaLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-2 bg-[#1E40AF] text-white rounded-xl font-bold hover:bg-blue-800 transition"
+                    href="mailto:bfe@up.edu.pe?subject=Consulta%20Cr%C3%A9ditos%20EFE%20y%20Voluntariados"
+                    className="px-4 py-2 bg-[#0B2240] hover:bg-[#16365F] text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-xs"
                   >
-                    Ver Nuevo Flujograma EFE
+                    <Icon name="mail" className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Escribir a bfe@up.edu.pe</span>
                   </a>
+                  <button
+                    onClick={() => copyToClipboard('bfe@up.edu.pe', '¡Correo bfe@up.edu.pe copiado!')}
+                    className="px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl font-bold border border-slate-300 transition flex items-center gap-1.5 shadow-2xs"
+                  >
+                    <Icon name="copy" className="w-3.5 h-3.5" />
+                    <span>Copiar correo</span>
+                  </button>
                 </div>
               </div>
             )}
@@ -4255,10 +3699,10 @@ function App() {
                             : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-200'
                         }`}
                       >
-                        <div className="font-bold text-xs truncate">{espacio.nombre}</div>
-                        <div className={`text-[10px] truncate mt-0.5 ${isSelected ? 'text-blue-100' : 'text-slate-500'}`}>
+                        <span className="font-bold text-xs truncate">{espacio.nombre}</span>
+                        <span className={`text-[10px] truncate mt-0.5 ${isSelected ? 'text-blue-100' : 'text-slate-500'}`}>
                           {espacio.ubicacion}
-                        </div>
+                        </span>
                       </button>
                     );
                   })}
@@ -4427,23 +3871,19 @@ function App() {
                     />
                     <div className="flex flex-wrap items-center gap-2">
                       <a
-                        href="https://intercambio.up.edu.pe"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs rounded-xl transition flex items-center gap-1.5 shadow"
+                        href="mailto:ori@up.edu.pe?subject=Consulta%20Intercambio%20Estudiantil"
+                        className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs rounded-xl transition flex items-center gap-2 shadow"
                       >
-                        <span>Sistema de Intercambio</span>
-                        <Icon name="external-link" className="w-3.5 h-3.5" />
+                        <Icon name="mail" className="w-4 h-4 text-white" />
+                        <span>Escribir a ori@up.edu.pe</span>
                       </a>
-                      <a
-                        href="https://ori.up.edu.pe/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 text-white font-semibold text-xs rounded-xl transition flex items-center gap-1.5 border border-white/20"
+                      <button
+                        onClick={() => copyToClipboard('ori@up.edu.pe', '¡Correo ori@up.edu.pe copiado!')}
+                        className="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white font-semibold text-xs rounded-xl border border-white/20 transition flex items-center gap-1.5"
                       >
-                        <span>Portal ORI</span>
-                        <Icon name="external-link" className="w-3.5 h-3.5" />
-                      </a>
+                        <Icon name="copy" className="w-3.5 h-3.5" />
+                        <span>Copiar correo</span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -4542,12 +3982,11 @@ function App() {
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
                         <a
-                          href="https://intercambio.up.edu.pe"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3.5 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-lg transition"
+                          href="mailto:ori@up.edu.pe?subject=Consulta%20Postulaci%C3%B3n%20Intercambio"
+                          className="px-3.5 py-1.5 bg-[#0B2240] hover:bg-[#16365F] text-white font-bold text-xs rounded-lg transition flex items-center gap-1.5 shadow-xs"
                         >
-                          Iniciar Aplicación ↗
+                          <Icon name="mail" className="w-3.5 h-3.5 text-rose-300" />
+                          <span>Escribir a ori@up.edu.pe</span>
                         </a>
                       </div>
                     </div>
@@ -4743,12 +4182,11 @@ function App() {
                       <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
                         <span className="text-slate-500">Consulta el directorio actualizado en ori.up.edu.pe</span>
                         <a
-                          href={oriCategory.convenios.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3 py-1.5 bg-[#1E40AF] text-white font-bold rounded-lg hover:bg-blue-800 transition"
+                          href="mailto:ori@up.edu.pe?subject=Consulta%20Lista%20de%20Convenios%20Internacionales"
+                          className="px-3.5 py-1.5 bg-[#0B2240] text-white font-bold text-xs rounded-lg hover:bg-[#16365F] transition flex items-center gap-1.5 shadow-xs"
                         >
-                          Ver Directorio de Convenios ↗
+                          <Icon name="mail" className="w-3.5 h-3.5 text-amber-300" />
+                          <span>Solicitar lista de convenios: ori@up.edu.pe</span>
                         </a>
                       </div>
                     </div>
@@ -4936,15 +4374,22 @@ function App() {
                 </div>
               </div>
 
-              <a
-                href="https://serviciost2d.up.edu.pe/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 bg-[#0B2240] hover:bg-[#16365F] text-white font-bold text-xs rounded-xl transition flex items-center gap-2 shadow-sm shrink-0"
-              >
-                <span>Portal de Autoservicio T2D</span>
-                <Icon name="external-link" className="w-3.5 h-3.5" />
-              </a>
+              <div className="flex items-center gap-2 shrink-0">
+                <a
+                  href="mailto:t2d@up.edu.pe?subject=Solicitud%20de%20Soporte%20T%C3%A9cnico%20-%20T2D"
+                  className="px-4 py-2 bg-[#0B2240] hover:bg-[#16365F] text-white font-bold text-xs rounded-xl transition flex items-center gap-2 shadow-sm"
+                >
+                  <Icon name="mail" className="w-4 h-4 text-cyan-400" />
+                  <span>Escribir a t2d@up.edu.pe</span>
+                </a>
+                <button
+                  onClick={() => copyToClipboard('t2d@up.edu.pe', '¡Correo t2d@up.edu.pe copiado!')}
+                  className="px-3 py-2 bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 transition flex items-center gap-1 shadow-2xs"
+                  title="Copiar correo"
+                >
+                  <Icon name="copy" className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
 
 <div className="space-y-6 mb-6 animate-fade-in">
@@ -4966,15 +4411,22 @@ function App() {
                       </p>
                     </div>
                   </div>
-                  <a
-                    href="https://serviciost2d.up.edu.pe/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-[#0B2240] font-extrabold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 shadow flex-shrink-0"
-                  >
-                    <span>Ir a Portal T2D</span>
-                    <Icon name="external-link" className="w-4 h-4" />
-                  </a>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <a
+                      href="mailto:t2d@up.edu.pe?subject=Ticket%20de%20Atenci%C3%B3n%20T2D"
+                      className="px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-[#0B2240] font-extrabold text-xs sm:text-sm rounded-xl transition shadow flex items-center gap-2"
+                    >
+                      <Icon name="mail" className="w-4 h-4 text-[#0B2240]" />
+                      <span>Escribir a t2d@up.edu.pe</span>
+                    </a>
+                    <button
+                      onClick={() => copyToClipboard('t2d@up.edu.pe', '¡Correo t2d@up.edu.pe copiado!')}
+                      className="px-3.5 py-2.5 bg-white/20 hover:bg-white/30 text-white font-bold text-xs rounded-xl border border-white/30 transition flex items-center gap-1.5"
+                    >
+                      <Icon name="copy" className="w-4 h-4" />
+                      <span>Copiar</span>
+                    </button>
+                  </div>
                 </div>
 
                 {/* Cuadrícula Dinámica de los 6 Servicios Clave de T2D */}
@@ -4994,13 +4446,11 @@ function App() {
                       <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
                         <span className="text-[11px] font-mono text-slate-400">serviciost2d.up.edu.pe</span>
                         <a
-                          href={srv.enlace}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          href={'mailto:t2d@up.edu.pe?subject=' + encodeURIComponent('Soporte ' + srv.nombre)}
                           className="text-xs font-bold text-[#1E40AF] hover:text-blue-800 flex items-center gap-1 group-hover:underline"
                         >
-                          <span>{srv.enlaceTexto}</span>
-                          <Icon name="arrow-right" className="w-3 h-3" />
+                          <Icon name="mail" className="w-3.5 h-3.5" />
+                          <span>Escribir a t2d@up.edu.pe</span>
                         </a>
                       </div>
                     </div>
@@ -5152,16 +4602,10 @@ function App() {
               </div>
 
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">PORTAL WEB</div>
-                <a 
-                  href="https://www.up.edu.pe" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="font-bold text-[#1E40AF] hover:underline flex items-center gap-1"
-                >
-                  <span>www.up.edu.pe</span>
-                  <Icon name="external-link" className="w-3 h-3 text-[#1E40AF]" />
-                </a>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CANAL OFICIAL</div>
+                <div className="font-bold text-[#0B2240] text-xs">
+                  Atención Institucional UP
+                </div>
               </div>
 
               <div>
@@ -5192,10 +4636,10 @@ function App() {
                           : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
                       }`}
                     >
-                      <div className="font-bold text-xs sm:text-sm">{cat.title}</div>
-                      <div className={`text-[10px] sm:text-xs mt-0.5 ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
+                      <span className="font-bold text-xs sm:text-sm block">{cat.title}</span>
+                      <span className={`text-[10px] sm:text-xs mt-0.5 block ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
                         {cat.badge}
-                      </div>
+                      </span>
                     </button>
                   );
                 })}
@@ -5275,7 +4719,7 @@ function App() {
                       {item.pabellon && (
                         <button
                           onClick={() => {
-                            setSelectedPabellon(item.pabellon);
+                            handleOpenMap(item.pabellon);
                             setShowMapModal(true);
                           }}
                           className="text-[11px] text-amber-700 hover:text-amber-900 font-semibold flex items-center gap-1 bg-amber-50 hover:bg-amber-100 px-2 py-0.5 rounded border border-amber-200 transition"
