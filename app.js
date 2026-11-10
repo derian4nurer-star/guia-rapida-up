@@ -2144,26 +2144,13 @@ function CampusMapModal({ isOpen, onClose, initialPabellon = 'Z' }) {
    ========================================================================== */
 function DynamicResultCard({ 
   channel, 
-  studentCode, 
-  setStudentCode, 
   copyToClipboard, 
   onOpenMap 
 }) {
-  const [localCode, setLocalCode] = useState(studentCode || '20231234');
   const [isCopiedAsunto, setIsCopiedAsunto] = useState(false);
   const [isCopiedCorreo, setIsCopiedCorreo] = useState(false);
 
-  useEffect(() => {
-    setLocalCode(studentCode || '20231234');
-  }, [studentCode]);
-
-  const handleCodeChange = (e) => {
-    const val = e.target.value.replace(/[^0-9]/g, '').slice(0, 8);
-    setLocalCode(val);
-    if (setStudentCode) setStudentCode(val);
-  };
-
-  const officialSubject = (channel.asunto || channel.tramite.split('/')[0].trim()) + ' - ' + (localCode || '20231234');
+  const officialSubject = channel.asunto || channel.tramite.split('/')[0].trim();
 
   const handleCopyAsunto = () => {
     copyToClipboard(officialSubject, '¡Asunto oficial copiado!');
@@ -2275,24 +2262,14 @@ function DynamicResultCard({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#0F2C59] block">
-              GENERADOR AUTOMÁTICO DE ASUNTO OFICIAL UP
+              ASUNTO OFICIAL SUGERIDO
             </span>
             <p className="text-xs text-slate-500">
-              Ingresa tu código de alumno para redactar según el formato institucional «Tema - Código»:
+              Formato institucional listo para copiar y enviar desde tu correo oficial UP:
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 self-start sm:self-center">
-            <label className="text-xs font-bold text-slate-600">Código UP:</label>
-            <input
-              type="text"
-              maxLength="8"
-              value={localCode}
-              onChange={handleCodeChange}
-              placeholder="Ej. 20231234"
-              className="w-24 px-2.5 py-1 text-xs font-mono font-bold text-slate-800 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-blue-600 text-center"
-            />
-          </div>
+
         </div>
 
         {/* Asunto Generado y Botones de Copiar / Enviar */}
@@ -2428,9 +2405,7 @@ function App() {
   const [activeOriTab, setActiveOriTab] = useState('outgoing'); // 'outgoing', 'cortos', 'disney', 'becas', 'convenios', 'faqs'
   const [activeOriFaq, setActiveOriFaq] = useState(null);
 
-  // Código de Alumno Persistente
-  const [studentCode, setStudentCode] = useState('20231234');
-  const [isEditingCode, setIsEditingCode] = useState(false);
+
 
   // Barra de Consulta Inteligente en Lenguaje Natural
   const [searchQuery, setSearchQuery] = useState('');
@@ -2840,8 +2815,7 @@ function App() {
                     {/* Tarjeta Dinámica Principal */}
                     <DynamicResultCard 
                       channel={searchEngineResults.principal}
-                      studentCode={studentCode}
-                      setStudentCode={setStudentCode}
+
                       copyToClipboard={copyToClipboard}
                       onOpenMap={handleOpenMap}
                     />
@@ -3003,1161 +2977,69 @@ function App() {
                   <span className={`font-bold text-sm sm:text-base ${activeSection === 'directorio' ? 'text-amber-300' : 'text-white'}`}>
                     Directorio
                   </span>
-                  {activeSection === 'directorio' && (
-                    <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                  )}
-                </div>
-                <div className="text-xs text-slate-300">
-                  Facultades, pagos, T2D, REUP, REA, ORI
-                </div>
-              </button>
-
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ====================================================================
-          ÁREA PRINCIPAL DE CONTENIDO INTERACTIVO EN PANTALLA ÚNICA
-          (Sin cambiar de página: el panel se despliega directamente aquí)
-          ==================================================================== */}
-      <main className="max-w-5xl mx-auto w-full px-4 sm:px-6 py-8 flex-1">
-        
-        {/* ==================================================================
-            SECCIÓN ACTIVA: BUSCADOR RÁPIDO (Réplica de Imagen 2)
-            ================================================================== */}
-        {activeSection === 'rapido' && (
+                          {/* ====================================================================
+            SECCIÓN 4: OFICINA DE RELACIONES INTERNACIONALES (ORI)
+            ==================================================================== */}
+        {activeSection === 'ori' && (
           <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 animate-fade-in">
-            
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
               <div className="flex items-center gap-3.5">
                 <img 
-                  src="assets/buho_thinking.png" 
-                  alt="Búho pensando UP" 
-                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain shrink-0"
-                />
-                <div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight">
-                    ¿No estás seguro?
-                  </h2>
-                  <p className="text-slate-600 text-sm mt-1">
-                    Ubica tu tema en la columna izquierda y presiona cualquier fila para activar el enrutador y generar tu asunto oficial.
-                  </p>
-                </div>
-              </div>
-
-              {/* Filtro en tiempo real */}
-              <div className="relative w-full md:w-72">
-                <Icon name="search" className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  placeholder="Filtrar duda (ej. retiro, gym)..."
-                  value={searchRapido}
-                  onChange={(e) => setSearchRapido(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white transition"
-                />
-              </div>
-            </div>
-
-            {/* Tabla Oficial de 15 Filas con Clics Interactivos */}
-            <div className="overflow-x-auto border-b-2 border-[#0B2240] mb-6">
-              <table className="w-full text-left text-xs sm:text-sm">
-                <thead>
-                  <tr className="border-b-2 border-[#0B2240] text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    <th className="py-3 px-3 sm:px-4 w-[46%]">SI TU DUDA ES SOBRE...</th>
-                    <th className="py-3 px-3 sm:px-4 w-[24%]">CANAL</th>
-                    <th className="py-3 px-3 sm:px-4 w-[30%]">CONTACTO</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {filteredRapido.map((row) => {
-                    const isSelected = activeRapidoRow && activeRapidoRow.id === row.id;
-                    return (
-                      <React.Fragment key={row.id}>
-                        <tr
-                          onClick={() => setActiveRapidoRow(isSelected ? null : row)}
-                          className={`transition cursor-pointer ${
-                            isSelected ? 'bg-blue-50/90 font-medium' : 'hover:bg-slate-50'
-                          }`}
-                        >
-                          <td className="py-3.5 px-3 sm:px-4 font-semibold text-slate-900 flex items-center gap-2">
-                            <span className={`text-xs transition-transform inline-block font-bold ${
-                              isSelected ? 'text-blue-600 rotate-90' : 'text-slate-300'
-                            }`}>
-                              ▶
-                            </span>
-                            <span>{row.duda}</span>
-                          </td>
-                          <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                            <span className="inline-flex items-center gap-2 font-medium text-slate-800">
-                              <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${row.dot}`}></span>
-                              {row.canal}
-                            </span>
-                          </td>
-                          <td className="py-3.5 px-3 sm:px-4 text-[#1E40AF]">
-                            {row.correo ? (
-                              <span className="font-semibold hover:underline block text-xs sm:text-sm">{row.correo}</span>
-                            ) : null}
-                            {row.enlace && (
-                              <a
-                                href={row.enlace}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="text-xs text-blue-700 hover:underline block"
-                              >
-                                {row.enlaceTexto || row.enlace}
-                              </a>
-                            )}
-                            {!row.correo && !row.enlace && (
-                              <span className="text-slate-600 font-semibold text-xs sm:text-sm">{row.contactoTexto}</span>
-                            )}
-                          </td>
-                        </tr>
-
-                        {/* DESPLIEGUE INMEDIATO EN EL MISMO LUGAR (Cero scroll hacia abajo) */}
-                        {isSelected && (
-                          <tr>
-                            <td colSpan="3" className="p-0 border-b-2 border-blue-300">
-                              <div className="bg-gradient-to-r from-blue-50/90 via-slate-50 to-blue-50/50 p-4 sm:p-5 animate-fade-in space-y-3">
-                                
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                                  <div>
-                                    <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 block mb-0.5">
-                                      Canal identificado · {row.canal} ({row.categoria})
-                                    </span>
-                                    <h4 className="text-base font-bold text-[#0B2240]">
-                                      {row.duda}
-                                    </h4>
-                                  </div>
-
-                                  {/* Botón directo a la sección correspondiente */}
-                                  {row.seccion && (
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        navigateToSectionAndItem(row);
-                                      }}
-                                      className="px-3.5 py-1.5 bg-[#0B2240] hover:bg-[#16365F] text-white text-xs font-bold rounded-xl transition self-start sm:self-auto flex items-center gap-1.5 shadow"
-                                    >
-                                      <span>Ir a la sección {row.canal}</span>
-                                      <Icon name="arrow-right" className="w-3.5 h-3.5" />
-                                    </button>
-                                  )}
-                                </div>
-
-                                <p className="text-slate-700 text-xs sm:text-sm leading-relaxed">
-                                  {row.detalle}
-                                </p>
-
-                                {/* Generador de Asunto Oficial Inmediato */}
-                                {row.correo && (
-                                  <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2.5">
-                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2">
-                                      <span className="font-bold text-[#0B2240]">
-                                        Asunto pre-armado: <span className="font-mono text-slate-800">«{row.duda.split(',')[0]} – {studentCode || '20231234'}»</span>
-                                      </span>
-                                      <div className="flex items-center gap-2">
-                                        <button
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            const subj = `${row.duda.split(',')[0]} – ${studentCode || '20231234'}`;
-                                            copyToClipboard(subj, "¡Asunto oficial copiado!");
-                                          }}
-                                          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded font-semibold text-xs transition flex items-center gap-1"
-                                        >
-                                          <Icon name="copy" className="w-3 h-3" />
-                                          <span>Copiar Asunto</span>
-                                        </button>
-                                        <button
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            copyToClipboard(row.correo, "¡Correo copiado!");
-                                          }}
-                                          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded font-semibold text-xs transition flex items-center gap-1"
-                                        >
-                                          <Icon name="copy" className="w-3 h-3" />
-                                          <span>Copiar Correo</span>
-                                        </button>
-                                      </div>
-                                    </div>
-
-                                    <div className="flex flex-wrap items-center gap-2 pt-1">
-                                      <a
-                                        href={`mailto:${row.correo}?subject=${encodeURIComponent(`${row.duda.split(',')[0]} – ${studentCode || '20231234'}`)}`}
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="py-1.5 px-3 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-lg transition inline-flex items-center gap-1.5"
-                                      >
-                                        <Icon name="mail" className="w-3.5 h-3.5" />
-                                        <span>Abrir en mi Correo UP</span>
-                                      </a>
-                                      {row.enlace && (
-                                        <a
-                                          href={row.enlace}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          onClick={(e) => e.stopPropagation()}
-                                          className="py-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-lg transition inline-flex items-center gap-1"
-                                        >
-                                          <span>Web oficial</span>
-                                          <Icon name="external-link" className="w-3 h-3" />
-                                        </a>
-                                      )}
-                                    </div>
-
-                                  </div>
-                                )}
-
-                                {/* Enlace directo y servicios para canales informativos (T2D, REA, REUP, etc.) */}
-                                {!row.correo && (
-                                  <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-3">
-                                    {row.pildoras && (
-                                      <div>
-                                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1.5">
-                                          Servicios y accesos incluidos:
-                                        </span>
-                                        <div className="flex flex-wrap gap-1.5">
-                                          {row.pildoras.map((p, pIdx) => (
-                                            <span key={pIdx} className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                                              <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                                              <span>{p}</span>
-                                            </span>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
-
-                                    {row.horario && (
-                                      <div className="text-xs text-slate-600 flex items-center gap-1.5 font-medium">
-                                        <Icon name="clock" className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
-                                        <span>Horario de atención: <strong>{row.horario}</strong></span>
-                                      </div>
-                                    )}
-
-                                    {row.enlace && (
-                                      <div className="pt-1 flex flex-wrap items-center gap-2">
-                                        <a
-                                          href={row.enlace}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          onClick={(e) => e.stopPropagation()}
-                                          className="py-1.5 px-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-lg transition inline-flex items-center gap-1.5 shadow-sm"
-                                        >
-                                          <span>{row.canal === 'T2D' ? 'Ingresar a Servicios T2D' : `Abrir Linktree de ${row.canal}`}</span>
-                                          <Icon name="external-link" className="w-3.5 h-3.5" />
-                                        </a>
-                                      </div>
-                                    )}
-                                  </div>
-                                )}
-
-                              </div>
-                            </td>
-                          </tr>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Enlaces Puente al pie */}
-            <div className="text-xs text-slate-600 flex flex-wrap items-center gap-x-2 gap-y-1 pt-2">
-              <span>Más información:</span>
-              <a href="https://daar.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[#1E40AF] font-bold hover:underline">
-                daar.up.edu.pe
-              </a>
-              <span>(trámites académicos) ·</span>
-              <a href="https://casaup.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[#1E40AF] font-bold hover:underline">
-                casaup.up.edu.pe
-              </a>
-              <span>(bienestar y vida universitaria).</span>
-            </div>
-
-          </div>
-        )}
-
-        {/* ==================================================================
-            2. SECCIÓN ACTIVA: DAAR (Réplica Exacta de Imagen 3)
-            ================================================================== */}
-        {activeSection === 'daar' && (
-          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 animate-fade-in">
-            
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
-              <div className="flex items-center gap-3.5">
-                <img 
-                  src="assets/buho_study.png" 
-                  alt="Búho estudiando UP" 
+                  src="assets/buho_travel.png" 
+                  alt="Búho ORI UP" 
                   className="w-14 h-14 sm:w-16 sm:h-16 object-contain shrink-0"
                 />
                 <div>
                   <div className="inline-block bg-[#1E40AF] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1 shadow-2xs">
-                    TRÁMITES ACADÉMICOS
+                    RELACIONES INTERNACIONALES
                   </div>
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight">
-                    DAAR – Servicios Académicos y Registro
+                    ORI – Oficina de Relaciones Internacionales
                   </h2>
                   <p className="text-slate-600 text-sm mt-0.5">
-                    Es la oficina para todo lo que afecta tu matrícula, tus notas y tu plan de estudios.
+                    Oportunidades académicas, convenios globales y experiencias en el extranjero para estudiantes UP.
                   </p>
                 </div>
               </div>
 
               <div className="hidden sm:flex items-center bg-slate-50 px-3 py-2 rounded-xl border border-slate-200 shrink-0">
                 <img 
-                  src="assets/daar_logo.png" 
-                  alt="Logo DAAR" 
+                  src="assets/ori_logo.png" 
+                  alt="Logo ORI" 
                   className="h-8 w-auto object-contain"
                 />
               </div>
             </div>
 
-            {/* Franja Celeste de 4 Columnas (Exacta a Imagen 3) */}
+            {/* Franja de Información Rápida ORI */}
             <div className="bg-[#EBF3FC] rounded-2xl p-4 sm:p-5 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 border border-blue-100 text-xs">
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CORREO</div>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CORREO OFICIAL</div>
                 <button
-                  onClick={() => copyToClipboard(DAAR_DATA.header.correo, "¡Correo de DAAR copiado!")}
+                  onClick={() => copyToClipboard('intercambios@up.edu.pe', '¡Correo de ORI copiado!')}
                   className="font-bold text-[#1E40AF] hover:underline text-left flex items-center gap-1"
                 >
-                  <span>{DAAR_DATA.header.correo}</span>
-                  <Icon name="copy" className="w-3 h-3 text-slate-400" />
+                  <span>intercambios@up.edu.pe</span>
+                  <Icon name="copy" className="w-3 h-3 text-[#1E40AF]" />
                 </button>
               </div>
 
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">WEB</div>
-                <a href={DAAR_DATA.header.web} target="_blank" rel="noopener noreferrer" className="font-bold text-[#1E40AF] hover:underline">
-                  {DAAR_DATA.header.webTexto}
-                </a>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">OFICINA / SEDE</div>
+                <div className="font-semibold text-slate-800">Pabellón I · 2.° piso</div>
               </div>
 
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">MATRÍCULA</div>
-                <a href={DAAR_DATA.header.matricula} target="_blank" rel="noopener noreferrer" className="font-bold text-[#1E40AF] hover:underline">
-                  {DAAR_DATA.header.matriculaTexto}
-                </a>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">ANEXOS TELEFÓNICOS</div>
+                <div className="font-semibold text-slate-800">2137 / 2176</div>
               </div>
 
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">GRADOS Y TÍTULOS</div>
-                <button
-                  onClick={() => copyToClipboard(DAAR_DATA.header.grados, "¡Correo de Grados y Títulos copiado!")}
-                  className="font-bold text-[#1E40AF] hover:underline text-left flex items-center gap-1"
-                >
-                  <span>{DAAR_DATA.header.grados}</span>
-                  <Icon name="copy" className="w-3 h-3 text-slate-400" />
-                </button>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">DESTINOS GLOBALES</div>
+                <div className="font-semibold text-slate-800">América, Europa, Asia y Oceanía</div>
               </div>
             </div>
 
-            {/* ==============================================================
-                BOTONES INTERACTIVOS DE LAS 4 ÁREAS DE DAAR
-                (Organizado con muy pocas letras para evitar muros de texto)
-                ============================================================== */}
-            <div className="mb-6">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
-                Elige la categoría del trámite:
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
-                {DAAR_DATA.categories.map((cat) => {
-                  const isCatActive = activeDaarCat === cat.id;
-                  return (
-                    <button
-                      key={cat.id}
-                      onClick={() => {
-                        setActiveDaarCat(cat.id);
-                        setActiveDaarItem(cat.items[0]);
-                      }}
-                      className={`p-3 rounded-xl text-left border transition ${
-                        isCatActive
-                          ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm'
-                          : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
-                      }`}
-                    >
-                      <div className="font-bold text-xs sm:text-sm">{cat.title}</div>
-                      <div className={`text-[11px] mt-0.5 ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
-                        {cat.badge}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* ==============================================================
-                2. BOTONES INTERACTIVOS PARA CADA TRÁMITE DE ESA CATEGORÍA
-                ============================================================== */}
-            <div className="mb-6">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
-                Selecciona el trámite para ver sus requisitos y asunto oficial:
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {currentDaarCategory.items.map((item) => {
-                  const isItemActive = activeDaarItem && activeDaarItem.id === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => setActiveDaarItem(item)}
-                      className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition border flex items-center gap-1.5 ${
-                        isItemActive
-                          ? 'bg-[#1E40AF] text-white border-blue-600 shadow-sm'
-                          : 'bg-white text-slate-700 border-slate-200 hover:border-blue-400 hover:text-blue-700'
-                      }`}
-                    >
-                      <span>{item.nombre}</span>
-                      {isItemActive && <Icon name="check" className="w-3.5 h-3.5 text-white" />}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* ==============================================================
-                3. DETALLE COMPLETO Y ASUNTO PRE-ARMADO (100% Sin Recortes)
-                ============================================================== */}
-            {activeDaarItem && (
-              <div className="bg-slate-50 border-2 border-blue-200 rounded-2xl p-5 sm:p-6 mb-8 animate-fade-in">
-                
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200">
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-blue-600 tracking-wider">
-                      {currentDaarCategory.title} · Trámite Oficial UP
-                    </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-[#0B2240]">
-                      {activeDaarItem.nombre}
-                    </h3>
-                  </div>
-                  <div className="text-xs font-semibold text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200 self-start sm:self-auto">
-                    Destino: <strong className="text-slate-800">{activeDaarItem.correo}</strong>
-                  </div>
-                </div>
-
-                {/* Texto Oficial Textual */}
-                <p className="text-slate-700 text-xs sm:text-sm leading-relaxed mb-5">
-                  {activeDaarItem.descripcion}
-                </p>
-
-                {/* Si es Matrícula, Retiro de curso, Retiro de semestre o Reserva: Trámite por Autoservicio */}
-                {['d-matr', 'd-reser', 'd-retcurso', 'd-retsem'].includes(activeDaarItem.id) ? (
-                  <div className="space-y-4 mb-5">
-                    {/* Tarjeta Destacada de Autoservicio */}
-                    <div className="bg-blue-50/80 border-2 border-blue-300 rounded-2xl p-5 shadow-sm">
-                      <div className="flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-[#1E40AF] text-white flex items-center justify-center shrink-0 shadow-xs">
-                          <Icon name="check" className="w-5 h-5 text-white" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-extrabold text-[#0B2240] text-sm sm:text-base">
-                            Trámite 100% en Línea mediante Autoservicio
-                          </h4>
-                          <p className="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
-                            Este trámite no se gestiona mediante correo ordinario. Se realiza de forma directa en las plataformas oficiales UP en las fechas establecidas en el Calendario Académico:
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                        <a
-                          href="https://powercampus.up.edu.pe"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3.5 rounded-xl bg-white border border-blue-200 hover:border-blue-500 hover:shadow-md transition flex items-center justify-between group"
-                        >
-                          <div>
-                            <span className="text-[10px] font-extrabold uppercase text-blue-600 block">Autoservicio Principal</span>
-                            <span className="font-extrabold text-slate-900 text-sm group-hover:text-blue-700">PowerCampus UP</span>
-                            <span className="text-[11px] text-slate-500 block">Matrícula regular y retiros</span>
-                          </div>
-                          <Icon name="external-link" className="w-4 h-4 text-blue-600 shrink-0" />
-                        </a>
-
-                        <a
-                          href="https://experience.up.edu.pe"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3.5 rounded-xl bg-white border border-blue-200 hover:border-blue-500 hover:shadow-md transition flex items-center justify-between group"
-                        >
-                          <div>
-                            <span className="text-[10px] font-extrabold uppercase text-blue-600 block">Portal del Alumno</span>
-                            <span className="font-extrabold text-slate-900 text-sm group-hover:text-blue-700">UP Experience</span>
-                            <span className="text-[11px] text-slate-500 block">Cronogramas y acceso rápido</span>
-                          </div>
-                          <Icon name="external-link" className="w-4 h-4 text-blue-600 shrink-0" />
-                        </a>
-                      </div>
-
-                      {/* Guía textual de ruta oficial en PowerCampus */}
-                      <div className="mt-4 bg-white border border-blue-200 rounded-xl p-3.5 flex items-start gap-3 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
-                          <Icon name="info" className="w-4 h-4 text-blue-700" />
-                        </div>
-                        <div className="text-xs text-slate-700 flex-1">
-                          <strong className="text-[#0B2240] block font-bold mb-0.5">
-                            📍 Ruta oficial en PowerCampus:
-                          </strong>
-                          <p className="leading-relaxed text-slate-600">
-                            Inicia sesión con tu correo institucional y dirígete al menú superior: <strong className="text-slate-900 font-semibold">«Información General» → «Trámites y Documentos»</strong> para acceder a las solicitudes virtuales de carné universitario, requisito de inglés, convenios de prácticas, cartas de presentación y verificación académica.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Fallback de Excepción para Casos Especiales */}
-                    <div className="bg-amber-50/80 border border-amber-300 rounded-xl p-4 text-xs">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div className="text-slate-700">
-                          <strong className="text-amber-950 font-bold block mb-0.5">
-                            ¿Tu caso es excepcional o no corresponde a un trámite automático?
-                          </strong>
-                          <span>Si presentas alguna incidencia técnica o trámite especial, escribe directamente a pregrado@up.edu.pe:</span>
-                        </div>
-                        <div className="flex items-center gap-2 shrink-0">
-                          <button
-                            onClick={() => copyToClipboard('pregrado@up.edu.pe', '¡Correo pregrado@up.edu.pe copiado!')}
-                            className="px-3 py-1.5 bg-white hover:bg-slate-100 border border-amber-300 rounded-lg font-bold text-slate-800 text-xs flex items-center gap-1 transition"
-                          >
-                            <Icon name="copy" className="w-3.5 h-3.5" />
-                            <span>Copiar correo</span>
-                          </button>
-                          <a
-                            href="mailto:pregrado@up.edu.pe?subject=Consulta%20Excepcional%20DAAR%20-%20Incidencia"
-                            className="px-3 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white rounded-lg font-bold text-xs flex items-center gap-1 transition shadow-xs"
-                          >
-                            <Icon name="mail" className="w-3.5 h-3.5" />
-                            <span>Escribir correo</span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    {/* Generador de Asunto Oficial para Otros Trámites */}
-                    <div className="bg-white rounded-xl p-4 border border-blue-100 shadow-sm space-y-3 mb-4">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-[#0B2240] uppercase tracking-wider text-[11px]">
-                          Fórmula de Asunto Oficial Pre-armada:
-                        </span>
-                        <span className="text-slate-500 text-[11px]">
-                          Código activo: <strong className="text-amber-700 font-mono">{studentCode || '20231234'}</strong>
-                        </span>
-                      </div>
-
-                      <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 font-mono text-xs sm:text-sm text-slate-800 flex items-center justify-between gap-2">
-                        <span className="font-semibold break-all">
-                          «{activeDaarItem.nombre} – {studentCode || '20231234'}»
-                        </span>
-                        <button
-                          onClick={() => {
-                            const subj = `${activeDaarItem.nombre} – ${studentCode || '20231234'}`;
-                            copyToClipboard(subj, "¡Asunto oficial copiado!");
-                          }}
-                          className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 rounded border border-slate-200 text-xs font-sans font-bold flex items-center gap-1 transition"
-                          title="Copiar fórmula"
-                        >
-                          <Icon name="copy" className="w-3.5 h-3.5" />
-                          <span>Copiar</span>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Botones de Acción Inmediata */}
-                    <div className="flex flex-wrap items-center gap-2.5">
-                      <a
-                        href={`mailto:${activeDaarItem.correo}?subject=${encodeURIComponent(`${activeDaarItem.nombre} – ${studentCode || '20231234'}`)}`}
-                        className="px-4 py-2 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5"
-                      >
-                        <Icon name="mail" className="w-3.5 h-3.5" />
-                        <span>Redactar en mi Correo UP</span>
-                      </a>
-
-                      <button
-                        onClick={() => copyToClipboard(activeDaarItem.correo, "¡Correo institucional copiado!")}
-                        className="px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition flex items-center gap-1.5"
-                      >
-                        <Icon name="copy" className="w-3.5 h-3.5" />
-                        <span>Copiar {activeDaarItem.correo}</span>
-                      </button>
-
-                      {activeDaarItem.web && (
-                        <a
-                          href={activeDaarItem.web}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition flex items-center gap-1.5"
-                        >
-                          <span>Web oficial</span>
-                          <Icon name="external-link" className="w-3.5 h-3.5" />
-                        </a>
-                      )}
-                    </div>
-                  </>
-                )}
-
-              </div>
-            )}
-
-            {/* Recordatorio del Calendario Académico */}
-            <div className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-start gap-3">
-              <Icon name="info" className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <strong className="font-semibold text-slate-800">Consejo:</strong> antes de escribir, revisa el calendario académico; muchos trámites (retiro, reprogramación, reclamos) tienen fechas límite.
-              </div>
-            </div>
-
-          </div>
-        )}
-
-        {/* ==================================================================
-            3. SECCIÓN ACTIVA: BFE (Bienestar y Vida Universitaria)
-            ================================================================== */}
-        {activeSection === 'bfe' && (
-          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 animate-fade-in">
-            
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
-              <div className="flex items-center gap-3.5">
-                <img 
-                  src="assets/buho_idea.png" 
-                  alt="Búho con idea UP" 
-                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain shrink-0"
-                />
-                <div>
-                  <div className="inline-block bg-[#1E40AF] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1 shadow-2xs">
-                    BIENESTAR Y VIDA UNIVERSITARIA
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight">
-                    BFE – Dirección de Bienestar y Formación Estudiantil
-                  </h2>
-                  <p className="text-slate-600 text-sm mt-0.5">
-                    Contribuir al bienestar y a la formación integral del estudiante (Bienestar Estudiantil y Formación y Experiencia Estudiantil).
-                  </p>
-                </div>
-              </div>
-
-              <div className="hidden sm:flex items-center bg-slate-50 px-3 py-2 rounded-xl border border-slate-200 shrink-0">
-                <img 
-                  src="assets/bfe_logo.png" 
-                  alt="Logo BFE" 
-                  className="h-8 w-auto object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Franja Celeste de Datos Institucionales */}
-            <div className="bg-[#EBF3FC] rounded-2xl p-4 sm:p-5 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 border border-blue-100 text-xs">
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CORREO</div>
-                <button
-                  onClick={() => copyToClipboard(BFE_DATA.header.correo, "¡Correo bfe@up.edu.pe copiado!")}
-                  className="font-bold text-[#1E40AF] hover:underline text-left flex items-center gap-1"
-                >
-                  <span>{BFE_DATA.header.correo}</span>
-                  <Icon name="copy" className="w-3 h-3 text-slate-400" />
-                </button>
-              </div>
-
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">UBICACIÓN</div>
-                <div className="font-semibold text-slate-800">{BFE_DATA.header.ubicacion}</div>
-              </div>
-
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">HORARIO</div>
-                <div className="font-semibold text-slate-800">{BFE_DATA.header.horario}</div>
-              </div>
-
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CENTRAL / WEB</div>
-                <div className="space-y-0.5">
-                  <a href="tel:012190100" className="font-bold text-[#1E40AF] hover:underline block">
-                    (01) 219-0100 <span className="font-normal text-slate-600 text-[11px]">(Anexos: 2390 / 2261)</span>
-                  </a>
-                  <a href="https://www.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[11px] font-bold text-blue-700 hover:underline flex items-center gap-1">
-                    <span>www.up.edu.pe</span>
-                    <Icon name="external-link" className="w-2.5 h-2.5" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* ==============================================================
-                BOTONES INTERACTIVOS DE LAS 5 ÁREAS DE BFE
-                ============================================================== */}
-            <div className="mb-6">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
-                Selecciona el área de bienestar o formación:
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
-                {BFE_DATA.categories.map((cat) => {
-                  const isCatActive = activeBfeCat === cat.id;
-                  return (
-                    <button
-                      key={cat.id}
-                      onClick={() => {
-                        setActiveBfeCat(cat.id);
-                        setActiveBfeItem(null);
-                      }}
-                      className={`p-3 rounded-xl text-left border transition ${
-                        isCatActive
-                          ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm'
-                          : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
-                      }`}
-                    >
-                      <div className="font-bold text-xs">{cat.title}</div>
-                      <div className={`text-[10px] mt-0.5 ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
-                        {cat.badge}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Sub-panel 1: Consejería Universitaria */}
-            {activeBfeCat === 'consejeria' && (
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 animate-fade-in space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-[#0B2240]">
-                    Consejería Universitaria Psicológica y Estudiantil
-                  </h3>
-                  <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">
-                    Gratuita y Confidencial
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600">
-                  {currentBfeCategory.descripcion}
-                </p>
-
-                <div className="space-y-3 pt-2">
-                  {currentBfeCategory.pasos.map((paso) => (
-                    <div key={paso.num} className="flex items-start gap-3 bg-white p-3 rounded-xl border border-slate-200 text-xs sm:text-sm">
-                      <span className="w-5 h-5 rounded-full bg-[#1E40AF] text-white font-bold flex items-center justify-center flex-shrink-0 text-xs mt-0.5">
-                        {paso.num}
-                      </span>
-                      <span className="text-slate-800">{paso.titulo}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-wrap gap-2.5 pt-3">
-                  <a
-                    href={`mailto:consejeriapsicologica@up.edu.pe?subject=${encodeURIComponent(`Solicitud Consejería Psicológica – ${studentCode || '20231234'}`)}`}
-                    className="px-4 py-2 bg-[#1E40AF] text-white font-bold text-xs rounded-xl hover:bg-blue-800 transition"
-                  >
-                    Solicitar Cita Psicológica
-                  </a>
-                  <a
-                    href={`mailto:consejeriaestudiantil@up.edu.pe?subject=${encodeURIComponent(`Solicitud Consejería Estudiantil – ${studentCode || '20231234'}`)}`}
-                    className="px-4 py-2 bg-blue-50 text-[#1E40AF] font-bold text-xs rounded-xl hover:bg-blue-100 border border-blue-200 transition"
-                  >
-                    Solicitar Cita Estudiantil
-                  </a>
-                  <a
-                    href={currentBfeCategory.pdfLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-2 bg-white text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 hover:bg-slate-100 transition flex items-center gap-1.5"
-                  >
-                    <span>Folleto Oficial PDF 2025</span>
-                    <Icon name="external-link" className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </div>
-            )}
-
-            {/* Sub-panel 2: Apoyo Académico y NEE */}
-            {activeBfeCat === 'apoyo' && (
-              <div className="space-y-3 mb-6 animate-fade-in">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                  Programas y apoyos disponibles (clic para ver el detalle oficial):
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {currentBfeCategory.items.map((item) => (
-                    <div key={item.id} className="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-2">
-                      <div className="font-bold text-sm text-[#0B2240]">{item.nombre}</div>
-                      <p className="text-xs text-slate-600 leading-relaxed">{item.texto}</p>
-                      <div className="pt-2 flex items-center justify-between">
-                        <span className="text-[11px] font-mono text-slate-500">{item.correo}</span>
-                        <a
-                          href={`mailto:${item.correo}?subject=${encodeURIComponent(`${item.nombre} – ${studentCode || '20231234'}`)}`}
-                          className="px-2.5 py-1 bg-white border border-blue-200 text-[#1E40AF] hover:bg-blue-50 rounded text-xs font-bold transition"
-                        >
-                          Escribir a BFE
-                        </a>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Sub-panel 3: EFE */}
-            {activeBfeCat === 'efe' && (
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 space-y-4 animate-fade-in">
-                <h3 className="text-lg font-bold text-[#0B2240]">
-                  Experiencias Formativas Estudiantiles (EFE)
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600">
-                  {currentBfeCategory.descripcion}
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                  <div className="bg-white p-4 rounded-xl border border-slate-200">
-                    <span className="font-bold text-[#0B2240] block mb-1">EFE Obligatorias:</span>
-                    <p className="text-slate-600">{currentBfeCategory.obligatorias}</p>
-                  </div>
-                  <div className="bg-amber-50/70 p-4 rounded-xl border border-amber-200 text-amber-950">
-                    <span className="font-bold block mb-1">★ Convalidación de 1 Crédito EFE Voluntario:</span>
-                    <p className="text-amber-900">{currentBfeCategory.voluntarias}</p>
-                  </div>
-                </div>
-
-                <div className="pt-2 flex flex-wrap gap-2 text-xs">
-                  {currentBfeCategory.enlaces.map((link, idx) => (
-                    <a
-                      key={idx}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3.5 py-2 bg-white border border-slate-200 rounded-xl hover:border-blue-400 font-semibold text-[#1E40AF] flex items-center gap-1.5 transition"
-                    >
-                      <span>{link.nombre} ({link.ig})</span>
-                      <Icon name="external-link" className="w-3 h-3" />
-                    </a>
-                  ))}
-                  <a
-                    href={currentBfeCategory.flujogramaLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-2 bg-[#1E40AF] text-white rounded-xl font-bold hover:bg-blue-800 transition"
-                  >
-                    Ver Nuevo Flujograma EFE
-                  </a>
-                </div>
-              </div>
-            )}
-
-            {/* Sub-panel 4: Espacios Pabellón Z */}
-            {activeBfeCat === 'espacios' && (
-              <div className="space-y-4 mb-6 animate-fade-in">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-                  Instalaciones en Jr. Sánchez Cerro 2215 (presiona cada espacio para ver sus condiciones):
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  {currentBfeCategory.items.map((espacio) => {
-                    const isSelected = activeBfeItem && activeBfeItem.id === espacio.id;
-                    return (
-                      <button
-                        key={espacio.id}
-                        onClick={() => setActiveBfeItem(espacio)}
-                        className={`p-3 rounded-xl text-left border transition ${
-                          isSelected
-                            ? 'bg-[#1E40AF] text-white border-blue-600 shadow-sm'
-                            : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-200'
-                        }`}
-                      >
-                        <div className="font-bold text-xs truncate">{espacio.nombre}</div>
-                        <div className={`text-[10px] truncate mt-0.5 ${isSelected ? 'text-blue-100' : 'text-slate-500'}`}>
-                          {espacio.ubicacion}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Detalle del Espacio */}
-                {activeBfeItem && (
-                  <div className="bg-slate-50 border border-blue-200 rounded-xl p-4 animate-fade-in text-xs space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-sm text-[#0B2240]">{activeBfeItem.nombre}</span>
-                      <span className="text-slate-500 bg-white px-2 py-0.5 rounded border">{activeBfeItem.ubicacion}</span>
-                    </div>
-                    <div><strong>Horario:</strong> {activeBfeItem.horario}</div>
-                    <div className="text-slate-600 leading-relaxed">{activeBfeItem.detalle}</div>
-                    <div className="pt-2 flex items-center gap-2">
-                      <a
-                        href={`mailto:${activeBfeItem.correo}?subject=${encodeURIComponent(`Consulta ${activeBfeItem.nombre} – ${studentCode || '20231234'}`)}`}
-                        className="px-3 py-1 bg-[#1E40AF] text-white rounded font-bold hover:bg-blue-800 transition"
-                      >
-                        Consultar a {activeBfeItem.correo}
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Sub-panel 5: 18 FAQs */}
-            {activeBfeCat === 'faqs' && (
-              <div className="space-y-2.5 mb-6 animate-fade-in">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                  Las 18 preguntas oficiales más consultadas:
-                </div>
-
-                <div className="space-y-2">
-                  {currentBfeCategory.faqs.map((faq, idx) => {
-                    const isOpen = activeBfeItem === idx;
-                    return (
-                      <div key={idx} className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden">
-                        <button
-                          onClick={() => setActiveBfeItem(isOpen ? null : idx)}
-                          className="w-full text-left p-3.5 font-bold text-xs sm:text-sm text-slate-800 hover:text-blue-700 flex items-center justify-between gap-3"
-                        >
-                          <span>{faq.q}</span>
-                          <Icon name={isOpen ? "chevron-down" : "chevron-right"} className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                        </button>
-                        {isOpen && (
-                          <div className="px-4 pb-3.5 text-xs text-slate-600 border-t border-slate-200/60 pt-2.5 leading-relaxed bg-white">
-                            {faq.a}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-          </div>
-        )}
-
-        {/* ==================================================================
-            SECCIÓN ACTIVA: DIRECTORIO DE CONTACTOS
-            ================================================================== */}
-        {activeSection === 'directorio' && (
-          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 animate-fade-in">
-            
-            {/* Píldora de Categoría */}
-            <div className="mb-3">
-              <span className="inline-block bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm">
-                DIRECTORIO OFICIAL
-              </span>
-            </div>
-
-            {/* Título y Subtítulo */}
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight mb-2">
-              Directorio de contactos – Universidad del Pacífico
-            </h2>
-            <p className="text-slate-600 text-sm mb-6">
-              Canales oficiales, anexos y correos de facultades, escuelas, servicios administrativos y empleabilidad.
-            </p>
-
-            {/* Franja Celeste */}
-            <div className="bg-[#EBF3FC] rounded-2xl p-4 sm:p-5 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 border border-blue-100 text-xs">
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CENTRAL TELEFÓNICA</div>
-                <div className="font-bold text-[#1E40AF]">{DIRECTORIO_DATA.header.central}</div>
-              </div>
-
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">SEDE PRINCIPAL</div>
-                <div className="font-semibold text-slate-800">{DIRECTORIO_DATA.header.sede}</div>
-              </div>
-
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">PORTAL WEB</div>
-                <a 
-                  href="https://www.up.edu.pe" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="font-bold text-[#1E40AF] hover:underline flex items-center gap-1"
-                >
-                  <span>www.up.edu.pe</span>
-                  <Icon name="external-link" className="w-3 h-3 text-[#1E40AF]" />
-                </a>
-              </div>
-
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">ADMISIÓN DIRECTO</div>
-                <div className="font-semibold text-slate-800">{DIRECTORIO_DATA.header.admisionDirecto}</div>
-              </div>
-            </div>
-
-            {/* ==============================================================
-                BOTONES INTERACTIVOS DE LAS 7 CATEGORÍAS DEL DIRECTORIO
-                ============================================================== */}
-            <div className="mb-6">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
-                Selecciona la categoría del directorio:
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2.5">
-                {DIRECTORIO_DATA.categories.map((cat) => {
-                  const isCatActive = activeDirCat === cat.id;
-                  return (
-                    <button
-                      key={cat.id}
-                      onClick={() => {
-                        setActiveDirCat(cat.id);
-                        if (cat.items && cat.items.length > 0) setActiveDirItem(cat.items[0]);
-                      }}
-                      className={`p-3 rounded-xl text-left border transition ${
-                        isCatActive
-                          ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm ring-1 ring-blue-400'
-                          : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
-                      }`}
-                    >
-                      <div className="font-bold text-xs">{cat.title}</div>
-                      <div className={`text-[10px] mt-0.5 ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
-                        {cat.badge}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* VISTA DINÁMICA ESPECIALIZADA: T2D (SOPORTE E INFORMÁTICA) */}
-            {currentDirCategory.id === 't2d' && (
-              <div className="space-y-6 mb-6 animate-fade-in">
-                {/* Banner Informativo T2D con Horario */}
-                <div className="bg-gradient-to-r from-[#0B2240] via-[#102A4C] to-[#16365F] text-white p-5 rounded-2xl shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-blue-900/50">
-                  <div className="flex items-center gap-4">
-                    <div className="bg-white p-2 rounded-xl border border-white/20 shadow-xs shrink-0">
-                      <img src="assets/t2d_logo.png" alt="Logo T2D" className="h-11 w-11 object-contain" />
-                    </div>
-                    <div>
-                      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 text-[11px] font-bold uppercase tracking-wider mb-1.5 border border-cyan-400/30">
-                        <Icon name="shield" className="w-3.5 h-3.5" />
-                        <span>Mesa de Ayuda Tecnológica UP</span>
-                      </div>
-                      <h3 className="text-xl font-bold tracking-tight">T2D – Servicios Informáticos y de Soporte</h3>
-                      <p className="text-xs sm:text-sm text-slate-300 mt-0.5 flex items-center gap-2">
-                        <Icon name="clock" className="w-4 h-4 text-cyan-300 flex-shrink-0" />
-                        <span>Atención: L–V 7:30 a.m. – 9:30 p.m. · Sáb 7:30 a.m. – 5:00 p.m.</span>
-                      </p>
-                    </div>
-                  </div>
-                  <a
-                    href="https://serviciost2d.up.edu.pe/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-[#0B2240] font-extrabold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 shadow flex-shrink-0"
-                  >
-                    <span>Ir a Portal T2D</span>
-                    <Icon name="external-link" className="w-4 h-4" />
-                  </a>
-                </div>
-
-                {/* Cuadrícula Dinámica de los 6 Servicios Clave de T2D */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {currentDirCategory.servicios.map((srv) => (
-                    <div key={srv.id} className="bg-white border-2 border-slate-200 hover:border-cyan-400 rounded-2xl p-4 transition shadow-xs hover:shadow-md flex flex-col justify-between space-y-3 group">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between gap-2">
-                          <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold ${srv.tagColor}`}>
-                            {srv.tag}
-                          </span>
-                          <Icon name={srv.icono} className="w-4 h-4 text-cyan-600 group-hover:scale-110 transition-transform" />
-                        </div>
-                        <h4 className="font-bold text-sm text-[#0B2240] leading-snug">{srv.nombre}</h4>
-                        <p className="text-xs text-slate-600 leading-relaxed">{srv.detalle}</p>
-                      </div>
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-                        <span className="text-[11px] font-mono text-slate-400">serviciost2d.up.edu.pe</span>
-                        <a
-                          href={srv.enlace}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs font-bold text-[#1E40AF] hover:text-blue-800 flex items-center gap-1 group-hover:underline"
-                        >
-                          <span>{srv.enlaceTexto}</span>
-                          <Icon name="arrow-right" className="w-3 h-3" />
-                        </a>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* VISTA DINÁMICA ESPECIALIZADA: REPRESENTACIÓN ESTUDIANTIL (REUP & PROGRAMA REA) */}
-            {currentDirCategory.id === 'representacion' && (
-              <div className="space-y-8 mb-6 animate-fade-in">
-                {currentDirCategory.organizaciones.map((org) => (
-                  <div key={org.id} className="bg-slate-50 border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xs">
-                    {/* Encabezado con Handle y Linktree */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
-                      <div className="flex items-center gap-3">
-                        <img 
-                          src={org.id === 'rea' ? 'assets/rea_logo.jpg' : 'assets/reup_logo.jpg'} 
-                          alt={org.nombre}
-                          className="w-12 h-12 rounded-full border-2 border-slate-200 shadow-xs object-cover shrink-0"
-                        />
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h3 className="text-lg sm:text-xl font-extrabold text-[#0B2240]">{org.nombre}</h3>
-                            <span className="px-2.5 py-0.5 rounded-full bg-blue-100 text-[#1E40AF] text-xs font-bold">
-                              {org.handle}
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-500 mt-0.5">{org.subtitulo}</p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        {org.id === 'reup' && (
-                          <img 
-                            src="assets/reup_buho_mascota.jpg" 
-                            alt="Mascota REUP" 
-                            className="h-10 w-auto object-contain hidden md:block" 
-                          />
-                        )}
-                        <a
-                          href={org.instagramUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3.5 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 self-start sm:self-auto shadow-sm"
-                        >
-                          <Icon name="instagram" className="w-3.5 h-3.5" />
-                          <span>Abrir Linktree ({org.handle})</span>
-                          <Icon name="external-link" className="w-3 h-3" />
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* 4 Tarjetas Dinámicas e Interactivas de Recursos */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                      {org.recursos.map((rec, rIdx) => (
-                        <div key={rIdx} className="bg-white border border-slate-200 hover:border-purple-300 rounded-xl p-3.5 space-y-2 flex flex-col justify-between hover:shadow transition">
-                          <div className="space-y-1.5">
-                            <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-bold text-purple-700 uppercase tracking-wider bg-purple-50 px-2 py-0.5 rounded">
-                                {rec.tag}
-                              </span>
-                              <Icon name={rec.icono} className="w-4 h-4 text-purple-600" />
-                            </div>
-                            <h4 className="font-bold text-xs sm:text-sm text-[#0B2240]">{rec.titulo}</h4>
-                            <p className="text-[11px] text-slate-600 leading-relaxed">{rec.desc}</p>
-                          </div>
-                          <div className="pt-2 border-t border-slate-100">
-                            <a
-                              href={org.instagramUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-full py-1 px-2.5 bg-slate-50 hover:bg-purple-50 text-purple-800 hover:text-purple-900 border border-slate-200 hover:border-purple-200 rounded-lg text-xs font-semibold flex items-center justify-between transition"
-                            >
-                              <span>{rec.accion}</span>
-                              <Icon name="chevron-right" className="w-3 h-3" />
-                            </a>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* VISTA DINÁMICA ESPECIALIZADA: OFICINA DE RELACIONES INTERNACIONALES (ORI) */}
-            {currentDirCategory.id === 'ori' && (
               <div className="space-y-6 mb-6 animate-fade-in">
                 
                 {/* Banner Oficial ORI (Fondo de Imágenes UP + Búho Viajero) */}
@@ -4559,141 +3441,513 @@ function App() {
                 )}
 
               </div>
-            )}
+          </div>
+        )}
 
-            {/* VISTA ESTÁNDAR PARA OTRAS CATEGORÍAS (FACULTADES, OFICINAS, EMPLEABILIDAD, ESCUELAS) */}
-            {currentDirCategory.id !== 't2d' && currentDirCategory.id !== 'representacion' && currentDirCategory.id !== 'ori' && (
-              <div className="space-y-3 mb-6 animate-fade-in">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                  Dependencias registradas en {currentDirCategory.title}:
+        {/* ====================================================================
+            SECCIÓN 5: EMPLEABILIDAD Y RED ALUMNI UP
+            ==================================================================== */}
+        {activeSection === 'empleabilidad' && (
+          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 animate-fade-in">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-3.5">
+                <img 
+                  src="assets/buho_formal.png" 
+                  alt="Búho Formal Empleabilidad UP" 
+                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain shrink-0"
+                />
+                <div>
+                  <div className="inline-block bg-[#1E40AF] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1 shadow-2xs">
+                    DESARROLLO PROFESIONAL
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight">
+                    Empleabilidad y Red Alumni
+                  </h2>
+                  <p className="text-slate-600 text-sm mt-0.5">
+                    Prácticas preprofesionales, convenios, empleo y la red de egresados UP.
+                  </p>
                 </div>
+              </div>
 
-                {/* Banner de Empleabilidad (Fondo de Imágenes UP + Búho Formal) */}
-                {currentDirCategory.id === 'empleabilidad' && (
-                  <div 
-                    className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-md text-white p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-6"
-                    style={{
-                      backgroundImage: "linear-gradient(to right, rgba(20, 24, 60, 0.94) 0%, rgba(30, 36, 90, 0.88) 50%, rgba(20, 24, 60, 0.82) 100%), url('assets/empleabilidad_banner_bg.jpg')",
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center 30%'
-                    }}
-                  >
-                    <div className="space-y-2 flex-1 max-w-2xl">
-                      <div>
-                        <span className="px-3 py-1 rounded-full bg-white text-purple-800 text-xs font-extrabold uppercase tracking-wider shadow-sm inline-block">
-                          DESARROLLO PROFESIONAL
-                        </span>
+              <div className="hidden sm:flex items-center gap-2 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 shrink-0">
+                <Icon name="briefcase" className="w-4 h-4 text-[#1E40AF]" />
+                <span>Central Anexo 2253</span>
+              </div>
+            </div>
+
+            {/* Banner Nativo de Empleabilidad (Fondo Imágenes UP + Búho Formal) */}
+            <div 
+              className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-md text-white p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8"
+              style={{
+                backgroundImage: "linear-gradient(to right, rgba(20, 24, 60, 0.94) 0%, rgba(30, 36, 90, 0.88) 50%, rgba(20, 24, 60, 0.82) 100%), url('assets/empleabilidad_banner_bg.jpg')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center 30%'
+              }}
+            >
+              <div className="space-y-2 flex-1 max-w-2xl text-left">
+                <div>
+                  <span className="px-3 py-1 rounded-full bg-white text-purple-800 text-xs font-extrabold uppercase tracking-wider shadow-sm inline-block">
+                    DESARROLLO PROFESIONAL
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
+                  Empleabilidad y Red Alumni
+                </h3>
+                <p className="text-slate-200 text-xs sm:text-sm leading-relaxed font-normal">
+                  Prácticas preprofesionales, empleo y la red de egresados de la Universidad del Pacífico.
+                </p>
+              </div>
+
+              <div className="shrink-0 self-end md:self-center">
+                <img 
+                  src="assets/buho_formal.png" 
+                  alt="Búho formal UP" 
+                  className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-xl hover:scale-105 transition-transform"
+                />
+              </div>
+            </div>
+
+            {/* Áreas Oficiales de Empleabilidad */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              {[
+                {
+                  id: "practicas",
+                  nombre: "Prácticas Preprofesionales",
+                  desc: "Convalidación y registro de convenios de prácticas preprofesionales obligatorias.",
+                  correo: "practicaspre@up.edu.pe",
+                  anexo: "2253",
+                  icono: "briefcase"
+                },
+                {
+                  id: "empleo",
+                  nombre: "Empleabilidad y Bolsa de Trabajo",
+                  desc: "Orientación laboral, asesoría curricular y ofertas de empleo exclusivas UP.",
+                  correo: "empleabilidad@up.edu.pe",
+                  anexo: "2253",
+                  icono: "award"
+                },
+                {
+                  id: "alumni",
+                  nombre: "Red Alumni UP",
+                  desc: "Red de egresados y vinculación profesional permanente.",
+                  correo: "redalumni@up.edu.pe",
+                  anexo: "2253",
+                  icono: "users"
+                }
+              ].map((item) => (
+                <div key={item.id} className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3 hover:border-blue-400 transition shadow-2xs flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-sm text-[#0B2240]">{item.nombre}</span>
+                      <Icon name={item.icono} className="w-4 h-4 text-[#1E40AF]" />
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                    <div className="text-[11px] font-mono text-slate-500 font-semibold">Anexo: {item.anexo}</div>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+                    <button
+                      onClick={() => copyToClipboard(item.correo, '¡Correo copiado!')}
+                      className="text-xs font-bold text-[#1E40AF] hover:underline flex items-center gap-1 truncate"
+                    >
+                      <span className="truncate">{item.correo}</span>
+                      <Icon name="copy" className="w-3 h-3 shrink-0" />
+                    </button>
+                    <a
+                      href={'mailto:' + item.correo + '?subject=' + encodeURIComponent('Consulta ' + item.nombre)}
+                      className="px-3 py-1 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-lg transition shrink-0"
+                    >
+                      Redactar
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ====================================================================
+            SECCIÓN 6: T2D – SOPORTE E INFORMÁTICA
+            ==================================================================== */}
+        {activeSection === 't2d' && (
+          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 animate-fade-in">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-3.5">
+                <div className="bg-slate-50 p-2 rounded-xl border border-slate-200 shrink-0">
+                  <img 
+                    src="assets/t2d_logo.png" 
+                    alt="Logo T2D" 
+                    className="h-10 w-10 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="inline-block bg-[#1E40AF] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1 shadow-2xs">
+                    SOPORTE E INFORMÁTICA
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight">
+                    T2D – Servicios Informáticos y de Soporte
+                  </h2>
+                  <p className="text-slate-600 text-sm mt-0.5">
+                    Mesa de ayuda institucional, recuperación de contraseñas, sistemas académicos y software UP.
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href="https://serviciost2d.up.edu.pe/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-[#0B2240] hover:bg-[#16365F] text-white font-bold text-xs rounded-xl transition flex items-center gap-2 shadow-sm shrink-0"
+              >
+                <span>Portal de Autoservicio T2D</span>
+                <Icon name="external-link" className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+              <div className="space-y-6 mb-6 animate-fade-in">
+                {/* Banner Informativo T2D con Horario */}
+                <div className="bg-gradient-to-r from-[#0B2240] via-[#102A4C] to-[#16365F] text-white p-5 rounded-2xl shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-blue-900/50">
+                  <div className="flex items-center gap-4">
+                    <div className="bg-white p-2 rounded-xl border border-white/20 shadow-xs shrink-0">
+                      <img src="assets/t2d_logo.png" alt="Logo T2D" className="h-11 w-11 object-contain" />
+                    </div>
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 text-[11px] font-bold uppercase tracking-wider mb-1.5 border border-cyan-400/30">
+                        <Icon name="shield" className="w-3.5 h-3.5" />
+                        <span>Mesa de Ayuda Tecnológica UP</span>
                       </div>
-                      <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
-                        Empleabilidad y Red Alumni
-                      </h3>
-                      <p className="text-slate-200 text-xs sm:text-sm leading-relaxed font-normal">
-                        Prácticas preprofesionales, empleo y la red de egresados UP.
+                      <h3 className="text-xl font-bold tracking-tight">T2D – Servicios Informáticos y de Soporte</h3>
+                      <p className="text-xs sm:text-sm text-slate-300 mt-0.5 flex items-center gap-2">
+                        <Icon name="clock" className="w-4 h-4 text-cyan-300 flex-shrink-0" />
+                        <span>Atención: L–V 7:30 a.m. – 9:30 p.m. · Sáb 7:30 a.m. – 5:00 p.m.</span>
                       </p>
                     </div>
-
-                    <div className="shrink-0 self-end md:self-center">
-                      <img 
-                        src="assets/buho_formal.png" 
-                        alt="Búho formal UP" 
-                        className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-xl"
-                      />
-                    </div>
                   </div>
-                )}
+                  <a
+                    href="https://serviciost2d.up.edu.pe/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-[#0B2240] font-extrabold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 shadow flex-shrink-0"
+                  >
+                    <span>Ir a Portal T2D</span>
+                    <Icon name="external-link" className="w-4 h-4" />
+                  </a>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {currentDirCategory.items.map((item) => (
-                    <div key={item.id} className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2 hover:border-blue-400 transition">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="font-bold text-sm text-[#0B2240]">{item.nombre}</div>
-                        {item.anexo && (
-                          <span className="text-[11px] font-mono bg-white px-2 py-0.5 rounded border border-slate-200 font-semibold text-slate-700 whitespace-nowrap">
-                            Anexo {item.anexo}
+                {/* Cuadrícula Dinámica de los 6 Servicios Clave de T2D */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {currentDirCategory.servicios.map((srv) => (
+                    <div key={srv.id} className="bg-white border-2 border-slate-200 hover:border-cyan-400 rounded-2xl p-4 transition shadow-xs hover:shadow-md flex flex-col justify-between space-y-3 group">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold ${srv.tagColor}`}>
+                            {srv.tag}
                           </span>
-                        )}
-                        {item.telefono && (
-                          <span className="text-[11px] font-mono bg-white px-2 py-0.5 rounded border border-slate-200 text-slate-600 whitespace-nowrap">
-                            {item.telefono}
-                          </span>
-                        )}
+                          <Icon name={srv.icono} className="w-4 h-4 text-cyan-600 group-hover:scale-110 transition-transform" />
+                        </div>
+                        <h4 className="font-bold text-sm text-[#0B2240] leading-snug">{srv.nombre}</h4>
+                        <p className="text-xs text-slate-600 leading-relaxed">{srv.detalle}</p>
+                      </div>
+                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                        <span className="text-[11px] font-mono text-slate-400">serviciost2d.up.edu.pe</span>
+                        <a
+                          href={srv.enlace}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-bold text-[#1E40AF] hover:text-blue-800 flex items-center gap-1 group-hover:underline"
+                        >
+                          <span>{srv.enlaceTexto}</span>
+                          <Icon name="arrow-right" className="w-3 h-3" />
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+          </div>
+        )}
+
+        {/* ====================================================================
+            SECCIÓN 7: REPRESENTACIÓN ESTUDIANTIL (REUP Y PROGRAMA REA)
+            ==================================================================== */}
+        {activeSection === 'representacion' && (
+          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 animate-fade-in">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-3.5">
+                <img 
+                  src="assets/reup_buho_mascota.jpg" 
+                  alt="Mascota REUP" 
+                  className="w-14 h-14 object-contain shrink-0 rounded-xl border border-slate-200"
+                />
+                <div>
+                  <div className="inline-block bg-[#1E40AF] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1 shadow-2xs">
+                    REPRESENTACIÓN ESTUDIANTIL
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight">
+                    REUP y Programa REA – Comunidad UP
+                  </h2>
+                  <p className="text-slate-600 text-sm mt-0.5">
+                    Canales oficiales, apoyo entre pares, banco de sílabos, causales de baja y grupos de WhatsApp estudiantiles.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <img src="assets/reup_logo.jpg" alt="Logo REUP" className="h-9 w-auto object-contain rounded border border-slate-200" />
+                <img src="assets/rea_logo.jpg" alt="Logo REA" className="h-9 w-auto object-contain rounded border border-slate-200" />
+              </div>
+            </div>
+
+              <div className="space-y-8 mb-6 animate-fade-in">
+                {currentDirCategory.organizaciones.map((org) => (
+                  <div key={org.id} className="bg-slate-50 border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xs">
+                    {/* Encabezado con Handle y Linktree */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
+                      <div className="flex items-center gap-3">
+                        <img 
+                          src={org.id === 'rea' ? 'assets/rea_logo.jpg' : 'assets/reup_logo.jpg'} 
+                          alt={org.nombre}
+                          className="w-12 h-12 rounded-full border-2 border-slate-200 shadow-xs object-cover shrink-0"
+                        />
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-lg sm:text-xl font-extrabold text-[#0B2240]">{org.nombre}</h3>
+                            <span className="px-2.5 py-0.5 rounded-full bg-blue-100 text-[#1E40AF] text-xs font-bold">
+                              {org.handle}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-500 mt-0.5">{org.subtitulo}</p>
+                        </div>
                       </div>
 
-                      {item.carreras && (
-                        <div className="text-xs text-slate-600">
-                          <strong>Carreras:</strong> {item.carreras}
-                        </div>
-                      )}
+                      <div className="flex items-center gap-2">
+                        {org.id === 'reup' && (
+                          <img 
+                            src="assets/reup_buho_mascota.jpg" 
+                            alt="Mascota REUP" 
+                            className="h-10 w-auto object-contain hidden md:block" 
+                          />
+                        )}
+                        <a
+                          href={org.instagramUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3.5 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 self-start sm:self-auto shadow-sm"
+                        >
+                          <Icon name="instagram" className="w-3.5 h-3.5" />
+                          <span>Abrir Linktree ({org.handle})</span>
+                          <Icon name="external-link" className="w-3 h-3" />
+                        </a>
+                      </div>
+                    </div>
 
-                      {item.redes && (
-                        <div className="text-[11px] text-slate-500">
-                          {item.ubicacion && <span className="font-semibold text-slate-700">{item.ubicacion} · </span>}
-                          {item.redes}
+                    {/* 4 Tarjetas Dinámicas e Interactivas de Recursos */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                      {org.recursos.map((rec, rIdx) => (
+                        <div key={rIdx} className="bg-white border border-slate-200 hover:border-purple-300 rounded-xl p-3.5 space-y-2 flex flex-col justify-between hover:shadow transition">
+                          <div className="space-y-1.5">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] font-bold text-purple-700 uppercase tracking-wider bg-purple-50 px-2 py-0.5 rounded">
+                                {rec.tag}
+                              </span>
+                              <Icon name={rec.icono} className="w-4 h-4 text-purple-600" />
+                            </div>
+                            <h4 className="font-bold text-xs sm:text-sm text-[#0B2240]">{rec.titulo}</h4>
+                            <p className="text-[11px] text-slate-600 leading-relaxed">{rec.desc}</p>
+                          </div>
+                          <div className="pt-2 border-t border-slate-100">
+                            <a
+                              href={org.instagramUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="w-full py-1 px-2.5 bg-slate-50 hover:bg-purple-50 text-purple-800 hover:text-purple-900 border border-slate-200 hover:border-purple-200 rounded-lg text-xs font-semibold flex items-center justify-between transition"
+                            >
+                              <span>{rec.accion}</span>
+                              <Icon name="chevron-right" className="w-3 h-3" />
+                            </a>
+                          </div>
                         </div>
-                      )}
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+          </div>
+        )}
 
-                      {item.detalle && (
-                        <div className="text-xs text-slate-600">
-                          {item.detalle}
-                        </div>
-                      )}
+        {/* ====================================================================
+            SECCIÓN 8: DIRECTORIO INSTITUCIONAL (FACULTADES, ESCUELAS Y SERVICIOS)
+            ==================================================================== */}
+        {activeSection === 'directorio' && (
+          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 animate-fade-in">
+            
+            {/* Píldora de Categoría */}
+            <div className="mb-3">
+              <span className="inline-block bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm">
+                DIRECTORIO INSTITUCIONAL
+              </span>
+            </div>
 
-                      {item.correo && (
-                        <div className="pt-2 flex items-center justify-between border-t border-slate-200/60">
+            {/* Título y Subtítulo */}
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight mb-2">
+              Directorio de Facultades, Escuelas y Dependencias UP
+            </h2>
+            <p className="text-slate-600 text-sm mb-6">
+              Canales oficiales, anexos y correos de facultades, escuelas de posgrado y oficinas administrativas de la Universidad del Pacífico.
+            </p>
+
+            {/* Franja Celeste */}
+            <div className="bg-[#EBF3FC] rounded-2xl p-4 sm:p-5 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 border border-blue-100 text-xs">
+              <div>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CENTRAL TELEFÓNICA</div>
+                <div className="font-bold text-[#1E40AF]">{DIRECTORIO_DATA.header.central}</div>
+              </div>
+
+              <div>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">SEDE PRINCIPAL</div>
+                <div className="font-semibold text-slate-800">{DIRECTORIO_DATA.header.sede}</div>
+              </div>
+
+              <div>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">PORTAL WEB</div>
+                <a 
+                  href="https://www.up.edu.pe" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="font-bold text-[#1E40AF] hover:underline flex items-center gap-1"
+                >
+                  <span>www.up.edu.pe</span>
+                  <Icon name="external-link" className="w-3 h-3 text-[#1E40AF]" />
+                </a>
+              </div>
+
+              <div>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">ADMISIÓN DIRECTO</div>
+                <div className="font-semibold text-slate-800">{DIRECTORIO_DATA.header.admisionDirecto}</div>
+              </div>
+            </div>
+
+            {/* Pestañas de las 3 categorías institucionales del Directorio */}
+            <div className="mb-6">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
+                Selecciona la dependencia institucional:
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                {DIRECTORIO_DATA.categories.filter(c => ['facultades', 'escuelas', 'oficinas'].includes(c.id)).map((cat) => {
+                  const isCatActive = activeDirCat === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => {
+                        setActiveDirCat(cat.id);
+                        if (cat.items && cat.items.length > 0) setActiveDirItem(cat.items[0]);
+                      }}
+                      className={`p-3.5 rounded-xl text-left border transition ${
+                        isCatActive
+                          ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm ring-1 ring-blue-400'
+                          : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
+                      }`}
+                    >
+                      <div className="font-bold text-xs sm:text-sm">{cat.title}</div>
+                      <div className={`text-[10px] sm:text-xs mt-0.5 ${isCatActive ? 'text-blue-200' : 'text-slate-500'}`}>
+                        {cat.badge}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Cuadrícula de dependencias del Directorio */}
+            <div className="space-y-3 mb-6 animate-fade-in">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                Dependencias registradas en {currentDirCategory.title}:
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {currentDirCategory.items.map((item) => (
+                  <div key={item.id} className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2 hover:border-blue-400 transition">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="font-bold text-sm text-[#0B2240]">{item.nombre}</div>
+                      {item.anexo && (
+                        <span className="text-[11px] font-mono bg-white px-2 py-0.5 rounded border border-slate-200 font-semibold text-slate-700 whitespace-nowrap">
+                          Anexo {item.anexo}
+                        </span>
+                      )}
+                      {item.telefono && (
+                        <span className="text-[11px] font-mono bg-white px-2 py-0.5 rounded border border-slate-200 text-slate-600 whitespace-nowrap">
+                          {item.telefono}
+                        </span>
+                      )}
+                    </div>
+
+                    {item.carreras && (
+                      <div className="text-xs text-slate-600">
+                        <strong>Carreras:</strong> {item.carreras}
+                      </div>
+                    )}
+
+                    {item.redes && (
+                      <div className="text-[11px] text-slate-500">
+                        {item.ubicacion && <span className="font-semibold text-slate-700">{item.ubicacion} · </span>}
+                        {item.redes}
+                      </div>
+                    )}
+
+                    {item.detalle && (
+                      <div className="text-xs text-slate-600">
+                        {item.detalle}
+                      </div>
+                    )}
+
+                    {item.horario && (
+                      <div className="text-[11px] text-slate-500 flex items-center gap-1">
+                        <Icon name="clock" className="w-3 h-3 text-slate-400" />
+                        <span>{item.horario}</span>
+                      </div>
+                    )}
+
+                    <div className="pt-2 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
+                      {item.correo ? (
+                        <div className="flex items-center gap-2">
                           <button
-                            onClick={() => copyToClipboard(item.correo, `¡Correo ${item.correo} copiado!`)}
-                            className="font-bold text-xs text-[#1E40AF] hover:underline flex items-center gap-1"
+                            onClick={() => copyToClipboard(item.correo, '¡Correo copiado!')}
+                            className="text-xs font-bold text-[#1E40AF] hover:underline flex items-center gap-1"
                           >
                             <span>{item.correo}</span>
-                            <Icon name="copy" className="w-3 h-3 text-slate-400" />
+                            <Icon name="copy" className="w-3 h-3 text-[#1E40AF]" />
                           </button>
                           <a
-                            href={`mailto:${item.correo}?subject=${encodeURIComponent(`Consulta ${item.nombre} – ${studentCode || '20231234'}`)}`}
+                            href={'mailto:' + item.correo + '?subject=' + encodeURIComponent('Consulta ' + item.nombre)}
                             className="px-2.5 py-1 bg-white border border-blue-200 text-[#1E40AF] hover:bg-blue-50 rounded text-xs font-bold transition"
                           >
                             Redactar
                           </a>
                         </div>
+                      ) : (
+                        <span className="text-xs text-slate-400">Atención presencial / telefónica</span>
                       )}
 
-                      {item.id === 'ofi-daar' && (
-                        <div className="pt-2">
-                          <button
-                            onClick={() => {
-                              setActiveSection('daar');
-                              window.scrollTo({ top: 400, behavior: 'smooth' });
-                            }}
-                            className="w-full py-2 px-3 bg-[#1E40AF] hover:bg-blue-800 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition shadow-xs"
-                          >
-                            <span>Ir al módulo de Trámites DAAR</span>
-                            <Icon name="chevron-right" className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
+                      {item.pabellon && (
+                        <button
+                          onClick={() => {
+                            setSelectedPabellon(item.pabellon);
+                            setShowMapModal(true);
+                          }}
+                          className="text-[11px] text-amber-700 hover:text-amber-900 font-semibold flex items-center gap-1 bg-amber-50 hover:bg-amber-100 px-2 py-0.5 rounded border border-amber-200 transition"
+                        >
+                          <Icon name="map-pin" className="w-3 h-3" />
+                          <span>Pabellón {item.pabellon}</span>
+                        </button>
                       )}
-
-                      {item.web && (
-                        <div className="pt-2">
-                          <a
-                            href={item.web}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs font-bold text-rose-700 hover:underline flex items-center gap-1"
-                          >
-                            <span>Visitar portal web</span>
-                            <Icon name="external-link" className="w-3 h-3" />
-                          </a>
-                        </div>
-                      )}
-
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-            )}
-
+            </div>
           </div>
         )}
-
       </main>
 
       {/* ====================================================================
