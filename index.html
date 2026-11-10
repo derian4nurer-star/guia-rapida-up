@@ -3033,8 +3033,8 @@
                           if (card.id === 'directorio') setActiveDirCat('facultades');
                         }}
                         className={`p-3.5 sm:p-4 rounded-xl text-left transition-all border flex flex-col justify-between min-h-[78px] sm:min-h-[86px] ${isActive
-                            ? 'bg-[#16365F] border-blue-400 ring-2 ring-blue-400/50 shadow-lg translate-y-[-2px]'
-                            : 'bg-[#102A4C] border-[#1D3D66] hover:bg-[#133055] hover:border-slate-500'
+                          ? 'bg-[#16365F] border-blue-400 ring-2 ring-blue-400/50 shadow-lg translate-y-[-2px]'
+                          : 'bg-[#102A4C] border-[#1D3D66] hover:bg-[#133055] hover:border-slate-500'
                           }`}
                       >
                         <span className="flex items-center justify-between mb-1 w-full">
@@ -3379,8 +3379,8 @@
                             setActiveDaarItem(cat.items[0]);
                           }}
                           className={`p-3 rounded-xl text-left border transition ${isCatActive
-                              ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm'
-                              : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
+                            ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm'
+                            : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
                             }`}
                         >
                           <span className="font-bold text-xs sm:text-sm">{cat.title}</span>
@@ -3409,8 +3409,8 @@
                           key={item.id}
                           onClick={() => setActiveDaarItem(item)}
                           className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition border flex items-center gap-1.5 ${isItemActive
-                              ? 'bg-[#1E40AF] text-white border-blue-600 shadow-sm'
-                              : 'bg-white text-slate-700 border-slate-200 hover:border-blue-400 hover:text-blue-700'
+                            ? 'bg-[#1E40AF] text-white border-blue-600 shadow-sm'
+                            : 'bg-white text-slate-700 border-slate-200 hover:border-blue-400 hover:text-blue-700'
                             }`}
                         >
                           <span>{item.nombre}</span>
@@ -3455,9 +3455,8 @@
                       </div>
                     )}
 
-                    <>
-                      {/* Generador de Asunto Oficial para Otros Trámites */}
-                      <div className="bg-white rounded-xl p-4 border border-blue-100 shadow-sm space-y-3 mb-4">
+                    {/* Generador de Asunto Oficial para Otros Trámites */}
+                    <div className="bg-white rounded-xl p-4 border border-blue-100 shadow-sm space-y-3 mb-4">
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-bold text-[#0B2240] uppercase tracking-wider text-[11px]">
                             Asunto Oficial Recomendado:
@@ -3605,8 +3604,8 @@
                                 setActiveBfeItem(null);
                               }}
                               className={`p-3 rounded-xl text-left border transition ${isCatActive
-                                  ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm'
-                                  : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
+                                ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm'
+                                : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
                                 }`}
                             >
                               <span className="font-bold text-xs">{cat.title}</span>
@@ -3747,8 +3746,8 @@
                                 key={espacio.id}
                                 onClick={() => setActiveBfeItem(espacio)}
                                 className={`p-3 rounded-xl text-left border transition ${isSelected
-                                    ? 'bg-[#1E40AF] text-white border-blue-600 shadow-sm'
-                                    : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-200'
+                                  ? 'bg-[#1E40AF] text-white border-blue-600 shadow-sm'
+                                  : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-200'
                                   }`}
                               >
                                 <span className="font-bold text-xs truncate">{espacio.nombre}</span>
@@ -3956,8 +3955,8 @@
                               key={tab.id}
                               onClick={() => setActiveOriTab(tab.id)}
                               className={`px-3.5 py-1.5 rounded-xl font-bold text-xs transition ${isTabActive
-                                  ? 'bg-[#0B2240] text-white shadow-sm ring-1 ring-blue-400'
-                                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                                ? 'bg-[#0B2240] text-white shadow-sm ring-1 ring-blue-400'
+                                : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                                 }`}
                             >
                               {tab.label}
@@ -4682,8 +4681,8 @@
                                 if (cat.items && cat.items.length > 0) setActiveDirItem(cat.items[0]);
                               }}
                               className={`p-3.5 rounded-xl text-left border transition ${isCatActive
-                                  ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm ring-1 ring-blue-400'
-                                  : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
+                                ? 'bg-[#0B2240] text-white border-[#0B2240] shadow-sm ring-1 ring-blue-400'
+                                : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
                                 }`}
                             >
                               <span className="font-bold text-xs sm:text-sm block">{cat.title}</span>

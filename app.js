@@ -3401,9 +3401,8 @@ function App() {
                   </div>
                 )}
 
-                <>
-                    {/* Generador de Asunto Oficial para Otros Trámites */}
-                    <div className="bg-white rounded-xl p-4 border border-blue-100 shadow-sm space-y-3 mb-4">
+                {/* Generador de Asunto Oficial para Otros Trámites */}
+                <div className="bg-white rounded-xl p-4 border border-blue-100 shadow-sm space-y-3 mb-4">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-bold text-[#0B2240] uppercase tracking-wider text-[11px]">
                           Asunto Oficial Recomendado:
