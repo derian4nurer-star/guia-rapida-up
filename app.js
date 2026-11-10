@@ -488,7 +488,10 @@ const DAAR_DATA = {
     webTexto: "daar.up.edu.pe",
     matricula: "https://daar.up.edu.pe/matricula",
     matriculaTexto: "daar.up.edu.pe/matricula",
-    grados: "gradosytitulos@up.edu.pe"
+    grados: "gradosytitulos@up.edu.pe",
+    tramiteLinea: "https://etramite.up.edu.pe",
+    tramiteLineaTexto: "etramite.up.edu.pe",
+    pagos: "App UPExperience"
   },
   categories: [
     {
@@ -3232,74 +3235,91 @@ function App() {
           <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 animate-fade-in">
             
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
-              <div className="flex items-center gap-3.5">
-                <img 
-                  src="assets/buho_study.png" 
-                  alt="Búho estudiando UP" 
-                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain shrink-0"
-                />
-                <div>
-                  <div className="inline-block bg-[#1E40AF] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1 shadow-2xs">
-                    TRÁMITES ACADÉMICOS
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight">
-                    DAAR – Servicios Académicos y Registro
-                  </h2>
-                  <p className="text-slate-600 text-sm mt-0.5">
-                    Es la oficina para todo lo que afecta tu matrícula, tus notas y tu plan de estudios.
-                  </p>
+              <div>
+                <div className="inline-block bg-[#1E40AF] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1 shadow-2xs">
+                  TRÁMITES ACADÉMICOS
                 </div>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2240] tracking-tight">
+                  DAAR – Servicios Académicos y Registro
+                </h2>
+                <p className="text-slate-600 text-sm mt-0.5">
+                  Es la oficina para todo lo que afecta tu matrícula, tus notas y tu plan de estudios.
+                </p>
               </div>
 
-              <div className="hidden sm:flex items-center bg-slate-50 px-3 py-2 rounded-xl border border-slate-200 shrink-0">
+              <div className="hidden sm:flex items-center shrink-0">
                 <img 
-                  src="assets/daar_logo.png" 
-                  alt="Logo DAAR" 
-                  className="h-8 w-auto object-contain"
+                  src="imágenes UP/DAAR UP LOGO.png" 
+                  alt="Dirección de Asuntos Académicos y Registro - Universidad del Pacífico" 
+                  className="h-9 md:h-11 w-auto object-contain"
+                  onError={(e) => { e.currentTarget.src = 'assets/daar_logo.png'; }}
                 />
               </div>
             </div>
 
-            {/* Franja Celeste de 4 Columnas (Exacta a Imagen 3) */}
-            <div className="bg-[#EBF3FC] rounded-2xl p-4 sm:p-5 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 border border-blue-100 text-xs">
+            {/* Franja Celeste con Links Oficiales (Réplica Exacta de Imagen 1) */}
+            <div className="bg-[#EBF3FC] rounded-2xl p-5 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-y-4 gap-x-6 border border-blue-100 text-xs">
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CORREO PRINCIPAL</div>
-                <button
-                  onClick={() => copyToClipboard(DAAR_DATA.header.correo, "¡Correo de DAAR copiado!")}
-                  className="font-bold text-[#0B2240] hover:underline text-left flex items-center gap-1"
+                <div className="font-extrabold text-slate-500 uppercase tracking-wider mb-1 text-[10px]">CORREO</div>
+                <a
+                  href={`mailto:${DAAR_DATA.header.correo}`}
+                  className="font-semibold text-blue-700 hover:text-blue-900 underline text-xs sm:text-sm break-all"
                 >
-                  <Icon name="mail" className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                  <span>{DAAR_DATA.header.correo}</span>
-                  <Icon name="copy" className="w-3 h-3 text-slate-400" />
-                </button>
+                  {DAAR_DATA.header.correo}
+                </a>
               </div>
 
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">UBICACIÓN EN CAMPUS</div>
-                <span className="font-semibold text-slate-800 flex items-center gap-1">
-                  <Icon name="map-pin" className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>Pabellón A · Edificio Central</span>
-                </span>
-              </div>
-
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">HORARIO DE ATENCIÓN</div>
-                <span className="font-semibold text-slate-800 flex items-center gap-1">
-                  <Icon name="clock" className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                  <span>Lunes a Viernes 8:00 – 18:00</span>
-                </span>
-              </div>
-
-              <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">GRADOS Y TÍTULOS</div>
-                <button
-                  onClick={() => copyToClipboard(DAAR_DATA.header.grados, "¡Correo de Grados y Títulos copiado!")}
-                  className="font-bold text-[#0B2240] hover:underline text-left flex items-center gap-1"
+                <div className="font-extrabold text-slate-500 uppercase tracking-wider mb-1 text-[10px]">WEB</div>
+                <a
+                  href={DAAR_DATA.header.web}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-blue-700 hover:text-blue-900 underline text-xs sm:text-sm break-all"
                 >
-                  <Icon name="mail" className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                  <span>{DAAR_DATA.header.grados}</span>
-                  <Icon name="copy" className="w-3 h-3 text-slate-400" />
-                </button>
+                  {DAAR_DATA.header.webTexto}
+                </a>
+              </div>
+
+              <div>
+                <div className="font-extrabold text-slate-500 uppercase tracking-wider mb-1 text-[10px]">MATRÍCULA</div>
+                <a
+                  href={DAAR_DATA.header.matricula}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-blue-700 hover:text-blue-900 underline text-xs sm:text-sm break-all"
+                >
+                  {DAAR_DATA.header.matriculaTexto}
+                </a>
+              </div>
+
+              <div>
+                <div className="font-extrabold text-slate-500 uppercase tracking-wider mb-1 text-[10px]">GRADOS Y TÍTULOS</div>
+                <a
+                  href={`mailto:${DAAR_DATA.header.grados}`}
+                  className="font-semibold text-blue-700 hover:text-blue-900 underline text-xs sm:text-sm break-all"
+                >
+                  {DAAR_DATA.header.grados}
+                </a>
+              </div>
+
+              <div>
+                <div className="font-extrabold text-slate-500 uppercase tracking-wider mb-1 text-[10px]">TRÁMITES EN LÍNEA</div>
+                <a
+                  href={DAAR_DATA.header.tramiteLinea}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-blue-700 hover:text-blue-900 underline text-xs sm:text-sm break-all"
+                >
+                  {DAAR_DATA.header.tramiteLineaTexto}
+                </a>
+              </div>
+
+              <div>
+                <div className="font-extrabold text-slate-500 uppercase tracking-wider mb-1 text-[10px]">PAGOS</div>
+                <span className="font-semibold text-slate-800 text-xs sm:text-sm">
+                  {DAAR_DATA.header.pagos}
+                </span>
               </div>
             </div>
 
