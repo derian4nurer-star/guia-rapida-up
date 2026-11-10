@@ -2681,7 +2681,13 @@ function App() {
     return BFE_DATA.categories.find(c => c.id === activeBfeCat) || BFE_DATA.categories[0];
   }, [activeBfeCat]);
 
-  // Selección de categoría actual en Directorio
+  // Categorías fijas de datos para secciones independientes
+  const oriCategory = useMemo(() => DIRECTORIO_DATA.categories.find(c => c.id === 'ori') || {}, []);
+  const t2dCategory = useMemo(() => DIRECTORIO_DATA.categories.find(c => c.id === 't2d') || {}, []);
+  const repCategory = useMemo(() => DIRECTORIO_DATA.categories.find(c => c.id === 'representacion') || {}, []);
+  const empCategory = useMemo(() => DIRECTORIO_DATA.categories.find(c => c.id === 'empleabilidad') || {}, []);
+
+  // Selección de categoría actual en Directorio institucional (solo facultades, escuelas y oficinas)
   const currentDirCategory = useMemo(() => {
     return DIRECTORIO_DATA.categories.find(c => c.id === activeDirCat) || DIRECTORIO_DATA.categories[0];
   }, [activeDirCat]);
@@ -3167,7 +3173,7 @@ function App() {
                           <span>Beneficios del Intercambio Semestral</span>
                         </h4>
                         <ul className="space-y-2 text-xs text-slate-700">
-                          {currentDirCategory.outgoing.beneficios.map((b, idx) => (
+                          {oriCategory.outgoing.beneficios.map((b, idx) => (
                             <li key={idx} className="flex items-start gap-2">
                               <span className="text-emerald-500 font-bold">✔</span>
                               <span>{b}</span>
@@ -3182,7 +3188,7 @@ function App() {
                           <span>Estructura Oficial de Pagos</span>
                         </h4>
                         <div className="space-y-1.5 text-xs">
-                          {currentDirCategory.outgoing.pagos.map((p, idx) => (
+                          {oriCategory.outgoing.pagos.map((p, idx) => (
                             <div key={idx} className="flex items-center justify-between p-2 bg-white rounded-lg border border-slate-200/80">
                               <span className="text-slate-600">{p.concepto}:</span>
                               <span className="font-bold text-[#0B2240] text-right">{p.monto}</span>
@@ -3229,7 +3235,7 @@ function App() {
                         </p>
                         <div className="space-y-1.5 pt-1">
                           <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Destinos y programas de ejemplo:</div>
-                          {currentDirCategory.programasCortos.facultyLed.ejemplos.map((ej, idx) => (
+                          {oriCategory.programasCortos.facultyLed.ejemplos.map((ej, idx) => (
                             <div key={idx} className="p-2 bg-slate-50 rounded-lg border border-slate-200 text-xs text-slate-700 flex items-center gap-2">
                               <span className="w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></span>
                               <span>{ej}</span>
@@ -3330,7 +3336,7 @@ function App() {
                         Certificaciones de idioma inglés y puntajes mínimos aceptados:
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        {currentDirCategory.disney.certificaciones.map((c, idx) => (
+                        {oriCategory.disney.certificaciones.map((c, idx) => (
                           <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
                             <div className="text-xs font-bold text-slate-600 uppercase">{c.examen}</div>
                             <div className="text-lg font-extrabold text-[#1E40AF] mt-0.5">{c.puntaje}</div>
@@ -3348,7 +3354,7 @@ function App() {
                 {activeOriTab === 'becas' && (
                   <div className="space-y-4 animate-fade-in">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {currentDirCategory.becas.map((b) => (
+                      {oriCategory.becas.map((b) => (
                         <div key={b.id} className={`border-2 rounded-2xl p-5 space-y-3 shadow-xs ${b.color}`}>
                           <div className="flex items-center justify-between">
                             <span className="px-2.5 py-0.5 rounded-full bg-white text-slate-800 text-[10px] font-bold border border-slate-200">
@@ -3390,7 +3396,7 @@ function App() {
                         La Universidad del Pacífico mantiene convenios de intercambio académico con prestigiosas universidades asociadas en todo el mundo:
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                        {currentDirCategory.convenios.continentes.map((cont, idx) => (
+                        {oriCategory.convenios.continentes.map((cont, idx) => (
                           <div key={idx} className="bg-white p-3 rounded-xl border border-slate-200 space-y-1">
                             <div className="text-xs font-bold text-[#0B2240]">{cont.nombre}</div>
                             <div className="text-xs text-slate-600">{cont.detalle}</div>
@@ -3400,7 +3406,7 @@ function App() {
                       <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
                         <span className="text-slate-500">Consulta el directorio actualizado en ori.up.edu.pe</span>
                         <a
-                          href={currentDirCategory.convenios.link}
+                          href={oriCategory.convenios.link}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-3 py-1.5 bg-[#1E40AF] text-white font-bold rounded-lg hover:bg-blue-800 transition"
@@ -3416,9 +3422,9 @@ function App() {
                 {activeOriTab === 'faqs' && (
                   <div className="space-y-2.5 animate-fade-in">
                     <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                      Banco oficial de preguntas frecuentes de ORI ({currentDirCategory.faqs.length} consultas):
+                      Banco oficial de preguntas frecuentes de ORI ({oriCategory.faqs.length} consultas):
                     </div>
-                    {currentDirCategory.faqs.map((faq, idx) => {
+                    {oriCategory.faqs.map((faq, idx) => {
                       const isOpen = activeOriFaq === idx;
                       return (
                         <div key={idx} className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
@@ -3636,7 +3642,7 @@ function App() {
 
                 {/* Cuadrícula Dinámica de los 6 Servicios Clave de T2D */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {currentDirCategory.servicios.map((srv) => (
+                  {t2dCategory.servicios.map((srv) => (
                     <div key={srv.id} className="bg-white border-2 border-slate-200 hover:border-cyan-400 rounded-2xl p-4 transition shadow-xs hover:shadow-md flex flex-col justify-between space-y-3 group">
                       <div className="space-y-2">
                         <div className="flex items-center justify-between gap-2">
@@ -3699,7 +3705,7 @@ function App() {
             </div>
 
               <div className="space-y-8 mb-6 animate-fade-in">
-                {currentDirCategory.organizaciones.map((org) => (
+                {repCategory.organizaciones.map((org) => (
                   <div key={org.id} className="bg-slate-50 border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xs">
                     {/* Encabezado con Handle y Linktree */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
