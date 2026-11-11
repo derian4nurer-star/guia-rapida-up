@@ -171,7 +171,7 @@ const BUSCADOR_RAPIDO = [
     "dot": "bg-blue-600",
     "correo": "gradosytitulos@up.edu.pe",
     "enlace": "https://daar.up.edu.pe",
-    "enlaceTexto": "gradosytitulos@up.edu.pe",
+    "enlaceTexto": "daar.up.edu.pe",
     "categoria": "Graduación y Titulación",
     "detalle": "Modalidades de obtención del título profesional (tesis y TSP), duplicados de diploma y trámites de bachiller.",
     "seccion": "daar",
@@ -316,8 +316,8 @@ const BUSCADOR_RAPIDO = [
     "canal": "DAAR",
     "dot": "bg-blue-600",
     "correo": "pregrado@up.edu.pe",
-    "enlace": "https://powercampus.up.edu.pe",
-    "enlaceTexto": "powercampus.up.edu.pe",
+    "enlace": "https://autoservicio2.up.edu.pe/ss/",
+    "enlaceTexto": "autoservicio2.up.edu.pe/ss",
     "categoria": "Identificación Estudiantil",
     "detalle": "Solicitud virtual en PowerCampus: Información General → Trámites y Documentos. Costo oficial S/ 40.00 con foto formal.",
     "seccion": "daar",
@@ -329,8 +329,8 @@ const BUSCADOR_RAPIDO = [
     "canal": "DAAR",
     "dot": "bg-blue-600",
     "correo": "pregrado@up.edu.pe",
-    "enlace": "https://daar.up.edu.pe",
-    "enlaceTexto": "daar.up.edu.pe",
+    "enlace": "https://etramite.up.edu.pe",
+    "enlaceTexto": "etramite.up.edu.pe",
     "categoria": "Certificados y Récords",
     "detalle": "Emisión de constancias de estudios, orden de mérito, récord histórico y certificados oficiales con firma digital.",
     "seccion": "daar",
@@ -729,9 +729,9 @@ const BFE_DATA = {
       obligatorias: "Para ingresantes a partir de 2022-I: deben acreditar obligatoriamente 4 créditos EFE para egresar. Para ingresantes entre 2017-I y 2021-II: consultar el reglamento correspondiente en el portal de estudiantes.",
       voluntarias: "Se ofrecen actividades deportivas, artísticas, culturales y de liderazgo. Por ser parte de una selección deportiva, elenco artístico o Brigada UP se puede solicitar la convalidación de 1 crédito EFE voluntario.",
       enlaces: [
-        { nombre: "Elencos y Selecciones Deportivas", ig: "@elencos.up", url: "https://casaup.up.edu.pe/vida-universitaria/elencos-artisticos/" },
-        { nombre: "Brigada UP (Voluntariado)", ig: "@brigadeando.up", url: "https://casaup.up.edu.pe/vida-universitaria/brigada-up/" },
-        { nombre: "Organizaciones Estudiantiles (Guía Oficial PDF)", ig: "Casa UP", url: "https://casaup.up.edu.pe/wp-content/uploads/2025/09/2025_Guia-de-Organizaciones-estudiantiles-UP_act.set_.pdf" }
+        { nombre: "Elencos y Selecciones Deportivas", fuente: "Casa UP", url: "https://casaup.up.edu.pe/vida-universitaria/elencos-artisticos/" },
+        { nombre: "Brigada UP (Voluntariado)", fuente: "Casa UP", url: "https://casaup.up.edu.pe/vida-universitaria/brigada-up/" },
+        { nombre: "Organizaciones Estudiantiles (Guía Oficial PDF)", fuente: "PDF Casa UP", url: "https://casaup.up.edu.pe/wp-content/uploads/2025/09/2025_Guia-de-Organizaciones-estudiantiles-UP_act.set_.pdf" }
       ]
     },
     {
@@ -1306,35 +1306,41 @@ const DIRECTORIO_DATA = {
           nombre: "REUP (reupunido)",
           handle: "@reupcontigo",
           instagramUrl: "https://www.instagram.com/reupcontigo/",
-          subtitulo: "Representación Estudiantil de la Universidad del Pacífico · Todos sus enlaces funcionan desde su Linktree",
+          portalUrl: "https://beacons.ai/reupcontigo",
+          portalLabel: "Beacons REUP",
+          subtitulo: "Representación Estudiantil de la Universidad del Pacífico · Recursos disponibles en su portal Beacons y perfil de Instagram",
           recursos: [
             {
               titulo: "Comunidad REUP de WhatsApp",
-              tag: "Comunidad Oficial",
-              desc: "Invitación para unirte a la comunidad oficial de WhatsApp de todos los estudiantes de la UP.",
+              tag: "En Beacons REUP",
+              desc: "Invitación para unirte a la comunidad oficial de WhatsApp de los estudiantes UP (acceso desde Beacons @reupcontigo).",
               icono: "chat",
-              accion: "Unirme al WhatsApp"
+              accion: "Ir a Beacons @reupcontigo",
+              url: "https://beacons.ai/reupcontigo"
             },
             {
               titulo: "Causales de baja de la UP",
-              tag: "Guía PDF",
-              desc: "Documento oficial en PDF explicando al detalle las causales académicas de baja y permanencia.",
+              tag: "Guía en Beacons REUP",
+              desc: "Guía sobre causales académicas de baja y permanencia publicada por REUP dentro de su portal de recursos (beacons.ai/reupcontigo).",
               icono: "doc",
-              accion: "Ver PDF Oficial"
+              accion: "Abrir Beacons REUP",
+              url: "https://beacons.ai/reupcontigo"
             },
             {
               titulo: "Tu amigo Inge",
               tag: "Ingeniería UP",
-              desc: "Exámenes pasados, proyectos y materiales académicos de apoyo para estudiantes de Ingeniería.",
+              desc: "Exámenes pasados, proyectos y materiales académicos de apoyo para Ingeniería (disponible en Beacons @reupcontigo).",
               icono: "academic",
-              accion: "Ver Repositorio"
+              accion: "Ir a Beacons @reupcontigo",
+              url: "https://beacons.ai/reupcontigo"
             },
             {
               titulo: "Doble Grado (2025)",
               tag: "Afiches UOL · Rennes · HEC",
-              desc: "Afiches informativos y requisitos vigentes 2025 para postular a los convenios de doble titulación internacional.",
+              desc: "Afiches informativos y requisitos para postular a doble titulación internacional (enlace en Beacons @reupcontigo).",
               icono: "globe",
-              accion: "Ver Afiches 2025"
+              accion: "Ir a Beacons @reupcontigo",
+              url: "https://beacons.ai/reupcontigo"
             }
           ]
         },
@@ -1343,35 +1349,41 @@ const DIRECTORIO_DATA = {
           nombre: "Programa REA (progreaup)",
           handle: "@progreaup",
           instagramUrl: "https://www.instagram.com/progreaup/",
-          subtitulo: "Acompañamiento, enlaces y recursos para estudiantes de pregrado · Acceso desde su Linktree de Instagram",
+          portalUrl: "https://linktr.ee/progreaup",
+          portalLabel: "Linktree @progreaup",
+          subtitulo: "Acompañamiento, enlaces y recursos para estudiantes de pregrado · Acceso desde Linktree / Instagram @progreaup",
           recursos: [
             {
               titulo: "REA sin contactar",
               tag: "Grupos de WhatsApp",
-              desc: "Encuentra el grupo oficial de WhatsApp correspondiente a tu salón y sección para estar comunicado.",
+              desc: "Encuentra el grupo de WhatsApp correspondiente a tu salón y sección (enlace en Linktree @progreaup).",
               icono: "chat",
-              accion: "Buscar mi Salón"
+              accion: "Ir a Linktree @progreaup",
+              url: "https://linktr.ee/progreaup"
             },
             {
               titulo: "Buzón REA",
               tag: "Formulario Unificado",
-              desc: "Formulario pensado para que tengas un solo espacio donde compartir lo que necesites con el Programa REA.",
+              desc: "Espacio para compartir inquietudes y solicitudes con el Programa REA (enlace en Linktree @progreaup).",
               icono: "mail",
-              accion: "Llenar Formulario"
+              accion: "Ir a Linktree @progreaup",
+              url: "https://linktr.ee/progreaup"
             },
             {
               titulo: "Banco de Sílabos",
               tag: "Hasta ciclo 2025-1",
-              desc: "Repositorio descargable con los sílabos históricos de cursos UP para planificar tus materias.",
+              desc: "Repositorio histórico con sílabos de cursos UP para planificar tus materias (enlace en Linktree @progreaup).",
               icono: "book",
-              accion: "Consultar Sílabos"
+              accion: "Ir a Linktree @progreaup",
+              url: "https://linktr.ee/progreaup"
             },
             {
               titulo: "Música de REA Estudio",
               tag: "Playlist Focus",
-              desc: "Selección musical ambiental diseñada para maximizar el enfoque y la productividad al estudiar.",
+              desc: "Selección musical ambiental para estudiar (enlace en Linktree @progreaup).",
               icono: "music",
-              accion: "Escuchar Música"
+              accion: "Ir a Linktree @progreaup",
+              url: "https://linktr.ee/progreaup"
             }
           ]
         }
@@ -1475,7 +1487,8 @@ const CANALES_SEARCH_ENGINE = [
     correo: 'consejeriapsicologica@up.edu.pe',
     correoAlt: 'consejeriaestudiantil@up.edu.pe',
     anexo: '2215',
-    web: 'https://www.up.edu.pe',
+    web: 'https://casaup.up.edu.pe/wp-content/uploads/2025/09/Consejeria-Universitaria-2025_web.pdf',
+    webTexto: 'Folleto Consejería (PDF Oficial)',
     pabellon: 'Z',
     ubicacionTexto: 'Pabellón Z — Casa del Estudiante (Piso 2, Jr. Sánchez Cerro 2215)',
     horario: 'Lunes a viernes de 8:00 a. m. a 5:00 p. m.',
@@ -1496,7 +1509,8 @@ const CANALES_SEARCH_ENGINE = [
     asunto: 'Acompañamiento Académico / Tutoría BFE',
     correo: 'bfe@up.edu.pe',
     anexo: '2215',
-    web: 'https://www.up.edu.pe',
+    web: 'https://casaup.up.edu.pe',
+    webTexto: 'Portal Casa UP',
     pabellon: 'Z',
     ubicacionTexto: 'Pabellón Z — Casa del Estudiante',
     horario: 'Lunes a viernes de 8:00 a. m. a 5:00 p. m.',
@@ -1518,7 +1532,8 @@ const CANALES_SEARCH_ENGINE = [
     correo: 'bfe@up.edu.pe',
     correoCanchita: 'vr.espinozap@up.edu.pe',
     anexo: '2215',
-    web: 'https://www.up.edu.pe',
+    web: 'https://casaup.up.edu.pe',
+    webTexto: 'Portal Casa UP',
     pabellon: 'Z',
     ubicacionTexto: 'Pabellón Z — Jr. Sánchez Cerro 2215, Jesús María',
     horario: 'Gym UP: L-V 7:30 a 11:30 a. m. y 1:00 a 9:00 p. m.',
@@ -1539,7 +1554,8 @@ const CANALES_SEARCH_ENGINE = [
     asunto: 'Consulta Créditos EFE',
     correo: 'bfe@up.edu.pe',
     anexo: '2215',
-    web: 'https://www.up.edu.pe',
+    web: 'https://casaup.up.edu.pe/nuevo-flujograma-plan-efe-para-planes-2027-i-y-2028-i/',
+    webTexto: 'Flujograma EFE (Casa UP)',
     pabellon: 'Z',
     ubicacionTexto: 'Pabellón Z — Casa del Estudiante',
     horario: 'Lunes a viernes de 8:00 a. m. a 5:00 p. m.',
@@ -1601,7 +1617,7 @@ const CANALES_SEARCH_ENGINE = [
     asunto: 'Consulta Facultad de Derecho',
     correo: 'derecho@up.edu.pe',
     anexo: '2329',
-    web: 'https://derecho.up.edu.pe',
+    web: null,
     pabellon: null,
     horario: 'Lunes a viernes de 8:30 a. m. a 5:30 p. m.',
     consejo: 'Atención a alumnos de Derecho para convalidaciones, clínicas jurídicas de práctica y orientación curricular.',
@@ -1621,7 +1637,7 @@ const CANALES_SEARCH_ENGINE = [
     asunto: 'Consulta Facultad Economía y Finanzas',
     correo: 'fef@up.edu.pe',
     anexo: '2143',
-    web: 'https://fef.up.edu.pe',
+    web: null,
     pabellon: null,
     horario: 'Lunes a viernes de 8:30 a. m. a 5:30 p. m.',
     consejo: 'Canal especializado para estudiantes de Economía y Finanzas, programas de doble grado y asesorías de cursos cuantitativos.',
@@ -1642,7 +1658,8 @@ const CANALES_SEARCH_ENGINE = [
     correo: 'pensiones@up.edu.pe',
     correoAlt: 'tesoreria@up.edu.pe',
     anexo: '2239 (Pensiones) / 2272 - 2343 (Tesorería)',
-    web: 'https://daar.up.edu.pe/pensiones',
+    web: 'https://srvnetpagos.up.edu.pe/UPPagoVirtual/',
+    webTexto: 'Pagos Virtuales UP',
     pabellon: null,
     horario: 'Lunes a viernes de 8:00 a. m. a 5:00 p. m.',
     consejo: 'Las fechas de vencimiento de las cuotas son improrrogables para evitar recargos por mora. Puedes verificar tus boletas en PowerCampus.',
@@ -1663,7 +1680,7 @@ const CANALES_SEARCH_ENGINE = [
     correo: 'practicaspre@up.edu.pe',
     correoAlt: 'empleabilidad@up.edu.pe',
     anexo: '2253',
-    web: 'https://empleabilidad.up.edu.pe',
+    web: null,
     pabellon: null,
     horario: 'Lunes a viernes de 8:30 a. m. a 5:30 p. m.',
     consejo: 'Debes registrar y legalizar tu convenio de prácticas preprofesionales antes de comenzar tus labores para que tengan validez y seguro universitario.',
@@ -1701,7 +1718,7 @@ const CANALES_SEARCH_ENGINE = [
     tramite: 'Acreditación de Suficiencia de Idioma y Certificados',
     asunto: 'Suficiencia de Idioma Extranjero',
     correo: 'idiomas.informes@up.edu.pe',
-    web: 'https://centrodeidiomas.up.edu.pe',
+    web: null,
     pabellon: null,
     horario: 'Lunes a viernes de 8:30 a. m. a 6:00 p. m.',
     consejo: 'El certificado o examen de suficiencia de inglés es indispensable para postular al intercambio de ORI y para obtener el grado académico de Bachiller.',
@@ -1740,7 +1757,8 @@ const CANALES_SEARCH_ENGINE = [
     asunto: 'Consulta a Representación Estudiantil REUP',
     correo: 'reupunido@up.edu.pe',
     instagram: '@reupcontigo',
-    web: 'https://www.instagram.com/reupcontigo',
+    web: 'https://beacons.ai/reupcontigo',
+    webTexto: 'Portal Beacons @reupcontigo',
     pabellon: null,
     horario: 'Canales digitales estudiantiles 24/7',
     consejo: 'REUP es la voz de los estudiantes. En su linktree de Instagram encuentras el PDF de causales de baja, el banco de exámenes "Tu amigo Inge" y la comunidad de WhatsApp.',
@@ -1760,7 +1778,8 @@ const CANALES_SEARCH_ENGINE = [
     asunto: 'Consulta Programa REA',
     correo: 'progreaup@up.edu.pe',
     instagram: '@progreaup',
-    web: 'https://www.instagram.com/progreaup',
+    web: 'https://linktr.ee/progreaup',
+    webTexto: 'Linktree @progreaup',
     pabellon: null,
     horario: 'Canales digitales estudiantiles 24/7',
     consejo: '¿Buscas el grupo de WhatsApp de tu clase? En "REA sin contactar" están organizados por curso y sección. También puedes consultar el Banco de Sílabos y escuchar música de estudio.',
@@ -2289,7 +2308,20 @@ function DynamicResultCard({
         </div>
 
         {/* Enlace Oficial Web */}
-        {/* Web externa eliminada - Solo canal de correo oficial */}
+        {channel.web && (
+          <a
+            href={channel.web}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 rounded-2xl bg-blue-50 hover:bg-blue-100/80 border border-blue-200 text-blue-900 flex items-center justify-between gap-2 transition font-bold"
+          >
+            <div>
+              <span className="text-[10px] uppercase font-bold text-blue-500 block">Portal Institucional</span>
+              <span className="truncate block text-xs">{channel.webTexto || 'Sitio Web Oficial'}</span>
+            </div>
+            <Icon name="external-link" className="w-4 h-4 text-blue-700 shrink-0" />
+          </a>
+        )}
 
         {/* Botón Mapa si tiene Pabellón */}
         {channel.pabellon && (
@@ -2619,7 +2651,7 @@ function App() {
               titulo: rec.titulo,
               canal: org.nombre,
               detalle: rec.desc,
-              enlace: org.instagramUrl
+              enlace: rec.url || org.portalUrl || org.instagramUrl
             });
           }
         });
@@ -3085,7 +3117,19 @@ function App() {
                                 <Icon name="mail" className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                                 {row.correo}
                               </span>
-                            ) : (
+                            ) : null}
+                            {row.enlace && (
+                              <a
+                                href={row.enlace}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="text-xs text-blue-700 hover:underline block mt-0.5"
+                              >
+                                {row.enlaceTexto || row.enlace}
+                              </a>
+                            )}
+                            {!row.correo && !row.enlace && (
                               <span className="text-slate-600 font-semibold text-xs sm:text-sm">{row.contactoTexto || "Atención presencial"}</span>
                             )}
                           </td>
@@ -3167,7 +3211,18 @@ function App() {
                                         <Icon name="mail" className="w-3.5 h-3.5" />
                                         <span>Abrir en mi Correo UP</span>
                                       </a>
-                                      {/* Enlace externo retirado */}
+                                      {row.enlace && (
+                                        <a
+                                          href={row.enlace}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          onClick={(e) => e.stopPropagation()}
+                                          className="py-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-lg transition inline-flex items-center gap-1"
+                                        >
+                                          <span>Web oficial</span>
+                                          <Icon name="external-link" className="w-3 h-3" />
+                                        </a>
+                                      )}
                                     </div>
 
                                   </div>
@@ -3199,6 +3254,21 @@ function App() {
                                       </div>
                                     )}
 
+                                    {row.enlace && (
+                                      <div className="pt-1 flex flex-wrap items-center gap-2">
+                                        <a
+                                          href={row.enlace}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          onClick={(e) => e.stopPropagation()}
+                                          className="py-1.5 px-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-lg transition inline-flex items-center gap-1.5 shadow-sm"
+                                        >
+                                          <span>{row.canal === 'T2D' ? 'Ingresar a Servicios T2D' : `Visitar portal (${row.enlaceTexto || row.canal})`}</span>
+                                          <Icon name="external-link" className="w-3.5 h-3.5" />
+                                        </a>
+                                      </div>
+                                    )}
+
                                   </div>
                                 )}
 
@@ -3215,14 +3285,21 @@ function App() {
 
             {/* Enlaces Puente al pie */}
             <div className="text-xs text-slate-600 flex flex-wrap items-center gap-x-2 gap-y-1 pt-2">
-              <span>Canal oficial de atención:</span>
+              <span>Más información:</span>
+              <a href="https://daar.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[#1E40AF] font-bold hover:underline">
+                daar.up.edu.pe
+              </a>
+              <span>(trámites académicos) ·</span>
+              <a href="https://casaup.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[#1E40AF] font-bold hover:underline">
+                casaup.up.edu.pe
+              </a>
+              <span>(bienestar y vida universitaria) ·</span>
               <button 
                 onClick={() => copyToClipboard('pregrado@up.edu.pe', '¡Correo pregrado@up.edu.pe copiado!')} 
                 className="font-bold text-[#0B2240] hover:underline inline-flex items-center gap-1 bg-white px-2.5 py-0.5 rounded-lg border border-slate-200"
               >
                 <Icon name="mail" className="w-3.5 h-3.5 text-blue-600" /> pregrado@up.edu.pe
               </button>
-              <span>· Oficina DAAR (Pabellón A)</span>
             </div>
 
           </div>
@@ -3413,11 +3490,33 @@ function App() {
                 </p>
 
                 {['d-matr', 'd-reser', 'd-retcurso', 'd-retsem'].includes(activeDaarItem.id) && (
-                  <div className="bg-blue-50/80 border border-blue-200 rounded-xl p-3.5 text-xs text-slate-700 mb-4 flex items-start gap-2.5 shadow-2xs">
-                    <Icon name="info" className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">
-                      <strong className="text-[#0B2240]">Nota sobre autoservicio:</strong> Si las fechas de matrícula o retiro por sistema están vigentes según tu turno, también puedes realizarlo desde tu cuenta regular en PowerCampus. Para cualquier duda, cruce de cursos, excepción o incidencia técnica, escribe directamente al correo institucional indicado abajo.
-                    </span>
+                  <div className="bg-blue-50/80 border border-blue-200 rounded-xl p-3.5 text-xs text-slate-700 mb-4 space-y-2.5 shadow-2xs">
+                    <div className="flex items-start gap-2.5">
+                      <Icon name="info" className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
+                      <span className="leading-relaxed">
+                        <strong className="text-[#0B2240]">Nota sobre autoservicio:</strong> Si las fechas de matrícula o retiro por sistema están vigentes según tu turno, puedes realizarlo directamente desde los portales oficiales. Para dudas o excepciones, escribe al correo institucional abajo.
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2 pl-6">
+                      <a
+                        href="https://autoservicio2.up.edu.pe/ss/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 bg-white hover:bg-blue-100/70 text-[#0B2240] font-bold rounded-lg border border-blue-200 transition inline-flex items-center gap-1.5"
+                      >
+                        <span>PowerCampus Autoservicio</span>
+                        <Icon name="external-link" className="w-3 h-3 text-blue-700" />
+                      </a>
+                      <a
+                        href="https://etramite.up.edu.pe"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 bg-white hover:bg-blue-100/70 text-[#0B2240] font-bold rounded-lg border border-blue-200 transition inline-flex items-center gap-1.5"
+                      >
+                        <span>Trámites en Línea (etramite)</span>
+                        <Icon name="external-link" className="w-3 h-3 text-blue-700" />
+                      </a>
+                    </div>
                   </div>
                 )}
 
@@ -3465,7 +3564,17 @@ function App() {
                         <span>Copiar {activeDaarItem.correo}</span>
                       </button>
 
-                      {/* Web externa eliminada */}
+                      {activeDaarItem.web && (
+                        <a
+                          href={activeDaarItem.web}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-[#0B2240] font-bold text-xs rounded-xl border border-slate-200 transition flex items-center gap-1.5"
+                        >
+                          <span>Ir a página oficial DAAR</span>
+                          <Icon name="external-link" className="w-3.5 h-3.5" />
+                        </a>
+                      )}
                     </div>
 
               </div>
@@ -3546,7 +3655,10 @@ function App() {
                   <a href="tel:012190100" className="font-bold text-[#1E40AF] hover:underline block">
                     (01) 219-0100 <span className="font-normal text-slate-600 text-[11px]">(Anexos: 2390 / 2261)</span>
                   </a>
-                  <span className="text-[11px] font-medium text-slate-600">Pabellón Z · Casa del Estudiante</span>
+                  <a href="https://casaup.up.edu.pe" target="_blank" rel="noopener noreferrer" className="text-[11px] font-bold text-blue-700 hover:underline flex items-center gap-1">
+                    <span>casaup.up.edu.pe</span>
+                    <Icon name="external-link" className="w-2.5 h-2.5" />
+                  </a>
                 </div>
               </div>
             </div>
@@ -3624,10 +3736,16 @@ function App() {
                   >
                     Solicitar Cita Estudiantil
                   </a>
-                  <button onClick={() => copyToClipboard('bfe@up.edu.pe', '¡Correo bfe@up.edu.pe copiado!')} className="px-3.5 py-2 bg-white text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 hover:bg-slate-100 transition flex items-center gap-1.5 shadow-2xs">
-                    <Icon name="mail" className="w-3.5 h-3.5 text-blue-600" />
-                    <span>Solicitar guía oficial: bfe@up.edu.pe</span>
-                  </button>
+                  <a
+                    href={currentBfeCategory.pdfLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-2 bg-white text-[#1E40AF] font-bold text-xs rounded-xl border border-blue-200 hover:bg-blue-50 transition flex items-center gap-1.5 shadow-2xs"
+                  >
+                    <Icon name="doc" className="w-3.5 h-3.5" />
+                    <span>Folleto Oficial PDF 2025</span>
+                    <Icon name="external-link" className="w-3.5 h-3.5" />
+                  </a>
                 </div>
               </div>
             )}
@@ -3680,20 +3798,34 @@ function App() {
                 </div>
 
                 <div className="pt-2 flex flex-wrap items-center gap-2 text-xs">
+                  {currentBfeCategory.enlaces.map((link, idx) => (
+                    <a
+                      key={idx}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3.5 py-2 bg-white border border-slate-200 rounded-xl hover:border-blue-400 font-semibold text-[#1E40AF] flex items-center gap-1.5 transition"
+                    >
+                      <span>{link.nombre} ({link.fuente})</span>
+                      <Icon name="external-link" className="w-3 h-3" />
+                    </a>
+                  ))}
+                  <a
+                    href={currentBfeCategory.flujogramaLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-2 bg-[#1E40AF] text-white rounded-xl font-bold hover:bg-blue-800 transition flex items-center gap-1.5"
+                  >
+                    <span>Ver Nuevo Flujograma EFE</span>
+                    <Icon name="external-link" className="w-3 h-3" />
+                  </a>
                   <a
                     href="mailto:bfe@up.edu.pe?subject=Consulta%20Cr%C3%A9ditos%20EFE%20y%20Voluntariados"
-                    className="px-4 py-2 bg-[#0B2240] hover:bg-[#16365F] text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-xs"
+                    className="px-3.5 py-2 bg-[#0B2240] hover:bg-[#16365F] text-white rounded-xl font-bold transition flex items-center gap-1.5 shadow-xs"
                   >
                     <Icon name="mail" className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Escribir a bfe@up.edu.pe</span>
+                    <span>bfe@up.edu.pe</span>
                   </a>
-                  <button
-                    onClick={() => copyToClipboard('bfe@up.edu.pe', '¡Correo bfe@up.edu.pe copiado!')}
-                    className="px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl font-bold border border-slate-300 transition flex items-center gap-1.5 shadow-2xs"
-                  >
-                    <Icon name="copy" className="w-3.5 h-3.5" />
-                    <span>Copiar correo</span>
-                  </button>
                 </div>
               </div>
             )}
@@ -3890,19 +4022,30 @@ function App() {
                     />
                     <div className="flex flex-wrap items-center gap-2">
                       <a
-                        href="mailto:ori@up.edu.pe?subject=Consulta%20Intercambio%20Estudiantil"
-                        className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs rounded-xl transition flex items-center gap-2 shadow"
+                        href="https://intercambio.up.edu.pe"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3.5 py-2 bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs rounded-xl transition flex items-center gap-1.5 shadow"
                       >
-                        <Icon name="mail" className="w-4 h-4 text-white" />
-                        <span>Escribir a ori@up.edu.pe</span>
+                        <span>Sistema de Intercambio</span>
+                        <Icon name="external-link" className="w-3.5 h-3.5" />
                       </a>
-                      <button
-                        onClick={() => copyToClipboard('ori@up.edu.pe', '¡Correo ori@up.edu.pe copiado!')}
+                      <a
+                        href="https://ori.up.edu.pe/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white font-semibold text-xs rounded-xl border border-white/20 transition flex items-center gap-1.5"
                       >
-                        <Icon name="copy" className="w-3.5 h-3.5" />
-                        <span>Copiar correo</span>
-                      </button>
+                        <span>Portal ORI</span>
+                        <Icon name="external-link" className="w-3.5 h-3.5" />
+                      </a>
+                      <a
+                        href="mailto:outgoing@up.edu.pe?subject=Consulta%20Intercambio%20Estudiantil"
+                        className="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white font-semibold text-xs rounded-xl border border-white/20 transition flex items-center gap-1.5"
+                      >
+                        <Icon name="mail" className="w-3.5 h-3.5 text-rose-300" />
+                        <span>outgoing@up.edu.pe</span>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -4001,11 +4144,20 @@ function App() {
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
                         <a
-                          href="mailto:ori@up.edu.pe?subject=Consulta%20Postulaci%C3%B3n%20Intercambio"
+                          href="https://intercambio.up.edu.pe"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3.5 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs rounded-lg transition inline-flex items-center gap-1.5 shadow-xs"
+                        >
+                          <span>Iniciar Aplicación</span>
+                          <Icon name="external-link" className="w-3.5 h-3.5" />
+                        </a>
+                        <a
+                          href="mailto:outgoing@up.edu.pe?subject=Consulta%20Postulaci%C3%B3n%20Intercambio"
                           className="px-3.5 py-1.5 bg-[#0B2240] hover:bg-[#16365F] text-white font-bold text-xs rounded-lg transition flex items-center gap-1.5 shadow-xs"
                         >
                           <Icon name="mail" className="w-3.5 h-3.5 text-rose-300" />
-                          <span>Escribir a ori@up.edu.pe</span>
+                          <span>outgoing@up.edu.pe</span>
                         </a>
                       </div>
                     </div>
@@ -4198,15 +4350,26 @@ function App() {
                           </div>
                         ))}
                       </div>
-                      <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+                      <div className="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
                         <span className="text-slate-500">Consulta el directorio actualizado en ori.up.edu.pe</span>
-                        <a
-                          href="mailto:ori@up.edu.pe?subject=Consulta%20Lista%20de%20Convenios%20Internacionales"
-                          className="px-3.5 py-1.5 bg-[#0B2240] text-white font-bold text-xs rounded-lg hover:bg-[#16365F] transition flex items-center gap-1.5 shadow-xs"
-                        >
-                          <Icon name="mail" className="w-3.5 h-3.5 text-amber-300" />
-                          <span>Solicitar lista de convenios: ori@up.edu.pe</span>
-                        </a>
+                        <div className="flex items-center gap-2">
+                          <a
+                            href={oriCategory.convenios.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-3.5 py-1.5 bg-[#1E40AF] text-white font-bold rounded-lg hover:bg-blue-800 transition inline-flex items-center gap-1.5 shadow-xs"
+                          >
+                            <span>Ver Directorio de Convenios</span>
+                            <Icon name="external-link" className="w-3.5 h-3.5" />
+                          </a>
+                          <a
+                            href="mailto:outgoing@up.edu.pe?subject=Consulta%20Lista%20de%20Convenios%20Internacionales"
+                            className="px-3.5 py-1.5 bg-[#0B2240] text-white font-bold text-xs rounded-lg hover:bg-[#16365F] transition flex items-center gap-1.5 shadow-xs"
+                          >
+                            <Icon name="mail" className="w-3.5 h-3.5 text-amber-300" />
+                            <span>outgoing@up.edu.pe</span>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -4393,21 +4556,23 @@ function App() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
                 <a
-                  href="mailto:t2d@up.edu.pe?subject=Solicitud%20de%20Soporte%20T%C3%A9cnico%20-%20T2D"
+                  href="https://serviciost2d.up.edu.pe/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="px-4 py-2 bg-[#0B2240] hover:bg-[#16365F] text-white font-bold text-xs rounded-xl transition flex items-center gap-2 shadow-sm"
                 >
-                  <Icon name="mail" className="w-4 h-4 text-cyan-400" />
-                  <span>Escribir a t2d@up.edu.pe</span>
+                  <span>Portal de Autoservicio T2D</span>
+                  <Icon name="external-link" className="w-3.5 h-3.5 text-cyan-400" />
                 </a>
-                <button
-                  onClick={() => copyToClipboard('t2d@up.edu.pe', '¡Correo t2d@up.edu.pe copiado!')}
-                  className="px-3 py-2 bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 transition flex items-center gap-1 shadow-2xs"
-                  title="Copiar correo"
+                <a
+                  href="mailto:t2d@up.edu.pe?subject=Solicitud%20de%20Soporte%20T%C3%A9cnico%20-%20T2D"
+                  className="px-3.5 py-2 bg-white hover:bg-slate-100 text-[#0B2240] font-bold text-xs rounded-xl border border-slate-300 transition flex items-center gap-1.5 shadow-2xs"
                 >
-                  <Icon name="copy" className="w-3.5 h-3.5" />
-                </button>
+                  <Icon name="mail" className="w-3.5 h-3.5 text-blue-600" />
+                  <span>t2d@up.edu.pe</span>
+                </a>
               </div>
             </div>
 
@@ -4430,21 +4595,23 @@ function App() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
                     <a
-                      href="mailto:t2d@up.edu.pe?subject=Ticket%20de%20Atenci%C3%B3n%20T2D"
+                      href="https://serviciost2d.up.edu.pe/"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-[#0B2240] font-extrabold text-xs sm:text-sm rounded-xl transition shadow flex items-center gap-2"
                     >
-                      <Icon name="mail" className="w-4 h-4 text-[#0B2240]" />
-                      <span>Escribir a t2d@up.edu.pe</span>
+                      <span>Ir a Portal T2D</span>
+                      <Icon name="external-link" className="w-4 h-4 text-[#0B2240]" />
                     </a>
-                    <button
-                      onClick={() => copyToClipboard('t2d@up.edu.pe', '¡Correo t2d@up.edu.pe copiado!')}
+                    <a
+                      href="mailto:t2d@up.edu.pe?subject=Ticket%20de%20Atenci%C3%B3n%20T2D"
                       className="px-3.5 py-2.5 bg-white/20 hover:bg-white/30 text-white font-bold text-xs rounded-xl border border-white/30 transition flex items-center gap-1.5"
                     >
-                      <Icon name="copy" className="w-4 h-4" />
-                      <span>Copiar</span>
-                    </button>
+                      <Icon name="mail" className="w-4 h-4" />
+                      <span>t2d@up.edu.pe</span>
+                    </a>
                   </div>
                 </div>
 
@@ -4465,11 +4632,13 @@ function App() {
                       <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
                         <span className="text-[11px] font-mono text-slate-400">serviciost2d.up.edu.pe</span>
                         <a
-                          href={'mailto:t2d@up.edu.pe?subject=' + encodeURIComponent('Soporte ' + srv.nombre)}
+                          href={srv.enlace}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="text-xs font-bold text-[#1E40AF] hover:text-blue-800 flex items-center gap-1 group-hover:underline"
                         >
-                          <Icon name="mail" className="w-3.5 h-3.5" />
-                          <span>Escribir a t2d@up.edu.pe</span>
+                          <span>{srv.enlaceTexto}</span>
+                          <Icon name="external-link" className="w-3 h-3" />
                         </a>
                       </div>
                     </div>
@@ -4532,7 +4701,7 @@ function App() {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         {org.id === 'reup' && (
                           <img 
                             src="assets/reup_buho_mascota.jpg" 
@@ -4541,13 +4710,23 @@ function App() {
                           />
                         )}
                         <a
+                          href={org.portalUrl || org.instagramUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3.5 py-1.5 bg-[#0B2240] hover:bg-[#16365F] text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm"
+                        >
+                          <Icon name="globe" className="w-3.5 h-3.5" />
+                          <span>{org.portalLabel || 'Portal de Enlaces'}</span>
+                          <Icon name="external-link" className="w-3 h-3" />
+                        </a>
+                        <a
                           href={org.instagramUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-3.5 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 self-start sm:self-auto shadow-sm"
                         >
                           <Icon name="instagram" className="w-3.5 h-3.5" />
-                          <span>Abrir Linktree ({org.handle})</span>
+                          <span>Instagram ({org.handle})</span>
                           <Icon name="external-link" className="w-3 h-3" />
                         </a>
                       </div>
@@ -4569,13 +4748,13 @@ function App() {
                           </div>
                           <div className="pt-2 border-t border-slate-100">
                             <a
-                              href={org.instagramUrl}
+                              href={rec.url || org.portalUrl || org.instagramUrl}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="w-full py-1 px-2.5 bg-slate-50 hover:bg-purple-50 text-purple-800 hover:text-purple-900 border border-slate-200 hover:border-purple-200 rounded-lg text-xs font-semibold flex items-center justify-between transition"
                             >
                               <span>{rec.accion}</span>
-                              <Icon name="chevron-right" className="w-3 h-3" />
+                              <Icon name="external-link" className="w-3 h-3" />
                             </a>
                           </div>
                         </div>
@@ -4621,10 +4800,16 @@ function App() {
               </div>
 
               <div>
-                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">CANAL OFICIAL</div>
-                <div className="font-bold text-[#0B2240] text-xs">
-                  Atención Institucional UP
-                </div>
+                <div className="font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 text-[10px]">PORTAL WEB</div>
+                <a 
+                  href="https://www.up.edu.pe" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="font-bold text-[#1E40AF] hover:underline flex items-center gap-1"
+                >
+                  <span>www.up.edu.pe</span>
+                  <Icon name="external-link" className="w-3 h-3 text-[#1E40AF]" />
+                </a>
               </div>
 
               <div>
